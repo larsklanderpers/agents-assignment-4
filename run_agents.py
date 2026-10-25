@@ -34,7 +34,7 @@ from a2a.client import ClientConfig, ClientFactory, create_text_message_object
 from a2a.server.apps import A2AStarletteApplication
 from a2a.server.request_handlers import DefaultRequestHandler
 from a2a.server.tasks import InMemoryTaskStore
-from a2a.types import TransportProtocol
+from a2a.types import TaskState, TransportProtocol
 from a2a.utils.constants import AGENT_CARD_WELL_KNOWN_PATH
 
 from google.adk.a2a.executor.a2a_agent_executor import (
@@ -74,8 +74,24 @@ def print_agent_card(agent_card, port: int):
             print(f"      * {example}")
     print("="*80 + "\n")
 
-# Apply nest_asyncio for Jupyter/Colab compatibility
-nest_asyncio.apply()
+# Only notebook callers with an already-running loop need nested-loop support.
+# Patching plain CLI execution can break async-library detection on Python 3.14.
+try:
+    asyncio.get_running_loop()
+except RuntimeError:
+    pass
+else:
+    nest_asyncio.apply()
+
+
+_DEFAULT_EVENT_CONVERTER = A2aAgentExecutorConfig().event_converter
+
+
+def convert_agent_event(event, *args):
+    """Propagate remote ADK errors so partial artifacts cannot complete a task."""
+    if event.error_message:
+        raise RuntimeError(f"{event.author} failed: {event.error_message}")
+    return _DEFAULT_EVENT_CONVERTER(event, *args)
 
 
 def create_agent_a2a_server(agent, agent_card):
@@ -97,7 +113,7 @@ def create_agent_a2a_server(agent, agent_card):
         memory_service=InMemoryMemoryService(),
     )
 
-    config = A2aAgentExecutorConfig()
+    config = A2aAgentExecutorConfig(event_converter=convert_agent_event)
     executor = A2aAgentExecutor(runner=runner, config=config)
 
     # Create custom request handler with logging. DefaultRequestHandler has no
@@ -238,6 +254,7 @@ class A2AClient:
                 agent_card_response = await httpx_client.get(
                     f'{agent_url}{AGENT_CARD_WELL_KNOWN_PATH}'
                 )
+                agent_card_response.raise_for_status()
                 agent_card_data = self._agent_info_cache[agent_url] = agent_card_response.json()
 
             # Create AgentCard from data
@@ -268,7 +285,7 @@ class A2AClient:
             # Extract response text
             if responses and isinstance(responses[-1], tuple) and len(responses[-1]) > 0:
                 task = responses[-1][0]
-                if task.artifacts:
+                if task.status.state == TaskState.completed and task.artifacts:
                     return ''.join(
                         getattr(part.root, 'text', '') for part in task.artifacts[0].parts
                     )
@@ -279,7 +296,7 @@ class A2AClient:
                     getattr(part.root, 'text', '') for part in message.parts
                 ) if message else ''
                 raise RuntimeError(
-                    f"A2A task {task.status.state.value} with no artifacts: "
+                    f"A2A task {task.status.state.value} did not produce a successful final answer: "
                     f"{detail or 'no status message (check the agent server logs)'}"
                 )
 
