@@ -63,13 +63,77 @@ class TestParallel(unittest.IsolatedAsyncioTestCase):
                 await invoke()
             self.assertEqual(len(summaries), 2, 'Summary ran after failed worker')
 
-    async def test_remote_error_event_raises_inside_worker(self):
-        async def error_events(self, ctx):
-            yield Event(author=self.name, invocation_id='current', error_message='connection refused')
-        worker = parallel.ParallelRemoteA2aAgent(name='support_specialist', agent_card='http://example.test/card')
-        with patch.object(parallel.RemoteA2aAgent, '_run_async_impl', error_events):
-            with self.assertRaisesRegex(RuntimeError, 'support_specialist failed: connection refused'):
-                _ = [event async for event in worker._run_async_impl(None)]
+    async def test_remote_failure_drains_both_workers_before_terminal_failure(self):
+        # Exercise real RemoteA2aAgent lifecycle, ParallelAgent merger and Runner.
+        # The failed remote yields cleanup events after the error, as ADK does.
+        for failed_name in ('customer_data', 'support_specialist'):
+            with self.subTest(failed_name=failed_name):
+                finished = set()
+                completed = set()
+                failure_seen = asyncio.Event()
+                fail = True
+                async def remote_events(worker, ctx):
+                    try:
+                        if fail and worker.name == failed_name:
+                            yield Event(author=worker.name, invocation_id=ctx.invocation_id,
+                                content=types.Content(parts=[types.Part(text='PARTIAL')]))
+                            failure_seen.set()
+                            yield Event(author=worker.name, invocation_id=ctx.invocation_id,
+                                error_message='connection refused')
+                            yield Event(author=worker.name, invocation_id=ctx.invocation_id)
+                        else:
+                            if fail:
+                                await failure_seen.wait()
+                                await asyncio.sleep(0.05)
+                            yield Event(author=worker.name, invocation_id=ctx.invocation_id,
+                                content=types.Content(role='model', parts=[types.Part(text=worker.name + ' CURRENT')]))
+                        completed.add(worker.name)
+                    finally:
+                        finished.add(worker.name)
+                agent = parallel.create_agent()
+                summaries = []
+                def summary(callback_context, llm_request):
+                    summaries.append(parallel.create_summary_instruction(callback_context))
+                    return LlmResponse(content=types.Content(role='model', parts=[types.Part(text='RECOVERED')]))
+                agent.sub_agents[1].before_model_callback = summary
+                service = InMemorySessionService()
+                await service.create_session(app_name='outage', user_id='u', session_id='s')
+                runner = Runner(app_name='outage', agent=agent, session_service=service)
+                async def invoke():
+                    return [e async for e in runner.run_async(user_id='u', session_id='s',
+                        new_message=types.Content(role='user', parts=[types.Part(text='request')]))]
+                with patch.object(parallel.RemoteA2aAgent, '_run_async_impl', remote_events):
+                    async with runner:
+                        with self.assertRaisesRegex(RuntimeError, failed_name + ' failed: connection refused'):
+                            await asyncio.wait_for(invoke(), 2)
+                        self.assertEqual(finished, {'customer_data', 'support_specialist'})
+                        self.assertEqual(completed, finished, 'A remote stream was aborted during failure handling')
+                        self.assertFalse(summaries, 'Partial response was synthesized after a failure')
+                        fail = False
+                        events = await asyncio.wait_for(invoke(), 2)
+                        self.assertEqual(events[-1].content.parts[0].text, 'RECOVERED')
+                        self.assertEqual(len(summaries), 1, 'Previous failure poisoned the next turn')
+
+    async def test_unexpected_remote_exception_is_deferred(self):
+        async def remote_events(worker, ctx):
+            raise ValueError('remote decode failed')
+            yield
+        worker = parallel.ParallelRemoteA2aAgent(name='customer_data', agent_card='http://example.test/card')
+        ctx = SimpleNamespace(invocation_id='current', branch=None)
+        with patch.object(parallel.RemoteA2aAgent, '_run_async_impl', remote_events):
+            events = [e async for e in worker._run_async_impl(ctx)]
+        self.assertEqual(len(events), 1)
+        self.assertIsNone(events[0].error_message)
+        self.assertIn('remote decode failed', events[0].actions.state_delta['customer_data_error'])
+
+    async def test_cancellation_is_not_converted_to_an_error_event(self):
+        async def remote_events(worker, ctx):
+            raise asyncio.CancelledError()
+            yield
+        worker = parallel.ParallelRemoteA2aAgent(name='customer_data', agent_card='http://example.test/card')
+        with patch.object(parallel.RemoteA2aAgent, '_run_async_impl', remote_events):
+            with self.assertRaises(asyncio.CancelledError):
+                _ = [e async for e in worker._run_async_impl(None)]
 
     def test_missing_stale_outputs_and_readonly_instruction(self):
         ctx = context()
@@ -87,8 +151,10 @@ class TestParallel(unittest.IsolatedAsyncioTestCase):
         ctx = context()
         ctx.session.events = [Event(author='customer_data', invocation_id='old',
             content=types.Content(parts=[types.Part(text='STALE')]))]
+        parallel.capture_output(ctx)
+        self.assertIn('without a current', ctx.state[ctx.agent_name + '_error'])
         with self.assertRaisesRegex(RuntimeError, 'without a current'):
-            parallel.capture_output(ctx)
+            parallel.finish_parallel(ctx)
 
     def test_parallel_support_cannot_write(self):
         from support_agent.agent import create_agent

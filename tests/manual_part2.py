@@ -160,11 +160,17 @@ async def check_cases(processes, db, trace, outage_only=False, host_mode="basic"
         records = [json.loads(line) for line in trace.read_text(encoding='utf-8')[offset:].splitlines()]
         assert not any(r['agent'] == 'support_agent' for r in records)
         print(json.dumps({'case': 'skipped_support_unavailable', 'answer': answer}), flush=True)
+    outage_start = time.monotonic()
+    outage_offset = len(trace.read_text(encoding='utf-8'))
     try:
         answer = await send_with_deadline(client, 'http://localhost:10022', 'Check customer 5 and help with login. Do not change records.')
     except RuntimeError as exc:
         assert 'failed' in str(exc).lower(), str(exc)
-        print(json.dumps({'case': 'support_unavailable', 'error_type': type(exc).__name__, 'detail': str(exc)}), flush=True)
+        if host_mode == 'parallel':
+            records = [json.loads(line) for line in trace.read_text(encoding='utf-8')[outage_offset:].splitlines()]
+            assert not any(r['agent'] == 'parallel_summary' for r in records), 'Summary ran after a failed worker'
+        print(json.dumps({'case': 'support_unavailable', 'error_type': type(exc).__name__,
+            'seconds': round(time.monotonic() - outage_start, 2), 'detail': str(exc)}), flush=True)
     else:
         raise AssertionError(f'Downstream failure unexpectedly reported as success: {answer}')
 
