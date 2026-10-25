@@ -9,6 +9,16 @@ from a2a.utils.constants import AGENT_CARD_WELL_KNOWN_PATH
 from shared.agents_config import CUSTOMER_DATA_AGENT_URL, SUPPORT_AGENT_URL, GEMINI_MODEL
 
 
+class ParallelRemoteA2aAgent(RemoteA2aAgent):
+    """Raise remote error events inside the worker before outer conversion."""
+
+    async def _run_async_impl(self, ctx):
+        async for event in super()._run_async_impl(ctx):
+            if event.error_message:
+                raise RuntimeError(f'{self.name} failed: {event.error_message}')
+            yield event
+
+
 def prepare_parallel(callback_context: CallbackContext) -> None:
     """Clear both outputs before workers start; retain only the current request."""
     callback_context.state['parallel_invocation_id'] = callback_context.invocation_id
@@ -67,7 +77,7 @@ def create_summary_instruction(readonly_context: ReadonlyContext) -> str:
 
 def create_agent() -> SequentialAgent:
     """Build parallel A2A workers followed by a tool-free Gemini summary."""
-    workers = [RemoteA2aAgent(name=name, agent_card=f'{url}{AGENT_CARD_WELL_KNOWN_PATH}',
+    workers = [ParallelRemoteA2aAgent(name=name, agent_card=f'{url}{AGENT_CARD_WELL_KNOWN_PATH}',
         after_agent_callback=capture_output) for name, url in (
             ('customer_data', CUSTOMER_DATA_AGENT_URL), ('support_specialist', SUPPORT_AGENT_URL))]
     return SequentialAgent(name='parallel_customer_support_host', before_agent_callback=prepare_parallel,

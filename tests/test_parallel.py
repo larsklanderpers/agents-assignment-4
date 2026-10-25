@@ -36,7 +36,7 @@ class TestParallel(unittest.IsolatedAsyncioTestCase):
 
     async def test_concurrency_repeated_turns_and_worker_failure(self):
         shared = {'started': set(), 'barrier': asyncio.Event()}
-        with patch.object(parallel, 'RemoteA2aAgent', side_effect=lambda **kw: Worker(shared=shared, **kw)):
+        with patch.object(parallel, 'ParallelRemoteA2aAgent', side_effect=lambda **kw: Worker(shared=shared, **kw)):
             agent = parallel.create_agent()
         summaries = []
         def summary(callback_context, llm_request):
@@ -62,6 +62,14 @@ class TestParallel(unittest.IsolatedAsyncioTestCase):
             with self.assertRaisesRegex(RuntimeError, 'deliberate worker failure'):
                 await invoke()
             self.assertEqual(len(summaries), 2, 'Summary ran after failed worker')
+
+    async def test_remote_error_event_raises_inside_worker(self):
+        async def error_events(self, ctx):
+            yield Event(author=self.name, invocation_id='current', error_message='connection refused')
+        worker = parallel.ParallelRemoteA2aAgent(name='support_specialist', agent_card='http://example.test/card')
+        with patch.object(parallel.RemoteA2aAgent, '_run_async_impl', error_events):
+            with self.assertRaisesRegex(RuntimeError, 'support_specialist failed: connection refused'):
+                _ = [event async for event in worker._run_async_impl(None)]
 
     def test_missing_stale_outputs_and_readonly_instruction(self):
         ctx = context()
