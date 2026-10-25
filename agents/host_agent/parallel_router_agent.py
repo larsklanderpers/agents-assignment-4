@@ -55,7 +55,9 @@ def create_summary_instruction(readonly_context: ReadonlyContext) -> str:
         'contact billing/engineering, cancel subscriptions, process payments, or issue refunds. '
         'Tell the customer to contact the relevant provider themselves where needed. '
         'Do not invent product navigation, billing portals, service policies, or resolution '
-        'timeframes. Give generic qualified guidance when product-specific facts are unavailable. '
+        'timeframes, including reset-link expiry. Do not invent administrator capabilities. '
+        'Preserve exact ticket status labels; in-progress tickets are not open tickets. '
+        'Give generic qualified guidance when product-specific facts are unavailable. '
         'Preserve relevant troubleshooting, limitations, and questions; omit internal routing details. '
         'Input JSON: ' + json.dumps({'request': state.get('parallel_query', ''), **outputs})
     )
