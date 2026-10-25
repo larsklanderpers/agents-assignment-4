@@ -10,7 +10,8 @@ and malformed final text after a write. The first live lookup nevertheless faile
 with four missing-field errors: customer_context.phone, ticket_statistics,
 customer_statistics, and a completed-action record_id. The model had supplied
 nullable fields, but the installed ADK output_schema-with-tools fallback used
-SetModelResponseTool.model_dump(exclude_none=True). Its final JSON omitted them.
+SetModelResponseTool serialized its validated model with model_dump(exclude_none=True).
+Its final JSON omitted them.
 This was a serialization-path gap that the first fixtures had not exercised.
 
 The fix intercepts the installed fallback's set_model_response declaration in
