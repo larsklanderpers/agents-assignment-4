@@ -37,8 +37,20 @@ adk web
 
 Select `customer_data_agent` in the UI. With a valid API key and available model,
 try `Get customer 5's information` and `Show open high-priority tickets`.
-Check responses against the database. These model-backed checks are separate
-from the structural checks and have not yet been verified.
+Check responses against the database. Live Gemini/MCP verification was run on
+2026-10-25; see `part1_test_results.md` for results and limitations.
+
+A repeatable isolated fixture run is also available from the assignment root:
+
+```bash
+python tests/manual_part1.py
+# SSE/tool checks only, without Gemini calls:
+python tests/manual_part1.py --tools-only
+```
+
+The live script uses the configured model/API key, starts a temporary MCP server
+on port 18080, and creates its own synthetic database. Model responses are printed
+for manual review rather than graded by exact wording.
 
 ## Stop here
 
@@ -47,5 +59,6 @@ unimplemented for Part 2. Consequently, full agent/A2A checks and
 `python run_agents.py --mode start` are expected to fail at this breakpoint.
 The launcher's misleading startup-success message also remains unchanged.
 
-The initial commit captures the starter stubs. Part 1 changes should form a
-separate checkpoint commit after verification.
+The original GitHub `main` remains the starter point. Part 1 is on
+`parts/part-1-mcp-tools-customer-data-agent`, with both original starting commits
+preserved in its reconciled history.
