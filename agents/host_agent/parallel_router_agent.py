@@ -57,6 +57,8 @@ def create_summary_instruction(readonly_context: ReadonlyContext) -> str:
         'Do not invent product navigation, billing portals, service policies, or resolution '
         'timeframes, including reset-link expiry. Do not invent administrator capabilities. '
         'Preserve exact ticket status labels; in-progress tickets are not open tickets. '
+        'An active account does not prove it is unlocked: lockout state is not exposed. '
+        'Never infer unexposed account, transaction, or diagnostic fields from status. '
         'Give generic qualified guidance when product-specific facts are unavailable. '
         'Preserve relevant troubleshooting, limitations, and questions; omit internal routing details. '
         'Input JSON: ' + json.dumps({'request': state.get('parallel_query', ''), **outputs})
