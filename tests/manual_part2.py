@@ -37,8 +37,16 @@ async def serve(name):
         if root_agent is None:
             raise RuntimeError('Requested scenario Host mode is not implemented')
         config['agent'] = root_agent
-    if name != 'host':
-        config['agent'].before_model_callback = record_request
+    from google.adk.agents import Agent
+
+    def trace_models(agent):
+        """Trace all local LLM stages, including the advanced router."""
+        if isinstance(agent, Agent):
+            agent.before_model_callback = record_request
+        for child in agent.sub_agents:
+            trace_models(child)
+
+    trace_models(config['agent'])
     await run_agent_server(config['agent'], config['card'], config['port'])
 
 
@@ -62,7 +70,7 @@ async def wait_ready(processes):
     print('PASS: all three HTTP agent cards available', flush=True)
 
 
-async def check_cases(processes, db, trace, outage_only=False):
+async def check_cases(processes, db, trace, outage_only=False, host_mode="basic"):
     """Exercise real A2A HTTP calls and verify context plus database effects."""
     await wait_ready(processes)
     client = A2AClient(default_timeout=180)
@@ -74,15 +82,38 @@ async def check_cases(processes, db, trace, outage_only=False):
         ('ticket_creation', 10022, 'For customer 6 create one high-priority ticket for Fixture export failure ABC42, which blocks all exports, and help me troubleshoot. Do not create duplicates.'),
         ('missing_record', 10022, 'Check customer 999999 and help with login. Do not change any records.'),
     ]
+    if host_mode == 'advanced' and not outage_only:
+        cases += [
+            ('host_data_only', 10022, 'Get customer 5 information. Do not provide support. Do not change records.'),
+            ('host_support_only', 10022, 'How do I reset my password? Give general guidance; do not change records.'),
+        ]
     if outage_only:
         cases = [case for case in cases if case[0] == 'host_context']
     for label, port, prompt in cases:
-        offset = trace.stat().st_size if trace.exists() else 0
+        offset = len(trace.read_text(encoding='utf-8')) if trace.exists() else 0
+        logs = [trace.parent / 'server-1.log', trace.parent / 'server-2.log']
+        log_offsets = [len(path.read_text(encoding='utf-8')) for path in logs]
         answer = await client.send_message(f'http://localhost:{port}', prompt)
         assert answer and len(answer) > 40, label
         print(json.dumps({'case': label, 'answer': answer}), flush=True)
+        if host_mode == 'advanced' and port == 10022:
+            assert 'ROUTING_PLAN:' not in answer, 'Internal routing plan leaked into final answer'
+            counts = tuple(path.read_text(encoding='utf-8')[offset:].count('Received request') for path, offset in zip(logs, log_offsets))
+            expected_calls = {'host_data_only': (1, 0), 'host_support_only': (0, 1)}.get(label, (1, 1))
+            assert counts == expected_calls, (label, counts, expected_calls)
+            print('PASS: actual specialist HTTP requests match the selected route', flush=True)
         if label == 'data_lookup':
             assert 'A2A Fixture Five' in answer
+        if label in ('host_data_only', 'host_support_only'):
+            records = [json.loads(line) for line in trace.read_text(encoding='utf-8')[offset:].splitlines()]
+            names = {r['agent'] for r in records}
+            expected = 'customer_data_agent' if label == 'host_data_only' else 'support_agent'
+            excluded = 'support_agent' if label == 'host_data_only' else 'customer_data_agent'
+            assert expected in names and excluded not in names, names
+            assert 'query_router' in names, names
+            if label == 'host_data_only':
+                assert 'A2A Fixture Five' in answer, 'Skip callback lost the useful data answer'
+            print('PASS: requested route ran only its selected specialist', flush=True)
         if label == 'host_context':
             records = [json.loads(line) for line in trace.read_text()[offset:].splitlines()]
             support_inputs = [json.dumps(r['contents']) for r in records if r['agent'] == 'support_agent']
@@ -93,6 +124,8 @@ async def check_cases(processes, db, trace, outage_only=False):
             count = conn.execute('SELECT count(*) FROM tickets').fetchone()[0]
             if label in ('data_lookup', 'support_password', 'host_context', 'missing_identity'):
                 assert count == 1, 'Unexpected ticket write during a lookup'
+            if label in ('missing_record', 'host_data_only', 'host_support_only'):
+                assert count == 2, 'Unexpected write after the requested ticket was created'
             if label == 'ticket_creation':
                 rows = conn.execute('SELECT customer_id, issue, priority FROM tickets WHERE customer_id=6').fetchall()
                 assert len(rows) == 1 and rows[0][2] == 'high' and 'ABC42' in rows[0][1], rows
@@ -100,6 +133,13 @@ async def check_cases(processes, db, trace, outage_only=False):
     # The Support server is separate, so test a real downstream A2A failure.
     processes[2].terminate()
     processes[2].wait(timeout=10)
+    if host_mode == 'advanced':
+        offset = len(trace.read_text(encoding='utf-8'))
+        answer = await client.send_message('http://localhost:10022', 'Get customer 5 information. Do not provide support. Do not change records.')
+        assert 'A2A Fixture Five' in answer
+        records = [json.loads(line) for line in trace.read_text(encoding='utf-8')[offset:].splitlines()]
+        assert not any(r['agent'] == 'support_agent' for r in records)
+        print(json.dumps({'case': 'skipped_support_unavailable', 'answer': answer}), flush=True)
     try:
         answer = await client.send_message('http://localhost:10022', 'Check customer 5 and help with login. Do not change records.')
     except RuntimeError as exc:
@@ -113,6 +153,7 @@ if __name__ == '__main__':
     configure_logging()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--serve', choices=['customer_data', 'support', 'host'])
+    parser.add_argument('--host-mode', choices=['basic', 'advanced'], default='basic')
     parser.add_argument('--outage-only', action='store_true', help='Warm the Host context and test a stopped Support server')
     args = parser.parse_args()
     if args.serve:
@@ -135,7 +176,7 @@ if __name__ == '__main__':
             with sqlite3.connect(db) as conn:
                 conn.executemany('INSERT INTO customers(id,name,email,status) VALUES (?,?,?,?)', [(5,'A2A Fixture Five','five@example.test','active'),(6,'A2A Fixture Six','six@example.test','active')])
                 conn.execute("INSERT INTO tickets(customer_id,issue,status,priority) VALUES (5,'Fixture existing login issue','open','high')")
-            env = dict(os.environ, PORT='18081', HOST='127.0.0.1', DB_PATH=str(db), PART2_TRACE=str(trace))
+            env = dict(os.environ, HOST_AGENT_MODE=args.host_mode, SCENARIO_HOST_MODE=args.host_mode, PORT='18081', HOST='127.0.0.1', DB_PATH=str(db), PART2_TRACE=str(trace))
             processes, logs = [], []
             try:
                 commands = [[sys.executable, str(ROOT / 'mcp_server/app.py')]] + [[sys.executable, __file__, '--serve', name] for name in ('customer_data','support','host')]
@@ -143,7 +184,7 @@ if __name__ == '__main__':
                     log = (Path(tmp) / f'server-{index}.log').open('w')
                     logs.append(log)
                     processes.append(subprocess.Popen(command, env=env, stdout=log, stderr=log))
-                asyncio.run(check_cases(processes, db, trace, args.outage_only))
+                asyncio.run(check_cases(processes, db, trace, args.outage_only, args.host_mode))
             except BaseException:
                 for log in logs:
                     log.flush()
