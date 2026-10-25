@@ -76,8 +76,28 @@ def main():
                     'mcp_tool_calls': re.findall(r'\[TOOL\] ([^(]+)', new_logs.get('server-0.log', '')),
                     'customer_data_requests': new_logs.get('server-1.log', '').count('[Customer Data Agent] Received request'),
                     'support_requests': new_logs.get('server-2.log', '').count('[Support Agent] Received request'),
-                    'model_requests': len(inputs),
+                    'model_requests': sum(r['agent'] in ('customer_data_agent', 'support_agent') for r in inputs),
+                    'router_model_requests': sum(r['agent'] == 'query_router' for r in inputs),
+                    'total_model_requests': len(inputs),
+                    'routing_decisions': [json.loads(raw) for raw in re.findall(r'Routing decision: (\{[^\n]+\})', new_logs.get('server-3.log', ''))],
                 }
+                if args.host_mode == 'advanced':
+                    pure_data = {
+                        'Simple Query - Single Agent',
+                        'Multi-Step Coordination - Complex Data Query',
+                        'Data Aggregation - Statistical Analysis',
+                    }
+                    mode = 'data_only' if row['scenario'] in pure_data else 'sequential'
+                    expected = (1, 0) if mode == 'data_only' else (1, 1)
+                    observed = (row['customer_data_requests'], row['support_requests'])
+                    decisions = row['routing_decisions']
+                    route_ok = (observed == expected and row['router_model_requests'] == 1
+                        and len(decisions) == 1 and decisions[0]['execution_mode'] == mode)
+                    row['smoke_passed'] = passed
+                    row['routing_contract_passed'] = route_ok
+                    passed = passed and route_ok
+                    row['passed'] = passed
+                    print(f"Routing contract: {'PASS' if route_ok else 'FAIL'}; expected {mode} {expected}, observed {observed}")
                 metrics.append(row)
                 print('OBSERVED EXECUTION: ' + json.dumps(row), flush=True)
                 return passed
@@ -90,7 +110,7 @@ def main():
                 print('Fixture: original 15 sample customers and 25 tickets, newly seeded.', file=transcript)
                 with redirect_stdout(transcript):
                     passed = asyncio.run(run_scenarios(processes))
-            args.output.with_suffix('.metrics.json').write_text(json.dumps(metrics, indent=2) + '\n')
+            args.output.with_suffix('.metrics.json').write_text(json.dumps(metrics, indent=2) + '\n', encoding='utf-8')
             print(f'Scenario transcript: {args.output}; harness passed: {passed}', flush=True)
             return passed
         finally:
