@@ -125,7 +125,21 @@ def validate_model_response(callback_context: CallbackContext, llm_response: Llm
         return None  # Streaming fragments are provisional, not complete answers.
     content = llm_response.content
     parts = content.parts or [] if content else []
-    if any(p.function_call or p.function_response for p in parts):
+    calls = [p.function_call for p in parts if p.function_call]
+    final_calls = [call for call in calls if call.name == 'set_model_response']
+    if final_calls:
+        # The installed ADK fallback drops None fields after validating its args.
+        # Convert its validated final declaration to text before tool dispatch;
+        # no real tool is executed and no generation/workflow retry occurs.
+        if len(calls) != 1 or len(final_calls) != 1:
+            raise RuntimeError('Structured final response must not be mixed with tool operations')
+        try:
+            parsed = CustomerDataResponse.model_validate(final_calls[0].args, strict=True)
+        except ValidationError as exc:
+            raise RuntimeError('Customer Data response failed schema validation; no tools were retried. Earlier writes, if any, may already have committed.') from exc
+        llm_response.content = types.Content(role='model', parts=[types.Part(text=parsed.model_dump_json())])
+        return llm_response
+    if calls or any(p.function_response for p in parts):
         return None
     text = ''.join(p.text or '' for p in parts if not p.thought)
     parsed = parse_customer_data_response(text)

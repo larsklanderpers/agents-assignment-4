@@ -1,5 +1,4 @@
 """Strict response parsing and real ADK tool/write boundary regressions."""
-import copy
 import json
 import sqlite3
 import sys
@@ -69,6 +68,20 @@ class TestResponseSchema(unittest.TestCase):
         for response in [LlmResponse(content=types.Content(parts=[types.Part(text='invalid')])),LlmResponse(interrupted=True),LlmResponse(error_code='503')]:
             with self.assertRaises(RuntimeError):validate_model_response(None,response)
 
+    def test_sdk_fallback_preserves_required_nulls_and_rejects_bad_or_mixed_args(self):
+        def response(args, mixed=False):
+            parts=[types.Part(function_call=types.FunctionCall(name='set_model_response',args=args))]
+            if mixed:parts.append(types.Part(function_call=types.FunctionCall(name='create_ticket',args={})))
+            return LlmResponse(content=types.Content(role='model',parts=parts))
+        result=validate_model_response(None,response(envelope()))
+        parsed=json.loads(result.content.parts[0].text)
+        self.assertIn('customer_context',parsed)
+        self.assertIsNone(parsed['customer_context'])
+        with self.assertRaisesRegex(RuntimeError,'failed schema'):
+            validate_model_response(None,response({'summary':'missing fields'}))
+        with self.assertRaisesRegex(RuntimeError,'mixed'):
+            validate_model_response(None,response(envelope(),mixed=True))
+
     def test_completion_gate_rejects_old_turn_and_malformed_final(self):
         ctx=SimpleNamespace(invocation_id='now',agent_name='customer_data_agent',session=SimpleNamespace(events=[]))
         ctx.session.events=[Event(author=ctx.agent_name,invocation_id='old',content=types.Content(parts=[types.Part(text=json.dumps(envelope()))]))]
@@ -81,13 +94,15 @@ class FixtureModel(BaseLlm):
     """Emit one write request, then a controlled final answer without API access."""
     calls: int = 0
     final_text: str
+    use_fallback: bool = False
 
     async def generate_content_async(self,llm_request,stream=False):
         self.calls += 1
         if self.calls == 1:
             yield LlmResponse(content=types.Content(role='model',parts=[types.Part(function_call=types.FunctionCall(name='create_ticket',args={'customer_id':5,'issue':'Fixture write'}))]))
         else:
-            yield LlmResponse(content=types.Content(role='model',parts=[types.Part(text=self.final_text)]))
+            part=types.Part(function_call=types.FunctionCall(name='set_model_response',args=json.loads(self.final_text))) if self.use_fallback else types.Part(text=self.final_text)
+            yield LlmResponse(content=types.Content(role='model',parts=[part]))
 
 
 class NextAgent(BaseAgent):
@@ -102,7 +117,7 @@ class NextAgent(BaseAgent):
 class TestADKValidation(unittest.IsolatedAsyncioTestCase):
     """Use actual ADK tool execution and SQLite, not only direct parser calls."""
 
-    async def run_case(self,valid):
+    async def run_case(self,valid,fallback=False):
         conn=sqlite3.connect(':memory:');conn.execute('CREATE TABLE tickets(id INTEGER PRIMARY KEY,customer_id INTEGER,issue TEXT)')
         def create_ticket(customer_id:int,issue:str)->dict:
             """Create a fixture row once; never call a real service."""
@@ -110,7 +125,7 @@ class TestADKValidation(unittest.IsolatedAsyncioTestCase):
             return dict(id=cur.lastrowid,customer_id=customer_id,issue=issue)
         obj=envelope();obj['completed_actions']=[dict(tool='create_ticket',description='Created ticket',record_id=1)]
         data=create_agent();data.tools=[FunctionTool(create_ticket)]
-        model=FixtureModel(model='gemini-3.8-flash',final_text=json.dumps(obj) if valid else '{"ticket_id":"one"}')
+        model=FixtureModel(model='gemini-3.8-flash',final_text=json.dumps(obj) if valid else '{"ticket_id":"one"}',use_fallback=fallback)
         data.model=model
         downstream=[]
         root=SequentialAgent(name='schema_test',sub_agents=[data,NextAgent(name='next_agent',calls=downstream)])
@@ -137,6 +152,11 @@ class TestADKValidation(unittest.IsolatedAsyncioTestCase):
 
     async def test_valid_final_after_write_preserves_id_and_allows_handoff(self):
         await self.run_case(True)
+
+
+    async def test_sdk_fallback_after_write_valid_and_invalid(self):
+        await self.run_case(True,True)
+        await self.run_case(False,True)
 
 
 if __name__=='__main__':unittest.main()
