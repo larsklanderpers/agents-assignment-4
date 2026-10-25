@@ -17,6 +17,7 @@ sys.path.insert(0, str(ROOT / 'agents'))
 from dotenv import load_dotenv
 load_dotenv(ROOT / '.env')
 os.environ['MCP_SERVER_URL'] = 'http://127.0.0.1:18081'
+from customer_data_agent.response_schema import parse_customer_data_response
 from run_agents import A2AClient, configure_logging, create_all_agents, run_agent_server
 from a2a.utils.constants import AGENT_CARD_WELL_KNOWN_PATH
 import httpx
@@ -108,6 +109,8 @@ async def check_cases(processes, db, trace, outage_only=False, host_mode="basic"
             assert counts == expected_calls, (label, counts, expected_calls)
             print('PASS: actual specialist HTTP requests match the selected route', flush=True)
         if label == 'data_lookup':
+            parsed=parse_customer_data_response(answer)
+            assert parsed.status=='success' and parsed.customer_context.id==5
             assert 'A2A Fixture Five' in answer
         if label in ('host_data_only', 'host_support_only'):
             records = [json.loads(line) for line in trace.read_text(encoding='utf-8')[offset:].splitlines()]
