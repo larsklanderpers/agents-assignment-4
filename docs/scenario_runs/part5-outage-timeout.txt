@@ -1,0 +1,273 @@
+/home/lars/miniconda3/lib/python3.14/site-packages/google/adk/features/_feature_decorator.py:71: UserWarning: [EXPERIMENTAL] feature FeatureName.PLUGGABLE_AUTH is enabled.
+  check_feature_enabled()
+/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/agents/host_agent/agent.py:53: UserWarning: [EXPERIMENTAL] RemoteA2aAgent: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  RemoteA2aAgent(
+/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/run_agents.py:87: UserWarning: [EXPERIMENTAL] A2aAgentExecutorConfig: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  _DEFAULT_EVENT_CONVERTER = A2aAgentExecutorConfig().event_converter
+[18:54:22] [fixture_database] INFO - Database initialized successfully
+[18:54:24] [httpx] INFO - HTTP Request: GET http://127.0.0.1:10020/.well-known/agent-card.json "HTTP/1.1 200 OK"
+[18:54:24] [httpx] INFO - HTTP Request: GET http://127.0.0.1:10021/.well-known/agent-card.json "HTTP/1.1 200 OK"
+[18:54:24] [httpx] INFO - HTTP Request: GET http://127.0.0.1:10022/.well-known/agent-card.json "HTTP/1.1 200 OK"
+[HOST_AGENT] Using BASIC sequential router
+PASS: all three HTTP agent cards available
+[18:54:24] [httpx] INFO - HTTP Request: GET http://localhost:10020/.well-known/agent-card.json "HTTP/1.1 200 OK"
+[18:54:24] [httpx] INFO - HTTP Request: POST http://localhost:10020 "HTTP/1.1 200 OK"
+{"case": "data_lookup", "answer": "```json\n{\n  \"customer_context\": {\n    \"id\": 5,\n    \"name\": \"A2A Fixture Five\",\n    \"email\": \"five@example.test\",\n    \"phone\": null,\n    \"status\": \"active\",\n    \"created_at\": \"2026-10-25 07:54:22\",\n    \"updated_at\": \"2026-10-25 07:54:22\"\n  },\n  \"relevant_tickets\": {\n    \"pre_existing_tickets\": [\n      {\n        \"id\": 1,\n        \"customer_id\": 5,\n        \"issue\": \"Fixture existing login issue\",\n        \"status\": \"open\",\n        \"priority\": \"high\",\n        \"created_at\": \"2026-10-25 07:54:22\"\n      }\n    ],\n    \"tickets_created_this_request\": []\n  },\n  \"completed_actions\": [\n    \"Retrieved customer 5 details\",\n    \"Retrieved tickets associated with customer 5\"\n  ],\n  \"missing_information_or_errors\": null\n}\n```"}
+[18:54:48] [httpx] INFO - HTTP Request: GET http://localhost:10021/.well-known/agent-card.json "HTTP/1.1 200 OK"
+[18:54:48] [httpx] INFO - HTTP Request: POST http://localhost:10021 "HTTP/1.1 200 OK"
+{"case": "support_password", "answer": "Here is general guidance for resetting your password:\n\n### Step-by-Step Password Reset\n1. **Navigate to the Login Page:** Go to the official sign-in screen and look for a **\"Forgot password?\"** or **\"Reset password\"** link.\n2. **Submit Your Email:** Enter the primary email address associated with your account and submit the request.\n3. **Check Your Inbox:** \n   - Look for an automated password-reset email containing a reset link.\n   - If you do not see it shortly, check your **Spam**, **Junk**, or **Promotions** folders, or any email filters that might route automated system messages.\n4. **Follow the Reset Link:** Click the link provided in the email and enter your new, secure password.\n\n---\n\n### Troubleshooting Tips\n- **Link Expired or Invalid:** Reset links typically expire after a limited period for security (exact timing depends on system settings). If the link has expired, return to the login screen and request a fresh one.\n- **Email Verification:** Ensure there are no typos in the email address you entered and that it matches the address currently on file for your account.\n- **Browser & Cache Issues:** If the reset page fails to load or gives an error when submitting your new password, try opening the link in a private/incognito window or clearing your browser cache.\n- **Security Reminder:** Never share your password, multi-factor authentication (MFA) codes, or password-reset links with anyone. Support representatives will never ask for your password or verification codes.\n\n---\n\n### Next Steps\nIf you no longer have access to the email address tied to your account, or if you continue not receiving reset emails, please let us know so an administrator can assist with account verification."}
+[18:55:09] [httpx] INFO - HTTP Request: GET http://localhost:10022/.well-known/agent-card.json "HTTP/1.1 200 OK"
+[18:55:09] [httpx] INFO - HTTP Request: POST http://localhost:10022 "HTTP/1.1 200 OK"
+{"case": "host_context", "answer": "### Account & Open Tickets\n* **Customer ID:** 5 (A2A Fixture Five)\n* **Account Status:** Active *(Please note that lockout state is not exposed in our records; an active status does not confirm whether the account is locked).*\n* **Open Ticket:**\n  * **Ticket #1**\n    * **Issue:** Fixture existing login issue\n    * **Status:** open\n    * **Priority:** high\n    * **Created:** 2026-10-25 07:54:22\n\nPer your request, no records or tickets were created or modified.\n\n---\n\n### Troubleshooting Your Login Issue\nHere are recommended general troubleshooting steps:\n\n1. **Verify Your Login Identifier:** Ensure you are entering the email address associated with your account: `five@example.test`.\n2. **Use a Private/Incognito Window:** Test logging in via an incognito or private browsing window to rule out conflicting browser extensions, cached data, or stale cookies.\n3. **Password Reset:** If you are unsure of your credentials, use the password-reset option on the login page and check your inbox and spam folders for the reset email.\n4. **Note Specific Errors:** Check whether the screen indicates incorrect credentials, a locked account, or a network/timeout error.\n\nIf you are still unable to log in, please share the exact error message that appears and whether the problem occurs across different browsers or internet connections."}
+PASS: both remote workers and one current synthesis
+[18:55:30] [httpx] INFO - HTTP Request: POST http://localhost:10022 "HTTP/1.1 200 OK"
+{"case": "missing_identity", "answer": "To look up your account, an account identifier such as your registered email address, account ID, or full name is required. Because no identifying details were provided, an account lookup could not be performed. In accordance with your request, no records or tickets have been created or modified.\n\nWhile awaiting your details, you can try these standard troubleshooting steps:\n\n1. **Use a Private Browsing Window:** Open an incognito/private window or clear your browser's cache and cookies to prevent cached session conflicts.\n2. **Verify Credentials:** Ensure Caps Lock is off and check that no leading or trailing spaces were added if copying and pasting your password.\n3. **Password Reset:** Use the \"Forgot Password\" link on the login page to request a reset email. Be sure to check your spam or junk folders.\n4. **Account Lockouts:** If you receive a message indicating your account is locked due to repeated failed attempts, wait for any temporary lockout period to expire before attempting to sign in again.\n\nTo help locate your account without making any changes, please reply with your **registered email address**, **account ID**, or **full name**, along with the **exact error message** or behavior you are experiencing."}
+PASS: both remote workers and one current synthesis
+[18:56:52] [httpx] INFO - HTTP Request: POST http://localhost:10022 "HTTP/1.1 200 OK"
+{"case": "ticket_creation", "answer": "A high-priority support ticket has been created for your issue after verifying that no duplicate tickets existed:\n\n* **Ticket ID:** 2\n* **Customer ID:** 6 (A2A Fixture Six)\n* **Issue:** Fixture export failure ABC42 - blocks all exports\n* **Priority:** high\n* **Status:** open\n* **Created At:** 2026-10-25 07:57:41\n\n---\n\n### Troubleshooting Steps\n\nTo help isolate and troubleshoot error `ABC42`:\n\n1. **Reduce Export Scope:** Try exporting a smaller subset of records or a restricted date range to determine whether the issue is caused by payload size, timeouts, or a specific corrupt record.\n2. **Test Alternative Formats:** If your configuration supports multiple export formats (e.g., CSV, JSON), attempt exporting in a different format to see if the failure is format-specific.\n3. **Check Permissions & Session:** Confirm your role has active export permissions, and try re-authenticating or testing in an incognito window to rule out expired session tokens.\n4. **Inspect Pipeline & Storage:** Verify available disk space or destination storage quotas in the export target pipeline.\n5. **Review Logs & Collect Diagnostics:** Check service logs for error `ABC42` stack traces, schema mismatches, and note the exact failure timestamps."}
+PASS: both remote workers and one current synthesis
+PASS: exactly one requested high-priority ticket created for customer 6
+[18:57:56] [httpx] INFO - HTTP Request: POST http://localhost:10022 "HTTP/1.1 200 OK"
+{"case": "missing_record", "answer": "A search was conducted for Customer ID **999999**, but no customer record or associated tickets exist in the system under this ID. In accordance with your request, no records or tickets were created or modified.\n\nBecause account-specific details cannot be verified without a matching record, here is general troubleshooting guidance to assist with login issues:\n\n1. **Verify Credentials:** Ensure the exact username or email address registered to the account is being entered.\n2. **Clear Browser Data or Use Private Browsing:** Try logging in via an incognito/private browsing window, or clear your browser's cache and cookies to eliminate autofill or session conflicts.\n3. **Password Reset:** Use the \"Forgot Password\" link on the login page to request a reset link, and check spam/junk folders if the email does not appear.\n4. **Check the Error Message:** Note whether the system indicates invalid credentials, a locked account, or a connection issue.\n\nTo help locate your account, please confirm or provide the correct Customer ID, registered email address, or the exact error message displayed during login."}
+PASS: both remote workers and one current synthesis
+[18:58:21] [httpx] INFO - HTTP Request: POST http://localhost:10022 "HTTP/1.1 200 OK"
+--- server-0.log: last 35 lines ---
+2026-10-25 18:57:37,738 - __main__ - INFO - [TOOL] get_customer(customer_id=6)
+INFO:     127.0.0.1:60912 - "POST /messages/?session_id=2b75304b5c4d4ae9aab0dbe2eb5f0601 HTTP/1.1" 202 Accepted
+2026-10-25 18:57:37,740 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2026-10-25 18:57:37,740 - __main__ - INFO - [TOOL] list_tickets(status=None, priority=None, customer_id=6)
+INFO:     127.0.0.1:60912 - "POST /messages/?session_id=2b75304b5c4d4ae9aab0dbe2eb5f0601 HTTP/1.1" 202 Accepted
+2026-10-25 18:57:37,746 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2026-10-25 18:57:37,746 - __main__ - INFO - [TOOL] search_tickets(keyword=ABC42)
+INFO:     127.0.0.1:60912 - "POST /messages/?session_id=2b75304b5c4d4ae9aab0dbe2eb5f0601 HTTP/1.1" 202 Accepted
+2026-10-25 18:57:41,822 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2026-10-25 18:57:41,822 - __main__ - INFO - [TOOL] create_ticket(customer_id=6, issue=Fixture export failure ABC42 - blocks all exports...)
+2026-10-25 18:57:41,823 - database - INFO - Created ticket with ID: 2
+INFO:     127.0.0.1:50034 - "POST /messages/?session_id=2b75304b5c4d4ae9aab0dbe2eb5f0601 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:50022 - "POST /messages/?session_id=13cb4be9848e404d9842a556dc682357 HTTP/1.1" 202 Accepted
+2026-10-25 18:57:56,722 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2026-10-25 18:57:56,722 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+INFO:     127.0.0.1:50022 - "POST /messages/?session_id=13cb4be9848e404d9842a556dc682357 HTTP/1.1" 202 Accepted
+2026-10-25 18:57:59,842 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2026-10-25 18:57:59,842 - __main__ - INFO - [TOOL] get_customer(customer_id=999999)
+INFO:     127.0.0.1:50034 - "POST /messages/?session_id=2b75304b5c4d4ae9aab0dbe2eb5f0601 HTTP/1.1" 202 Accepted
+2026-10-25 18:58:00,686 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2026-10-25 18:58:00,686 - __main__ - INFO - [TOOL] get_customer(customer_id=999999)
+INFO:     127.0.0.1:50022 - "POST /messages/?session_id=13cb4be9848e404d9842a556dc682357 HTTP/1.1" 202 Accepted
+2026-10-25 18:58:02,320 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2026-10-25 18:58:02,320 - __main__ - INFO - [TOOL] list_tickets(status=None, priority=None, customer_id=999999)
+INFO:     127.0.0.1:50034 - "POST /messages/?session_id=2b75304b5c4d4ae9aab0dbe2eb5f0601 HTTP/1.1" 202 Accepted
+2026-10-25 18:58:03,200 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2026-10-25 18:58:03,200 - __main__ - INFO - [TOOL] list_tickets(status=None, priority=None, customer_id=999999)
+INFO:     127.0.0.1:38904 - "POST /messages/?session_id=2b75304b5c4d4ae9aab0dbe2eb5f0601 HTTP/1.1" 202 Accepted
+2026-10-25 18:58:21,920 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+INFO:     127.0.0.1:38904 - "POST /messages/?session_id=2b75304b5c4d4ae9aab0dbe2eb5f0601 HTTP/1.1" 202 Accepted
+2026-10-25 18:58:25,739 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2026-10-25 18:58:25,739 - __main__ - INFO - [TOOL] get_customer(customer_id=5)
+INFO:     127.0.0.1:38904 - "POST /messages/?session_id=2b75304b5c4d4ae9aab0dbe2eb5f0601 HTTP/1.1" 202 Accepted
+2026-10-25 18:58:25,741 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2026-10-25 18:58:25,741 - __main__ - INFO - [TOOL] list_tickets(status=None, priority=None, customer_id=5)
+--- server-3.log: last 35 lines ---
+[18:56:52] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[18:56:52] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[18:56:52] [run_agents] INFO - [Customer Support Host Agent] Sending response
+[18:56:52] [run_agents] INFO - [Customer Support Host Agent] Received request
+[18:56:52] [run_agents] INFO - [Customer Support Host Agent] Message: For customer 6 create one high-priority ticket for Fixture export failure ABC42, which blocks all ex...
+[18:56:52] [a2a.server.tasks.task_manager] INFO - Task not found or task_id not set. Creating new task for event (task_id: bf8d26c0-8bcb-488f-8a89-44111fb1b101, context_id: 0b177f96-970d-45c3-958a-d4014488722f).
+[18:56:52] [google_adk.google.adk.a2a.agent._remote_a2a_agent] WARNING - RemoteA2aAgent 'customer_data' cannot forward the preceding state-only event across A2A. Session state is local to each agent; include the required values in event content instead.
+[18:56:52] [google_adk.google.adk.a2a.agent._remote_a2a_agent] WARNING - RemoteA2aAgent 'support_specialist' cannot forward the preceding state-only event across A2A. Session state is local to each agent; include the required values in event content instead.
+[18:57:09] [httpx] INFO - HTTP Request: POST http://localhost:10021 "HTTP/1.1 200 OK"
+[18:57:49] [httpx] INFO - HTTP Request: POST http://localhost:10020 "HTTP/1.1 200 OK"
+[18:57:49] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[18:57:49] [google_genai.models] INFO - AFC is enabled with max remote calls: 10.
+[18:57:56] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[18:57:56] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[18:57:56] [run_agents] INFO - [Customer Support Host Agent] Sending response
+[18:57:56] [run_agents] INFO - [Customer Support Host Agent] Received request
+[18:57:56] [run_agents] INFO - [Customer Support Host Agent] Message: Check customer 999999 and help with login. Do not change any records....
+[18:57:56] [a2a.server.tasks.task_manager] INFO - Task not found or task_id not set. Creating new task for event (task_id: 8ace8321-c748-4a56-ba16-5cfb388ce892, context_id: 9ec158b1-b844-43c7-92b3-8d388128b921).
+[18:57:56] [google_adk.google.adk.a2a.agent._remote_a2a_agent] WARNING - RemoteA2aAgent 'customer_data' cannot forward the preceding state-only event across A2A. Session state is local to each agent; include the required values in event content instead.
+[18:57:56] [google_adk.google.adk.a2a.agent._remote_a2a_agent] WARNING - RemoteA2aAgent 'support_specialist' cannot forward the preceding state-only event across A2A. Session state is local to each agent; include the required values in event content instead.
+[18:58:08] [httpx] INFO - HTTP Request: POST http://localhost:10020 "HTTP/1.1 200 OK"
+[18:58:13] [httpx] INFO - HTTP Request: POST http://localhost:10021 "HTTP/1.1 200 OK"
+[18:58:13] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[18:58:13] [google_genai.models] INFO - AFC is enabled with max remote calls: 10.
+[18:58:21] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[18:58:21] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[18:58:21] [run_agents] INFO - [Customer Support Host Agent] Sending response
+[18:58:21] [run_agents] INFO - [Customer Support Host Agent] Received request
+[18:58:21] [run_agents] INFO - [Customer Support Host Agent] Message: Check customer 5 and help with login. Do not change records....
+[18:58:21] [a2a.server.tasks.task_manager] INFO - Task not found or task_id not set. Creating new task for event (task_id: 96e574d0-b5da-4eaf-ac2d-48a8b545ddf2, context_id: 7cc1b544-0d9f-4c60-844d-38a18661430a).
+[18:58:21] [google_adk.google.adk.a2a.agent._remote_a2a_agent] WARNING - RemoteA2aAgent 'customer_data' cannot forward the preceding state-only event across A2A. Session state is local to each agent; include the required values in event content instead.
+[18:58:21] [google_adk.google.adk.a2a.agent._remote_a2a_agent] WARNING - RemoteA2aAgent 'support_specialist' cannot forward the preceding state-only event across A2A. Session state is local to each agent; include the required values in event content instead.
+[18:58:21] [google_adk.google.adk.a2a.agent._remote_a2a_agent] ERROR - A2A request failed: HTTP Error 503: Network communication error: All connection attempts failed
+[18:58:21] [google_adk.google.adk.agents.parallel_agent] INFO - Agent run cancelled.
+[18:58:31] [httpx] INFO - HTTP Request: POST http://localhost:10020 "HTTP/1.1 200 OK"
+--- server-2.log: last 35 lines ---
+[18:55:36] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=13cb4be9848e404d9842a556dc682357 "HTTP/1.1 202 Accepted"
+[18:55:36] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[18:56:41] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[18:56:41] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[18:56:41] [run_agents] INFO - [Support Agent] Sending response
+[18:56:52] [run_agents] INFO - [Support Agent] Received request
+[18:56:52] [run_agents] INFO - [Support Agent] Message: For customer 6 create one high-priority ticket for Fixture export failure ABC42, which blocks all ex...
+[18:56:52] [a2a.server.tasks.task_manager] INFO - Task not found or task_id not set. Creating new task for event (task_id: f3060da3-d828-43b7-a7ab-bad51c9a1083, context_id: 3b5e35a9-1ed6-4803-99ac-bc703efc28e6).
+[18:56:52] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=13cb4be9848e404d9842a556dc682357 "HTTP/1.1 202 Accepted"
+[18:56:52] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[18:56:57] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[18:56:57] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[18:56:57] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=13cb4be9848e404d9842a556dc682357 "HTTP/1.1 202 Accepted"
+[18:56:57] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=13cb4be9848e404d9842a556dc682357 "HTTP/1.1 202 Accepted"
+[18:56:57] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=13cb4be9848e404d9842a556dc682357 "HTTP/1.1 202 Accepted"
+[18:56:57] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[18:57:09] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[18:57:09] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[18:57:09] [run_agents] INFO - [Support Agent] Sending response
+[18:57:56] [run_agents] INFO - [Support Agent] Received request
+[18:57:56] [run_agents] INFO - [Support Agent] Message: Check customer 999999 and help with login. Do not change any records....
+[18:57:56] [a2a.server.tasks.task_manager] INFO - Task not found or task_id not set. Creating new task for event (task_id: 09ffc312-c212-445e-a02d-7ca38c5dc3d9, context_id: bf4b6c14-4024-4d5d-baee-daa460f285d9).
+[18:57:56] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=13cb4be9848e404d9842a556dc682357 "HTTP/1.1 202 Accepted"
+[18:57:56] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[18:57:59] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[18:57:59] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[18:57:59] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=13cb4be9848e404d9842a556dc682357 "HTTP/1.1 202 Accepted"
+[18:57:59] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[18:58:02] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[18:58:02] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[18:58:02] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=13cb4be9848e404d9842a556dc682357 "HTTP/1.1 202 Accepted"
+[18:58:02] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[18:58:13] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[18:58:13] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[18:58:13] [run_agents] INFO - [Support Agent] Sending response
+--- server-1.log: last 35 lines ---
+[18:57:41] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[18:57:41] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=2b75304b5c4d4ae9aab0dbe2eb5f0601 "HTTP/1.1 202 Accepted"
+[18:57:41] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[18:57:49] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[18:57:49] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[18:57:49] [run_agents] INFO - [Customer Data Agent] Sending response
+[18:57:56] [run_agents] INFO - [Customer Data Agent] Received request
+[18:57:56] [run_agents] INFO - [Customer Data Agent] Message: Check customer 999999 and help with login. Do not change any records....
+[18:57:56] [a2a.server.tasks.task_manager] INFO - Task not found or task_id not set. Creating new task for event (task_id: f67c1408-bb7d-457a-bb92-5ba6976980f0, context_id: 79a2df30-d613-4dc8-a73a-98d39880470a).
+[18:57:56] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=2b75304b5c4d4ae9aab0dbe2eb5f0601 "HTTP/1.1 202 Accepted"
+[18:57:56] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[18:58:00] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[18:58:00] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[18:58:00] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=2b75304b5c4d4ae9aab0dbe2eb5f0601 "HTTP/1.1 202 Accepted"
+[18:58:00] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[18:58:03] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[18:58:03] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[18:58:03] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=2b75304b5c4d4ae9aab0dbe2eb5f0601 "HTTP/1.1 202 Accepted"
+[18:58:03] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[18:58:08] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[18:58:08] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[18:58:08] [run_agents] INFO - [Customer Data Agent] Sending response
+[18:58:21] [run_agents] INFO - [Customer Data Agent] Received request
+[18:58:21] [run_agents] INFO - [Customer Data Agent] Message: Check customer 5 and help with login. Do not change records....
+[18:58:21] [a2a.server.tasks.task_manager] INFO - Task not found or task_id not set. Creating new task for event (task_id: 64efd58b-c347-40e0-a44d-a5fb52bc9026, context_id: 570ef2df-1318-46d5-80af-025c16749b6b).
+[18:58:21] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=2b75304b5c4d4ae9aab0dbe2eb5f0601 "HTTP/1.1 202 Accepted"
+[18:58:21] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[18:58:25] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[18:58:25] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[18:58:25] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=2b75304b5c4d4ae9aab0dbe2eb5f0601 "HTTP/1.1 202 Accepted"
+[18:58:25] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=2b75304b5c4d4ae9aab0dbe2eb5f0601 "HTTP/1.1 202 Accepted"
+[18:58:25] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[18:58:31] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[18:58:31] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[18:58:31] [run_agents] INFO - [Customer Data Agent] Sending response
+Traceback (most recent call last):
+  File "/home/lars/miniconda3/lib/python3.14/asyncio/tasks.py", line 486, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/run_agents.py", line 333, in send_message
+    async for response in client.send_message(message_obj):
+        last_response = response
+  File "/home/lars/miniconda3/lib/python3.14/site-packages/a2a/client/base_client.py", line 136, in send_message
+    async for event in stream:
+        yield await self._process_response(tracker, event)
+  File "/home/lars/miniconda3/lib/python3.14/site-packages/a2a/client/transports/jsonrpc.py", line 178, in send_message_streaming
+    async for sse in event_source.aiter_sse():
+    ...<7 lines>...
+        yield response.root.result
+  File "/home/lars/miniconda3/lib/python3.14/site-packages/httpx_sse/_api.py", line 42, in aiter_sse
+    async for line in lines:
+    ...<3 lines>...
+            yield sse
+  File "/home/lars/miniconda3/lib/python3.14/site-packages/httpx_sse/_api.py", line 80, in _aiter_sse_lines
+    async for text in response.aiter_text():
+        for line in decoder.decode(text):
+            yield line
+  File "/home/lars/miniconda3/lib/python3.14/site-packages/httpx/_models.py", line 1018, in aiter_text
+    async for byte_content in self.aiter_bytes():
+    ...<2 lines>...
+            yield chunk
+  File "/home/lars/miniconda3/lib/python3.14/site-packages/httpx/_models.py", line 997, in aiter_bytes
+    async for raw_bytes in self.aiter_raw():
+    ...<2 lines>...
+            yield chunk
+  File "/home/lars/miniconda3/lib/python3.14/site-packages/httpx/_models.py", line 1055, in aiter_raw
+    async for raw_stream_bytes in self.stream:
+    ...<2 lines>...
+            yield chunk
+  File "/home/lars/miniconda3/lib/python3.14/site-packages/httpx/_client.py", line 176, in __aiter__
+    async for chunk in self._stream:
+        yield chunk
+  File "/home/lars/miniconda3/lib/python3.14/site-packages/httpx/_transports/default.py", line 271, in __aiter__
+    async for part in self._httpcore_stream:
+        yield part
+  File "/home/lars/miniconda3/lib/python3.14/site-packages/httpcore/_async/connection_pool.py", line 407, in __aiter__
+    raise exc from None
+  File "/home/lars/miniconda3/lib/python3.14/site-packages/httpcore/_async/connection_pool.py", line 403, in __aiter__
+    async for part in self._stream:
+        yield part
+  File "/home/lars/miniconda3/lib/python3.14/site-packages/httpcore/_async/http11.py", line 342, in __aiter__
+    raise exc
+  File "/home/lars/miniconda3/lib/python3.14/site-packages/httpcore/_async/http11.py", line 334, in __aiter__
+    async for chunk in self._connection._receive_response_body(**kwargs):
+        yield chunk
+  File "/home/lars/miniconda3/lib/python3.14/site-packages/httpcore/_async/http11.py", line 203, in _receive_response_body
+    event = await self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/lib/python3.14/site-packages/httpcore/_async/http11.py", line 217, in _receive_event
+    data = await self._network_stream.read(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.READ_NUM_BYTES, timeout=timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lars/miniconda3/lib/python3.14/site-packages/httpcore/_backends/anyio.py", line 35, in read
+    return await self._stream.receive(max_bytes=max_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 1407, in receive
+    await self._protocol.read_event.wait()
+  File "/home/lars/miniconda3/lib/python3.14/asyncio/locks.py", line 213, in wait
+    await fut
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/tests/manual_part2.py", line 203, in <module>
+    asyncio.run(check_cases(processes, db, trace, args.outage_only, args.host_mode))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/lib/python3.14/asyncio/runners.py", line 205, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/home/lars/miniconda3/lib/python3.14/asyncio/runners.py", line 128, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/lars/miniconda3/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/tests/manual_part2.py", line 160, in check_cases
+    answer = await send_with_deadline(client, 'http://localhost:10022', 'Check customer 5 and help with login. Do not change records.')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/tests/manual_part2.py", line 75, in send_with_deadline
+    return await asyncio.wait_for(client.send_message(url, prompt), timeout=180)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/lib/python3.14/asyncio/tasks.py", line 485, in wait_for
+    async with timeouts.timeout(timeout):
+               ~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/lars/miniconda3/lib/python3.14/asyncio/timeouts.py", line 115, in __aexit__
+    raise TimeoutError from exc_val
+TimeoutError
