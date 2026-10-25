@@ -211,6 +211,22 @@ HOST_AGENT_MODE=advanced   # Dynamic routing (bonus)
 HOST_AGENT_MODE=parallel   # Parallel execution (bonus)
 ```
 
+Parallel mode runs both specialists independently, then synthesizes their answers.
+Run all specialist servers with the same `HOST_AGENT_MODE=parallel` setting:
+Support becomes read-only in this mode, and Customer Data owns requested writes.
+Support cannot see Customer Data's result before answering; duplicate reads and
+record disagreements remain possible. The summary uses Customer Data for record
+facts/actions and Support for guidance. A failed worker fails the workflow.
+The CLI startup above still serves the basic Host; use ADK Web or the explicit
+parallel verification commands below to select the parallel Host.
+
+```bash
+python -m unittest tests.test_parallel -v
+python tests/manual_part2.py --host-mode parallel
+python tests/manual_scenarios.py --host-mode parallel --output docs/scenario_runs/part5.txt
+```
+
+
 ---
 
 ## Evaluation Rubric
