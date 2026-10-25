@@ -132,7 +132,8 @@ async def check_cases(processes, db, trace, outage_only=False, host_mode="basic"
             counts = tuple(path.read_text(encoding='utf-8')[start:].count('Received request') for path, start in zip(logs, log_offsets))
             assert counts == (1, 1), counts
             if label == 'host_context':
-                assert 'A2A Fixture Five' in answer and 'Fixture existing login issue' in summaries[0]
+                assert 'Fixture existing login issue' in summaries[0], 'Data ticket context missing from synthesis input'
+                assert 'Fixture existing login issue' in answer and 'five@example.test' in answer, 'Summary lost relevant account/ticket evidence'
             if label == 'ticket_creation':
                 assert 'ticket' in answer.lower() and '2' in answer, 'Summary lost the created ticket ID'
             print('PASS: both remote workers and one current synthesis', flush=True)
