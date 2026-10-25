@@ -51,6 +51,11 @@ def create_summary_instruction(readonly_context: ReadonlyContext) -> str:
         'by Customer Data. Do not claim no ticket was created merely because Support made no write. '
         'Distinguish missing records from failed lookups. Never invent facts or claim refunds, '
         'messages, escalation contacts, or other unperformed actions. You have no tools. '
+        'Do not offer, promise, schedule, or imply that this system can forward requests, '
+        'contact billing/engineering, cancel subscriptions, process payments, or issue refunds. '
+        'Tell the customer to contact the relevant provider themselves where needed. '
+        'Do not invent product navigation, billing portals, service policies, or resolution '
+        'timeframes. Give generic qualified guidance when product-specific facts are unavailable. '
         'Preserve relevant troubleshooting, limitations, and questions; omit internal routing details. '
         'Input JSON: ' + json.dumps({'request': state.get('parallel_query', ''), **outputs})
     )
