@@ -87,7 +87,8 @@ The probe now sets `SO_REUSEADDR` before binding, as the server does. An active 
 still prevents the probe from binding; the test does not stop existing services.
 
 **Verification:** The restarted full suite and the focused outage rerun both
-passed preflight/startup after this change.
+passed preflight/startup after this change. The subsequent complete seven-request
+rerun also passed all cases after the final converter/client changes.
 
 ## Verification results
 
@@ -102,9 +103,9 @@ passed preflight/startup after this change.
   scenario. It exited successfully and returned an explicit failed-task error:
   `A2A task failed ... support_specialist failed: A2A request failed: HTTP Error
   503: Network communication error: All connection attempts failed`.
-- The entire seven-request suite was not repeated after the final converter
-  change; its normal delegation path and failure path were exercised by the
-  focused two-request rerun, alongside the four regression tests.
+- The complete seven-request suite was subsequently rerun after the final
+  converter/client changes and passed all seven cases (exit code 0), including
+  the expected explicit failed-task error after Support was stopped.
 
 The initial live run verified customer lookup, standalone password guidance,
 Host data-to-support handoff, missing-identity clarification, exactly one
@@ -134,7 +135,8 @@ files. It requires a working API key/model and free listening ports.
 The suite covers seven live requests, including the deliberately stopped
 Support server. Responses are manually assessed for troubleshooting quality;
 context delivery and database effects have explicit assertions. The separate
-10-scenario `test_scenarios.py` harness was not run as part of this fixture suite.
+10-scenario `test_scenarios.py` harness was subsequently run against its full
+15-customer / 25-ticket sample dataset; see the baseline section below.
 Advanced/parallel routing remains a later checkpoint. No PR is automatically
 merged, and the original GitHub `main` remains the starting point.
 
@@ -146,3 +148,47 @@ escalated") despite no external engineering escalation integration existing.
 The actual database/tool traces show ticket creation and lookup only. Treat
 escalation suggestions as guidance; this wording remains a prompt-quality
 review point rather than an executed external action.
+
+The final seven-request rerun also exposed an action-attribution wording issue:
+a ticket was created by Customer Data (confirmed by SQLite), but Support's final
+answer said "no new ticket was created" while avoiding a duplicate itself. The
+database-effect assertion passed; the whole-workflow wording was misleading.
+This is a second prompt-quality issue for Part 3, alongside unsupported future
+escalation language. Passing fixture assertions do not establish that every
+statement in the final prose is accurate.
+
+## Ten-scenario baseline for later checkpoints
+
+The unchanged provided harness was subsequently run using
+`python tests/manual_scenarios.py --host-mode basic --output docs/scenario_runs/part2.txt`.
+It completed with exit code 0 and reported 10/10 passing scenarios. Full answers
+are in `scenario_runs/part2.txt`; execution measurements are in
+`scenario_runs/part2.metrics.json`. The repeat/comparison plan is documented in
+`scenario_runs/README.md` for Parts 3, 4, and 5.
+
+All ten requests called Customer Data and Support once each, consistent with
+the basic sequential Host. The observed MCP calls were reads only: 7 customer
+lookups, 11 ticket lists, 6 ticket lookups, 5 ticket searches, and 1 statistics
+lookup. The statistics answer reported 12 open, 6 in-progress, and 7 resolved
+tickets (25 total), matching the supplied fixtures.
+
+### What the passing harness did not establish
+
+The provided harness checks only answer length and relevant keywords. It prints
+expected capabilities without asserting them. For example, its urgency case
+passed without creating the high-priority ticket listed in those expectations.
+Not creating a ticket without an explicit request is consistent with the
+approved instruction; the issue is that the harness pass does not verify its
+printed capability list. Likewise, single-agent/parallel scenario labels do not
+prove conditional or parallel routing. This is a test-coverage limitation, not
+evidence that basic Part 2 should already implement those later routing modes.
+
+The urgency answer also gave a specific "1–3 business days" authorization-hold
+release estimate that was not supported by the supplied knowledge base or a
+tool result. Record this as an unsupported-specificity issue for Part 3 rather
+than treating the 10/10 result as complete instruction-quality validation.
+
+These baseline files preserve observed output, not deterministic guarantees.
+Timing can vary with provider and machine conditions; a single run is not a
+performance benchmark. The ten-scenario suite supplements rather than replaces
+the seven-request fixture/failure-injection suite.

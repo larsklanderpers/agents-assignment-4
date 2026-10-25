@@ -26,6 +26,8 @@ python -m tests.test_a2a
 python tests/manual_part2.py
 # Focused downstream-stop regression:
 python tests/manual_part2.py --outage-only
+# Provided ten-scenario baseline on fresh original sample data:
+python tests/manual_scenarios.py --host-mode basic --output docs/scenario_runs/part2.txt
 ```
 
 The opt-in live script starts the supplied MCP server and three real HTTP A2A

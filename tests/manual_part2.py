@@ -32,6 +32,11 @@ def record_request(callback_context, llm_request):
 async def serve(name):
     """Serve one real agent with test-only request tracing."""
     config = create_all_agents()[name]
+    if name == 'host' and os.environ.get('SCENARIO_HOST_MODE'):
+        from host_agent import root_agent
+        if root_agent is None:
+            raise RuntimeError('Requested scenario Host mode is not implemented')
+        config['agent'] = root_agent
     if name != 'host':
         config['agent'].before_model_callback = record_request
     await run_agent_server(config['agent'], config['card'], config['port'])
