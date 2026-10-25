@@ -24,6 +24,8 @@ The workers still run concurrently. A healthy sibling is allowed to finish; no a
 1. The first HTTP regression tried to assign `worker.agent_card` after construction. In this ADK version it is a constructor argument, not a mutable Pydantic field; four subcases failed with `ValueError`. The fixture now supplies endpoint URLs before construction. This was a test defect, not an application outage (`parallel-outage-fix-fixture-configuration-failure.txt`).
 2. A later combined regression run failed one HTTP subcase with an incomplete chunked response; Uvicorn logged “ASGI callable returned without completing response.” The fixture ran three servers in one loop. SSE's automatic graceful-drain watcher follows a process-wide Uvicorn shutdown signal, so stopping one fixture could drain the unrelated Host stream. The test now scopes automatic drain off while its shared-loop servers run and restores the flag afterward; its own shutdown still closes all servers. Production code is unchanged for this fixture issue. The failed run is retained in `parallel-outage-fix-http-fixture-failure.txt`.
 
+The final Git whitespace check also flagged trailing spaces and a blank EOF line in captured model output. Those whitespace-only transcript details were normalized; answer wording and measured results were preserved.
+
 ## Verification under Python 3.11.17
 
 ADK 2.12.0; a2a-sdk 0.3.26; MCP 1.30.0; Pydantic 2.14.1; sse-starlette 3.5.0.

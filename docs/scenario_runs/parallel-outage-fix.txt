@@ -218,7 +218,7 @@ Please note that this automated system cannot cancel subscriptions, halt recurri
 
 ### General Troubleshooting & Next Steps:
 * **Payment Processing:** If your payment failure is ongoing, verify with your card issuer or bank that your billing details (expiration date, postal/billing address) match their records and that no security blocks are in place. Avoid multiple rapid retry attempts, as these can trigger temporary holds.
-* **Clarification:** Are you looking to resolve the payment processing issue to keep your service active, or is your sole priority to ensure the subscription is cancelled and recurring billing is stopped? 
+* **Clarification:** Are you looking to resolve the payment processing issue to keep your service active, or is your sole priority to ensure the subscription is cancelled and recurring billing is stopped?
 
 When you contact support directly, having any specific error messages, transaction dates, or amounts ready will help them assist you.
 --------------------------------------------------------------------------------
@@ -457,4 +457,3 @@ Success Rate: 100.0%
 [PASS] ALL TESTS PASSED! Multi-agent system is working end-to-end!
 
 ================================================================================
-
