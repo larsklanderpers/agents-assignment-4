@@ -120,6 +120,27 @@ Create an ADK `Agent` with:
 - McpToolset handles MCP errors automatically
 - Agent instruction should guide graceful error communication to users
 
+### Structured Customer Data response follow-up
+
+Customer Data now uses `CustomerDataResponse` in
+`agents/customer_data_agent/response_schema.py` as its ADK `output_schema`.
+The versioned envelope has required typed fields for records, statistics,
+completed actions, and errors. Unused nullable fields remain explicit `null`;
+collections use `[]`. Final JSON is validated strictly before handoff. Support's
+customer-facing response remains prose. Earlier checkpoint snapshots intentionally
+preserve the original model-generated formats.
+
+Invalid final output fails the request. It does not automatically repeat tools or
+roll back earlier writes. The installed ADK's `set_model_response` fallback is
+validated/canonicalized before dispatch to preserve required nulls. A valid schema
+establishes structure and selected invariants, not factual grounding or exactly-once
+writes. See `docs/customer_data_schema_test_results.md` for failure evidence.
+
+```bash
+python -m unittest tests.test_response_schema -v
+python tests/manual_part1.py
+```
+
 ---
 
 # Part 2: Multi-Agent A2A System (40 points)

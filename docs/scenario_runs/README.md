@@ -65,3 +65,14 @@ Additional Part 5 failure evidence: `part5-outage-timeout.txt` preserves the liv
 parallel error-event hang; `part5-fixture-assertion.txt` preserves the valid answer
 rejected by an overly literal name assertion. The final live suite passed after
 the worker error wrapper and fixture correction. See the failure chronology.
+
+## Customer Data schema follow-up
+
+`schema-followup.txt` / `.metrics.json` repeat the same ten queries in advanced
+mode under the required Python 3.11 environment. Earlier Parts 2–5 snapshots are
+unchanged. `schema-mcp*.json`, `schema-basic.json`, and `schema-advanced.json`
+record direct/schema/A2A results; the report labels the environment for each.
+`schema-parallel-*-timeout.txt` preserves failed parallel outage attempts, including
+an unsuccessful cleanup experiment. These are not reported as passes.
+See `../customer_data_schema_test_results.md` for the null-serialization failure,
+its fix, environment differences, final results, and remaining issues.

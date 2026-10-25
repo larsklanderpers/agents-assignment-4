@@ -1,0 +1,8 @@
+[
+  {
+    "case": "customer_lookup",
+    "error_type": "ValidationError",
+    "error_code": null,
+    "detail": "4 validation errors for CustomerDataResponse\ncustomer_context.phone\n  Field required [type=missing, input_value={'id': 5, 'name': 'Synthe...: '2026-10-25 09:24:13'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing\nticket_statistics\n  Field required [type=missing, input_value={'schema_version': '1.0',...r ID 5'}], 'errors': []}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing\ncustomer_statistics\n  Field required [type=missing, input_value={'schema_version': '1.0',...r ID 5'}], 'errors': []}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing\ncompleted_actions.1.record_id\n  Field required [type=missing, input_value={'tool': 'list_tickets', ...kets for customer ID 5'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing"
+  }
+]
