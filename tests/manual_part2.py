@@ -114,12 +114,23 @@ async def check_cases(processes, db, trace, outage_only=False, host_mode="basic"
             if label == 'host_data_only':
                 assert 'A2A Fixture Five' in answer, 'Skip callback lost the useful data answer'
             print('PASS: requested route ran only its selected specialist', flush=True)
-        if label == 'host_context':
+        if label == 'host_context' and host_mode != 'parallel':
             records = [json.loads(line) for line in trace.read_text()[offset:].splitlines()]
             support_inputs = [json.dumps(r['contents']) for r in records if r['agent'] == 'support_agent']
             assert support_inputs, 'Support never received a model request'
             assert any(prompt in content and 'A2A Fixture Five' in content and 'Fixture existing login issue' in content for content in support_inputs), 'Original query or data result missing from Support context'
             print('PASS: Support model input includes original query and Customer Data output', flush=True)
+        if host_mode == 'parallel' and port == 10022:
+            records = [json.loads(line) for line in trace.read_text(encoding='utf-8')[offset:].splitlines()]
+            summaries = [json.dumps(r['contents']) for r in records if r['agent'] == 'parallel_summary']
+            assert len(summaries) == 1, 'Expected exactly one final synthesis'
+            counts = tuple(path.read_text(encoding='utf-8')[start:].count('Received request') for path, start in zip(logs, log_offsets))
+            assert counts == (1, 1), counts
+            if label == 'host_context':
+                assert 'A2A Fixture Five' in answer and 'Fixture existing login issue' in summaries[0]
+            if label == 'ticket_creation':
+                assert 'ticket' in answer.lower() and '2' in answer, 'Summary lost the created ticket ID'
+            print('PASS: both remote workers and one current synthesis', flush=True)
         with sqlite3.connect(db) as conn:
             count = conn.execute('SELECT count(*) FROM tickets').fetchone()[0]
             if label in ('data_lookup', 'support_password', 'host_context', 'missing_identity'):
@@ -153,7 +164,7 @@ if __name__ == '__main__':
     configure_logging()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--serve', choices=['customer_data', 'support', 'host'])
-    parser.add_argument('--host-mode', choices=['basic', 'advanced'], default='basic')
+    parser.add_argument('--host-mode', choices=['basic', 'advanced', 'parallel'], default='basic')
     parser.add_argument('--outage-only', action='store_true', help='Warm the Host context and test a stopped Support server')
     args = parser.parse_args()
     if args.serve:
