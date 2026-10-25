@@ -43,11 +43,14 @@ refresh across turns. These are preventive checks, not claimed live defects.
 
 - Routing contracts: seven test methods, including a multi-case intent matrix
   and three same-session ADK turns, passed before live testing.
-- Routing plus inherited quality/client regressions: 23/23 in the initial
-  combined run; final capture pending.
+- Final routing plus inherited quality/client regressions: 23/23 passed.
 - Basic structural harnesses: 35/35 passed.
-- Advanced live fixture (ten requests): pending.
-- Provided ten-scenario advanced run and Part 2/3 comparison: pending.
+- Advanced live fixture: 10/10 requests passed, exit code 0. Actual HTTP call
+  counts matched combined/data-only/support-only routes. The data-only answer
+  remained useful while Support was stopped; a request requiring Support failed
+  explicitly. Context handoff and exactly one requested ticket were verified.
+- Provided ten-scenario advanced run: 10/10 original smoke checks and 10/10
+  added execution contracts passed, exit code 0. See part4_comparison.md.
 
 ## Remaining limitations
 
@@ -68,3 +71,24 @@ No dependency migration, parallel execution, or automatic recovery/restart of a
 failed specialist is part of this checkpoint. Inherited failed-task handling and
 truthful action summaries must remain intact. Single runs are not performance
 benchmarks, and passing model examples do not guarantee every future response.
+
+## Comparison findings
+
+Actual specialist HTTP requests were 20 / 20 / 17 across Parts 2 / 3 / 4.
+Specialist model requests were 41 / 40 / 33, but Part 4 adds ten router requests,
+so total model requests were 41 / 40 / 43. MCP calls were 30 / 29 / 23. All
+observed MCP calls in these ten scenarios were reads; the dedicated fixture
+separately checked exactly one explicitly requested ticket creation.
+
+Pure record queries skip Support and retain the data answer. Statistics remain
+12 open / 6 in-progress / 7 resolved, with one statistics lookup instead of the
+Part 3 duplicate. General support-only is covered separately because the provided
+ten queries do not contain that route. Router diagnostics were not observed in
+final answers. The cached data replay is emitted by the skipped-stage callback;
+actual HTTP/model traces, not the event author's name alone, establish which
+specialist ran.
+
+Summed scenario durations were 297.68 / 287.87 / 277.92 seconds. These single
+runs do not establish a performance improvement, and token usage/billed cost
+were not measured. The additional planner model requests and remaining bounded
+language coverage are explicit tradeoffs, not hidden by the passing smoke test.

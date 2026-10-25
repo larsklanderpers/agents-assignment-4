@@ -7,7 +7,7 @@ original 15-customer / 25-ticket sample dataset for each checkpoint:
 | --- | --- | --- |
 | Part 2: basic A2A | basic | `part2.txt` |
 | Part 3: code quality | basic | `part3.txt` |
-| Part 4: advanced routing | advanced | `part4.txt` (planned) |
+| Part 4: advanced routing | advanced | `part4.txt` |
 | Part 5: parallel routing | parallel | `part5.txt` (planned) |
 
 ```bash
@@ -22,13 +22,16 @@ Advanced and parallel modes must be implemented before their runs. The wrapper
 selects the requested Host entry point rather than silently testing the basic
 factory for every checkpoint.
 
-Each run saves complete printed scenario answers plus a `.metrics.json` file
-with per-scenario duration, MCP tool names, specialist request counts, and specialist model
-request counts. The current model-input trace covers the two specialists; add
-Host classifier/synthesis tracing when those later modes are implemented. The transcript records the checkpoint commit and configured
-model. Use the same model/configuration when comparing; timestamps and model
-wording naturally vary. Single-run durations are observations, not performance
-benchmarks or proof of concurrent execution.
+Each run saves complete printed scenario answers plus a `.metrics.json` file.
+`model_requests` retains the comparable specialist-model count. Part 4 also
+records `router_model_requests`, `total_model_requests`, and `routing_decisions`.
+Its original smoke result and added actual-routing contract are reported
+separately. The test tracer walks local LLM stages, including the router; add
+explicit synthesis counters when Part 5 is implemented.
+
+Transcripts record checkpoint commit, configured model, and Host mode. Use the
+same queries, seed data, and model/configuration when comparing. Wording,
+timestamps, tool choices, and timing vary; single-run durations are not benchmarks.
 
 Review correctness, missing context, duplicated work, unsupported action claims,
 error handling, and whether execution matches the requested routing mode. The
@@ -41,3 +44,5 @@ checks context handoff, database effects, and a stopped downstream service,
 which the ten-scenario harness does not cover.
 
 Part 2 versus Part 3 observations and residual issues: `../part3_comparison.md`.
+
+Parts 2/3/4 comparison, including router overhead: `../part4_comparison.md`.
