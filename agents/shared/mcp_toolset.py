@@ -28,7 +28,6 @@ Grading (20 points):
   - Support toolset excludes admin/destructive tools: 5 pts
 """
 
-import os
 import logging
 
 from google.adk.tools.mcp_tool import McpToolset, SseConnectionParams

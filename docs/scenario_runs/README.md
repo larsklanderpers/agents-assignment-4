@@ -6,7 +6,7 @@ original 15-customer / 25-ticket sample dataset for each checkpoint:
 | Checkpoint | Host mode | Transcript |
 | --- | --- | --- |
 | Part 2: basic A2A | basic | `part2.txt` |
-| Part 3: code quality | basic | `part3.txt` (planned) |
+| Part 3: code quality | basic | `part3.txt` |
 | Part 4: advanced routing | advanced | `part4.txt` (planned) |
 | Part 5: parallel routing | parallel | `part5.txt` (planned) |
 
@@ -39,3 +39,5 @@ single-agent/parallel labels do not prove conditional or parallel execution.
 Keep the seven-request suite as a separate regression check: it explicitly
 checks context handoff, database effects, and a stopped downstream service,
 which the ten-scenario harness does not cover.
+
+Part 2 versus Part 3 observations and residual issues: `../part3_comparison.md`.

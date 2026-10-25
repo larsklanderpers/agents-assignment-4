@@ -1,16 +1,10 @@
-"""
-Run Customer Support A2A Multi-Agent System (GIVEN - fully implemented)
-Starts all agent servers and provides a client interface
-
-This script runs from the project root directory.
-"""
+"""Supervised A2A server CLI and client with explicit readiness/failure contracts."""
 
 import asyncio
+from collections.abc import AsyncIterator
 import logging
 import os
 import sys
-import threading
-import time
 from typing import Any
 
 # Add agents directory to Python path
@@ -34,13 +28,15 @@ from a2a.client import ClientConfig, ClientFactory, create_text_message_object
 from a2a.server.apps import A2AStarletteApplication
 from a2a.server.request_handlers import DefaultRequestHandler
 from a2a.server.tasks import InMemoryTaskStore
-from a2a.types import TaskState, TransportProtocol
+from a2a.types import AgentCard, Message, TaskState, TransportProtocol
 from a2a.utils.constants import AGENT_CARD_WELL_KNOWN_PATH
 
 from google.adk.a2a.executor.a2a_agent_executor import (
     A2aAgentExecutor,
     A2aAgentExecutorConfig,
 )
+from google.adk.agents import BaseAgent
+from google.adk.events import Event
 from google.adk.artifacts import InMemoryArtifactService
 from google.adk.memory.in_memory_memory_service import InMemoryMemoryService
 from google.adk.runners import Runner
@@ -48,15 +44,19 @@ from google.adk.sessions import InMemorySessionService
 
 from create_agents import create_all_agents
 
-# Setup logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='[%(asctime)s] [%(name)s] %(levelname)s - %(message)s',
-    datefmt='%H:%M:%S'
-)
 logger = logging.getLogger(__name__)
 
-def print_agent_card(agent_card, port: int):
+
+def configure_logging() -> None:
+    """Configure CLI logging; imported agent modules leave root handlers alone."""
+    logging.basicConfig(
+        level=logging.INFO,
+        format='[%(asctime)s] [%(name)s] %(levelname)s - %(message)s',
+        datefmt='%H:%M:%S',
+    )
+
+
+def print_agent_card(agent_card: AgentCard, port: int) -> None:
     """Print agent card in a nice formatted way."""
     print("\n" + "="*80)
     print(f"AGENT: {agent_card.name}")
@@ -87,14 +87,14 @@ else:
 _DEFAULT_EVENT_CONVERTER = A2aAgentExecutorConfig().event_converter
 
 
-def convert_agent_event(event, *args):
+def convert_agent_event(event: Event, *args: Any) -> list[Any]:
     """Propagate remote ADK errors so partial artifacts cannot complete a task."""
     if event.error_message:
         raise RuntimeError(f"{event.author} failed: {event.error_message}")
     return _DEFAULT_EVENT_CONVERTER(event, *args)
 
 
-def create_agent_a2a_server(agent, agent_card):
+def create_agent_a2a_server(agent: BaseAgent, agent_card: AgentCard) -> A2AStarletteApplication:
     """
     Create an A2A server for an ADK agent with logging.
 
@@ -120,7 +120,8 @@ def create_agent_a2a_server(agent, agent_card):
     # handle_request(); A2A message/send and message/stream requests arrive at
     # on_message_send() and on_message_send_stream().
     class LoggingRequestHandler(DefaultRequestHandler):
-        def _log_request(self, params):
+        """Add request diagnostics while preserving standard A2A behavior."""
+        def _log_request(self, params: Any) -> None:
             agent_name = agent_card.name
             logger.info(f"[{agent_name}] Received request")
 
@@ -134,13 +135,15 @@ def create_agent_a2a_server(agent, agent_card):
                 if msg_text:
                     logger.info(f"[{agent_name}] Message: {msg_text[:100]}...")
 
-        async def on_message_send(self, params, context=None):
+        async def on_message_send(self, params: Any, context: Any = None) -> Any:
+            """Log and delegate a non-streaming A2A request."""
             self._log_request(params)
             response = await super().on_message_send(params, context)
             logger.info(f"[{agent_card.name}] Sending response")
             return response
 
-        async def on_message_send_stream(self, params, context=None):
+        async def on_message_send_stream(self, params: Any, context: Any = None) -> AsyncIterator[Any]:
+            """Log and yield the standard streaming A2A response events."""
             self._log_request(params)
             async for event in super().on_message_send_stream(params, context):
                 yield event
@@ -156,73 +159,117 @@ def create_agent_a2a_server(agent, agent_card):
     )
 
 
-async def run_agent_server(agent, agent_card, port: int) -> None:
-    """Run a single agent server."""
-    app = create_agent_a2a_server(agent, agent_card)
-
-    config = uvicorn.Config(
-        app.build(),
-        host='127.0.0.1',
-        port=port,
-        log_level='warning',
-        loop='none',  # Use the current event loop
-    )
-
-    server = uvicorn.Server(config)
-    await server.serve()
+def _create_uvicorn_server(agent: BaseAgent, card: AgentCard, port: int) -> uvicorn.Server:
+    """Construct a server without binding a socket until serve() is awaited."""
+    app = create_agent_a2a_server(agent, card)
+    return uvicorn.Server(uvicorn.Config(
+        app.build(), host='127.0.0.1', port=port, log_level='warning', loop='none',
+    ))
 
 
-async def start_all_servers() -> None:
-    """Start all agent servers."""
-    logger.info("Creating agents...")
-    agents_config = create_all_agents()
-
-    # Print agent cards
-    print("\n" + " STARTING MULTI-AGENT SYSTEM ".center(80, "="))
-    for agent_name, config in agents_config.items():
-        print_agent_card(config['card'], config['port'])
-
-    # Create tasks for all servers
-    tasks = []
-    for agent_name, config in agents_config.items():
-        task = asyncio.create_task(
-            run_agent_server(
-                config['agent'],
-                config['card'],
-                config['port']
-            )
-        )
-        tasks.append(task)
-
-    # Give servers time to start
-    await asyncio.sleep(3)
-
-    print("\n" + "="*80)
-    print(" ALL AGENT SERVERS STARTED AND READY ".center(80))
-    print("="*80)
-    print(f"Customer Data Agent:  http://127.0.0.1:{agents_config['customer_data']['port']}")
-    print(f"Support Agent:        http://127.0.0.1:{agents_config['support']['port']}")
-    print(f"Host Agent:           http://127.0.0.1:{agents_config['host']['port']}")
-    print("="*80 + "\n")
-
-    # Keep servers running
+async def _serve(server: uvicorn.Server) -> None:
+    """Translate Uvicorn bind exits into exceptions the supervisor can handle."""
     try:
-        await asyncio.gather(*tasks)
-    except KeyboardInterrupt:
-        logger.info("Shutting down servers...")
+        await server.serve()
+    except SystemExit as exc:
+        raise RuntimeError(f'Agent server could not bind port {server.config.port}') from exc
+
+
+async def run_agent_server(agent: BaseAgent, agent_card: AgentCard, port: int) -> None:
+    """Serve one A2A endpoint until shutdown; raise if its startup fails."""
+    await _serve(_create_uvicorn_server(agent, agent_card, port))
+
+
+async def start_all_servers(
+    ready: asyncio.Event | None = None,
+    stop: asyncio.Event | None = None,
+    startup_timeout: float = 15.0,
+) -> None:
+    """Serve all agents, reporting readiness only after every listener starts.
+
+    Optional events coordinate test-mode readiness and shutdown. Factory, bind,
+    timeout, and runtime failures propagate to the caller. Every exit shuts down
+    this invocation's servers, including siblings of a failed server.
+    """
+    configs = create_all_agents()
+    servers = [_create_uvicorn_server(c['agent'], c['card'], c['port']) for c in configs.values()]
+    tasks = [asyncio.create_task(_serve(server)) for server in servers]
+    stop_task = None
+    try:
+        deadline = asyncio.get_running_loop().time() + startup_timeout
+        while not all(server.started for server in servers):
+            for task in tasks:
+                if task.done():
+                    task.result()
+                    raise RuntimeError('An agent server exited before readiness')
+            if asyncio.get_running_loop().time() >= deadline:
+                raise TimeoutError('Agent servers did not become ready before the startup deadline')
+            await asyncio.sleep(0.05)
+        for task in tasks:
+            if task.done():
+                task.result()
+                raise RuntimeError('An agent server exited before readiness')
+        logger.info('All %d agent servers are ready. Press Ctrl+C to stop.', len(servers))
+        for config in configs.values():
+            print_agent_card(config['card'], config['port'])
+        if ready is not None:
+            ready.set()
+        waiting = list(tasks)
+        if stop is not None:
+            stop_task = asyncio.create_task(stop.wait())
+            waiting.append(stop_task)
+        finished, _ = await asyncio.wait(waiting, return_when=asyncio.FIRST_COMPLETED)
+        for task in finished:
+            task.result()
+    finally:
+        if stop_task is not None:
+            stop_task.cancel()
+            await asyncio.gather(stop_task, return_exceptions=True)
+        for server in servers:
+            server.should_exit = True
+        try:
+            await asyncio.wait_for(asyncio.gather(*tasks, return_exceptions=True), timeout=5)
+        except TimeoutError:
+            for task in tasks:
+                task.cancel()
+            await asyncio.gather(*tasks, return_exceptions=True)
 
 
 def run_servers_in_background() -> None:
-    """Run servers in a background thread."""
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    loop.run_until_complete(start_all_servers())
+    """Run the supervised servers synchronously, usable as a thread target."""
+    asyncio.run(start_all_servers())
+
+
+def extract_response_text(response: Any) -> str:
+    """Return nonempty completed A2A text, or raise for failed/empty responses.
+
+    Accept a direct A2A Message or a client (Task, update) tuple. A partial
+    artifact never overrides a failed task status. All text artifacts in a
+    completed task are included; non-text/empty results are explicit failures.
+    """
+    if isinstance(response, Message):
+        parts = response.parts
+    elif isinstance(response, tuple) and response and hasattr(response[0], 'status'):
+        task = response[0]
+        if task.status.state != TaskState.completed:
+            message = task.status.message
+            detail = ' '.join(getattr(p.root, 'text', '') for p in message.parts) if message else ''
+            state = getattr(task.status.state, 'value', str(task.status.state))
+            raise RuntimeError(f'A2A task {state}: {detail or "no status message; check server logs"}')
+        parts = [part for artifact in (task.artifacts or []) for part in artifact.parts]
+    else:
+        raise RuntimeError('A2A stream ended without a supported final response')
+    text = ''.join(getattr(part.root, 'text', '') for part in parts)
+    if not text.strip():
+        raise RuntimeError('A2A response contained no text answer')
+    return text
 
 
 class A2AClient:
     """Simple A2A client for testing agents."""
 
-    def __init__(self, default_timeout: float = 240.0):
+    def __init__(self, default_timeout: float = 240.0) -> None:
+        """Set request timeout and initialize the agent-card cache."""
         self._agent_info_cache: dict[str, dict[str, Any] | None] = {}
         self.default_timeout = default_timeout
 
@@ -235,7 +282,11 @@ class A2AClient:
             message: The message to send
 
         Returns:
-            The agent's response
+            Nonempty text from a completed task or direct message.
+
+        Raises:
+            RuntimeError: The task failed, needs input, or has no text answer.
+            httpx.HTTPError: Discovery or transport failed.
         """
         timeout_config = httpx.Timeout(
             timeout=self.default_timeout,
@@ -277,34 +328,15 @@ class A2AClient:
             # Create and send message
             message_obj = create_text_message_object(content=message)
 
-            # Collect responses
-            responses = []
+            # Keep only the latest snapshot rather than retaining the full stream.
+            last_response = None
             async for response in client.send_message(message_obj):
-                responses.append(response)
-
-            # Extract response text
-            if responses and isinstance(responses[-1], tuple) and len(responses[-1]) > 0:
-                task = responses[-1][0]
-                if task.status.state == TaskState.completed and task.artifacts:
-                    return ''.join(
-                        getattr(part.root, 'text', '') for part in task.artifacts[0].parts
-                    )
-                # Failed or empty task: raise with the agent's status message instead
-                # of returning the Task repr (which looks like a real answer to callers).
-                message = task.status.message
-                detail = ' '.join(
-                    getattr(part.root, 'text', '') for part in message.parts
-                ) if message else ''
-                raise RuntimeError(
-                    f"A2A task {task.status.state.value} did not produce a successful final answer: "
-                    f"{detail or 'no status message (check the agent server logs)'}"
-                )
-
-            return 'No response received'
+                last_response = response
+            return extract_response_text(last_response)
 
 
-async def test_agents():
-    """Test all agents."""
+async def test_agents() -> bool:
+    """Smoke-test each endpoint and return False if any request fails."""
     client = A2AClient()
 
     print("\n" + "="*80)
@@ -319,67 +351,62 @@ async def test_agents():
         ("3. Testing Host Agent (Orchestrator)", "http://localhost:10022",
          "I'm having login issues, can you check my account and help me resolve this?"),
     ]
+    passed = 0
     for title, url, query in checks:
         print(title)
         print("-"*80)
         try:
             response = await client.send_message(url, query)
             print(f"Response: {response}\n")
+            passed += 1
         except Exception as e:
             print(f"[FAIL] {e}\n")
 
     print("="*80)
-    print("All tests completed!")
+    print(f"Agent requests passed: {passed}/{len(checks)}")
     print("="*80 + "\n")
 
+    return passed == len(checks)
 
-def main():
-    """Main entry point."""
+
+async def _run_test_mode() -> bool:
+    """Wait for verified startup, run smoke tests, and stop owned servers."""
+    ready, stop = asyncio.Event(), asyncio.Event()
+    servers = asyncio.create_task(start_all_servers(ready=ready, stop=stop))
+    readiness = asyncio.create_task(ready.wait())
+    try:
+        finished, _ = await asyncio.wait([servers, readiness], return_when=asyncio.FIRST_COMPLETED)
+        if servers in finished:
+            await servers
+            raise RuntimeError('Agent servers stopped before tests could start')
+        return await test_agents()
+    finally:
+        readiness.cancel()
+        await asyncio.gather(readiness, return_exceptions=True)
+        stop.set()
+        await servers
+
+
+def main(argv: list[str] | None = None) -> int:
+    """Run the CLI; return 1 on failures and 130 on keyboard interruption."""
     import argparse
 
-    parser = argparse.ArgumentParser(
-        description="Run Customer Support A2A Multi-Agent System"
-    )
-    parser.add_argument(
-        '--mode',
-        choices=['start', 'test'],
-        default='start',
-        help='Mode: start servers or run tests'
-    )
-
-    args = parser.parse_args()
-
-    if args.mode == 'start':
-        # Start servers in background thread
-        logger.info("Starting agent servers...")
-        server_thread = threading.Thread(target=run_servers_in_background, daemon=True)
-        server_thread.start()
-
-        # Wait for servers to be ready
-        time.sleep(5)
-
-        logger.info("\n" + "="*80)
-        logger.info("Servers are running! Press Ctrl+C to stop.")
-        logger.info("="*80 + "\n")
-
-        try:
-            while True:
-                time.sleep(1)
-        except KeyboardInterrupt:
-            logger.info("\nShutting down...")
-
-    elif args.mode == 'test':
-        # Start servers first
-        logger.info("Starting agent servers for testing...")
-        server_thread = threading.Thread(target=run_servers_in_background, daemon=True)
-        server_thread.start()
-
-        # Wait for servers to be ready
-        time.sleep(5)
-
-        # Run tests
-        asyncio.run(test_agents())
+    parser = argparse.ArgumentParser(description='Run the Customer Support A2A system')
+    parser.add_argument('--mode', choices=['start', 'test'], default='start')
+    args = parser.parse_args(argv)
+    configure_logging()
+    try:
+        if args.mode == 'start':
+            asyncio.run(start_all_servers())
+            return 0
+        return 0 if asyncio.run(_run_test_mode()) else 1
+    except KeyboardInterrupt:
+        logger.info('Shutting down agent servers')
+        return 130
+    except Exception:
+        logger.exception('Agent system failed')
+        return 1
 
 
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    sys.exit(main())

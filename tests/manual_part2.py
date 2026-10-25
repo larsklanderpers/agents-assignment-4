@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT / 'agents'))
 from dotenv import load_dotenv
 load_dotenv(ROOT / '.env')
 os.environ['MCP_SERVER_URL'] = 'http://127.0.0.1:18081'
-from run_agents import A2AClient, create_all_agents, run_agent_server
+from run_agents import A2AClient, configure_logging, create_all_agents, run_agent_server
 from a2a.utils.constants import AGENT_CARD_WELL_KNOWN_PATH
 import httpx
 
@@ -110,6 +110,7 @@ async def check_cases(processes, db, trace, outage_only=False):
 
 
 if __name__ == '__main__':
+    configure_logging()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--serve', choices=['customer_data', 'support', 'host'])
     parser.add_argument('--outage-only', action='store_true', help='Warm the Host context and test a stopped Support server')

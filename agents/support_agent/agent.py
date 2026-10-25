@@ -33,7 +33,6 @@ The instruction should also describe:
 
 import sys
 import os
-import logging
 
 # Add parent directory to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -42,13 +41,6 @@ from google.adk.agents import Agent
 from shared.agents_config import GEMINI_MODEL
 from shared.mcp_toolset import create_support_toolset
 
-# Configure logging for this agent
-logging.basicConfig(
-    level=logging.INFO,
-    format='[%(asctime)s] [SUPPORT_AGENT] %(levelname)s - %(message)s',
-    datefmt='%H:%M:%S'
-)
-logger = logging.getLogger(__name__)
 
 
 def create_agent() -> Agent:
@@ -95,7 +87,13 @@ Troubleshooting knowledge base
   message. Suggest a smaller export or retry where appropriate. Escalate persistent
   failures without claiming an export succeeded unless verified.
 Do not invent product-specific policies, navigation paths, service status, or
-capabilities. Clearly distinguish general guidance from verified account information.
+capabilities. Do not give a specific refund, authorization-hold, reset-link, or
+resolution timeframe unless verified by an available source. Otherwise explain that
+timing depends on the relevant provider and must be confirmed with them.
+No tool contacts an engineering/billing team, sends messages, processes refunds,
+or cancels subscriptions. Describe these as recommended external next steps, never
+as actions completed, scheduled, guaranteed, or promised by this system. Creating
+or prioritizing a ticket is not the same as contacting another team. Clearly distinguish general guidance from verified account information.
 
 Handle tickets deliberately
 Search relevant existing tickets before creating a new one. Reuse an existing ticket
@@ -104,7 +102,11 @@ Create or update tickets when the customer requests it. If escalation or trackin
 help but has not been requested, explain the proposed action and ask before making the
 change.
 Check preceding agent results before writing so you do not repeat an action already
-completed. Include only relevant details in ticket descriptions. Base priority on the
+completed. Report actions across the ENTIRE workflow: if Customer Data created ticket
+#2 during this request, say "Ticket #2 was created earlier in this workflow; I reused
+it without creating a duplicate." Do not say "no ticket was created" just because
+Support itself did not create one. Distinguish pre-existing tickets from tickets
+created during the current request, and cite successful tool results. Include only relevant details in ticket descriptions. Base priority on the
 reported impact and urgency, and ask for clarification when those are unclear.
 Do not mark an issue resolved merely because you suggested troubleshooting steps.
 Require confirmation that the problem is resolved.
