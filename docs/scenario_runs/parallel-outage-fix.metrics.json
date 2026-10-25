@@ -1,0 +1,203 @@
+[
+  {
+    "scenario": "Simple Query - Single Agent",
+    "passed": true,
+    "seconds": 34.15,
+    "mcp_tool_calls": [
+      "get_customer",
+      "get_customer",
+      "list_tickets"
+    ],
+    "customer_data_requests": 1,
+    "support_requests": 1,
+    "model_requests": 5,
+    "router_model_requests": 0,
+    "summary_model_requests": 1,
+    "total_model_requests": 6,
+    "routing_decisions": [],
+    "smoke_passed": true,
+    "parallel_contract_passed": true
+  },
+  {
+    "scenario": "Task Allocation - Customer Tier Recognition",
+    "passed": true,
+    "seconds": 29.31,
+    "mcp_tool_calls": [
+      "get_customer",
+      "list_tickets",
+      "get_customer",
+      "list_tickets"
+    ],
+    "customer_data_requests": 1,
+    "support_requests": 1,
+    "model_requests": 4,
+    "router_model_requests": 0,
+    "summary_model_requests": 1,
+    "total_model_requests": 5,
+    "routing_decisions": [],
+    "smoke_passed": true,
+    "parallel_contract_passed": true
+  },
+  {
+    "scenario": "Coordinated Query - Multi-Agent Collaboration",
+    "passed": true,
+    "seconds": 21.88,
+    "mcp_tool_calls": [
+      "get_customer",
+      "list_tickets",
+      "get_customer",
+      "list_tickets"
+    ],
+    "customer_data_requests": 1,
+    "support_requests": 1,
+    "model_requests": 4,
+    "router_model_requests": 0,
+    "summary_model_requests": 1,
+    "total_model_requests": 5,
+    "routing_decisions": [],
+    "smoke_passed": true,
+    "parallel_contract_passed": true
+  },
+  {
+    "scenario": "Multi-Step Coordination - Complex Data Query",
+    "passed": true,
+    "seconds": 22.75,
+    "mcp_tool_calls": [
+      "list_tickets",
+      "list_tickets",
+      "get_customer",
+      "get_customer"
+    ],
+    "customer_data_requests": 1,
+    "support_requests": 1,
+    "model_requests": 5,
+    "router_model_requests": 0,
+    "summary_model_requests": 1,
+    "total_model_requests": 6,
+    "routing_decisions": [],
+    "smoke_passed": true,
+    "parallel_contract_passed": true
+  },
+  {
+    "scenario": "Negotiation/Escalation - Multiple Intents",
+    "passed": true,
+    "seconds": 29.12,
+    "mcp_tool_calls": [
+      "get_customer",
+      "list_tickets",
+      "get_customer",
+      "list_tickets"
+    ],
+    "customer_data_requests": 1,
+    "support_requests": 1,
+    "model_requests": 4,
+    "router_model_requests": 0,
+    "summary_model_requests": 1,
+    "total_model_requests": 5,
+    "routing_decisions": [],
+    "smoke_passed": true,
+    "parallel_contract_passed": true
+  },
+  {
+    "scenario": "Urgency Detection - Immediate Escalation",
+    "passed": true,
+    "seconds": 29.02,
+    "mcp_tool_calls": [
+      "get_customer",
+      "list_tickets",
+      "get_customer",
+      "list_tickets"
+    ],
+    "customer_data_requests": 1,
+    "support_requests": 1,
+    "model_requests": 4,
+    "router_model_requests": 0,
+    "summary_model_requests": 1,
+    "total_model_requests": 5,
+    "routing_decisions": [],
+    "smoke_passed": true,
+    "parallel_contract_passed": true
+  },
+  {
+    "scenario": "Multi-Intent - Parallel Task Execution",
+    "passed": true,
+    "seconds": 27.68,
+    "mcp_tool_calls": [
+      "get_customer",
+      "list_tickets",
+      "get_customer",
+      "list_tickets"
+    ],
+    "customer_data_requests": 1,
+    "support_requests": 1,
+    "model_requests": 4,
+    "router_model_requests": 0,
+    "summary_model_requests": 1,
+    "total_model_requests": 5,
+    "routing_decisions": [],
+    "smoke_passed": true,
+    "parallel_contract_passed": true
+  },
+  {
+    "scenario": "Cross-Agent Dependency - Context Passing",
+    "passed": true,
+    "seconds": 23.23,
+    "mcp_tool_calls": [
+      "get_customer",
+      "list_tickets",
+      "get_customer",
+      "list_tickets"
+    ],
+    "customer_data_requests": 1,
+    "support_requests": 1,
+    "model_requests": 4,
+    "router_model_requests": 0,
+    "summary_model_requests": 1,
+    "total_model_requests": 5,
+    "routing_decisions": [],
+    "smoke_passed": true,
+    "parallel_contract_passed": true
+  },
+  {
+    "scenario": "Data Aggregation - Statistical Analysis",
+    "passed": true,
+    "seconds": 10.65,
+    "mcp_tool_calls": [
+      "get_ticket_stats",
+      "get_ticket_stats"
+    ],
+    "customer_data_requests": 1,
+    "support_requests": 1,
+    "model_requests": 4,
+    "router_model_requests": 0,
+    "summary_model_requests": 1,
+    "total_model_requests": 5,
+    "routing_decisions": [],
+    "smoke_passed": true,
+    "parallel_contract_passed": true
+  },
+  {
+    "scenario": "Customer Search - Ticket Resolution Flow",
+    "passed": true,
+    "seconds": 41.79,
+    "mcp_tool_calls": [
+      "search_tickets",
+      "search_tickets",
+      "search_tickets",
+      "list_tickets",
+      "search_tickets",
+      "list_tickets",
+      "get_ticket",
+      "get_customer"
+    ],
+    "customer_data_requests": 1,
+    "support_requests": 1,
+    "model_requests": 9,
+    "router_model_requests": 0,
+    "summary_model_requests": 1,
+    "total_model_requests": 10,
+    "routing_decisions": [],
+    "smoke_passed": true,
+    "parallel_contract_passed": true
+  }
+]

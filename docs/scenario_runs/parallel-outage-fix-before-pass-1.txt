@@ -1,0 +1,18 @@
+/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/features/_feature_decorator.py:71: UserWarning: [EXPERIMENTAL] feature FeatureName.PLUGGABLE_AUTH is enabled.
+  check_feature_enabled()
+/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/agents/host_agent/agent.py:53: UserWarning: [EXPERIMENTAL] RemoteA2aAgent: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  RemoteA2aAgent(
+/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/run_agents.py:87: UserWarning: [EXPERIMENTAL] A2aAgentExecutorConfig: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  _DEFAULT_EVENT_CONVERTER = A2aAgentExecutorConfig().event_converter
+[06:56:40] [fixture_database] INFO - Database initialized successfully
+[06:56:45] [httpx] INFO - HTTP Request: GET http://127.0.0.1:10020/.well-known/agent-card.json "HTTP/1.1 200 OK"
+[06:56:45] [httpx] INFO - HTTP Request: GET http://127.0.0.1:10021/.well-known/agent-card.json "HTTP/1.1 200 OK"
+[06:56:45] [httpx] INFO - HTTP Request: GET http://127.0.0.1:10022/.well-known/agent-card.json "HTTP/1.1 200 OK"
+[HOST_AGENT] Using BASIC sequential router
+PASS: all three HTTP agent cards available
+[06:56:45] [httpx] INFO - HTTP Request: GET http://localhost:10022/.well-known/agent-card.json "HTTP/1.1 200 OK"
+[06:56:45] [httpx] INFO - HTTP Request: POST http://localhost:10022 "HTTP/1.1 200 OK"
+{"case": "host_context", "answer": "### Account & Ticket Details\n* **Customer:** A2A Fixture Five (ID: 5)\n* **Email:** `five@example.test`\n* **Account Status:** active *(Note: account lockout state is not exposed)*\n\n#### Open Tickets\n* **Ticket #1**\n  * **Issue:** Fixture existing login issue\n  * **Status:** `open`\n  * **Priority:** high\n  * **Created:** 2026-10-25 19:56:40\n\nAs requested, no records or tickets were created or modified.\n\n---\n\n### Login Troubleshooting\nTo help resolve the login issue, please try the following steps:\n\n1. **Private/Incognito Browsing:** Open a private or incognito window to rule out browser cache, cookies, or extensions.\n2. **Verify Credentials:** Ensure you are entering `five@example.test` with no extra spaces.\n3. **Password Reset:** Attempt a password reset using the standard reset link. Check your spam or junk folder if the reset email does not arrive promptly.\n4. **Note Error Details:** If you still cannot log in, what specific error message or behavior occurs on screen (e.g., invalid credentials, lockout notification, or connection error)?"}
+PASS: both remote workers and one current synthesis
+[06:57:19] [httpx] INFO - HTTP Request: POST http://localhost:10022 "HTTP/1.1 200 OK"
+{"case": "support_unavailable", "error_type": "RuntimeError", "detail": "A2A task failed: support_specialist failed: A2A request failed: HTTP Error 503: Network communication error: All connection attempts failed"}
