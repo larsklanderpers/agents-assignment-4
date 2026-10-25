@@ -45,7 +45,7 @@ from shared.mcp_toolset import create_support_toolset
 
 def create_agent() -> Agent:
     """Create the Gemini support specialist with support-safe MCP tools."""
-    return Agent(
+    agent = Agent(
         model=GEMINI_MODEL,
         name='support_agent',
         instruction="""You are the Support Agent, a customer-service specialist who provides practical,
@@ -129,3 +129,16 @@ useful general guidance where possible, and state what is needed to continue.
 Distinguish an absent record from a failed lookup.""",
         tools=[create_support_toolset()],
     )
+
+    if os.environ.get('HOST_AGENT_MODE', 'basic').lower() == 'parallel':
+        agent.tools[0].tool_filter = [name for name in agent.tools[0].tool_filter
+            if name not in ('create_ticket', 'update_ticket_status', 'update_ticket_priority')]
+        agent.instruction += """
+Parallel execution contract (takes precedence over ticket-write instructions):
+Customer Data runs concurrently and owns ALL requested writes. You have read-only tools.
+Provide troubleshooting and independently retrieve context when needed. Do not create or
+update tickets, and do not assert that no action occurred elsewhere in this workflow.
+Your answer will be reconciled with Customer Data by a summary agent. Do not assume you
+have seen Customer Data's results; clearly distinguish advice from verified facts.
+"""
+    return agent

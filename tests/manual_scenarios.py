@@ -21,9 +21,18 @@ from manual_part2 import ROOT, wait_ready
 import test_scenarios
 
 
+class BoundedScenarioClient(test_scenarios.A2AClient):
+    """Add an overall scenario deadline without modifying supplied queries."""
+
+    async def send_message(self, agent_url, message):
+        """Fail the test after four minutes regardless of stream activity."""
+        return await asyncio.wait_for(super().send_message(agent_url, message), timeout=240)
+
+
 async def run_scenarios(processes):
     """Run the unchanged provided harness after actual card readiness checks."""
     await wait_ready(processes)
+    test_scenarios.A2AClient = BoundedScenarioClient
     return await test_scenarios.main()
 
 
@@ -78,6 +87,7 @@ def main():
                     'support_requests': new_logs.get('server-2.log', '').count('[Support Agent] Received request'),
                     'model_requests': sum(r['agent'] in ('customer_data_agent', 'support_agent') for r in inputs),
                     'router_model_requests': sum(r['agent'] == 'query_router' for r in inputs),
+                    'summary_model_requests': sum(r['agent'] == 'parallel_summary' for r in inputs),
                     'total_model_requests': len(inputs),
                     'routing_decisions': [json.loads(raw) for raw in re.findall(r'Routing decision: (\{[^\n]+\})', new_logs.get('server-3.log', ''))],
                 }
@@ -98,6 +108,14 @@ def main():
                     passed = passed and route_ok
                     row['passed'] = passed
                     print(f"Routing contract: {'PASS' if route_ok else 'FAIL'}; expected {mode} {expected}, observed {observed}")
+                if args.host_mode == 'parallel':
+                    execution_ok = (row['customer_data_requests'] == 1 and row['support_requests'] == 1
+                        and row['summary_model_requests'] == 1)
+                    row['smoke_passed'] = passed
+                    row['parallel_contract_passed'] = execution_ok
+                    passed = passed and execution_ok
+                    row['passed'] = passed
+                    print(f"Parallel execution contract: {execution_ok}")
                 metrics.append(row)
                 print('OBSERVED EXECUTION: ' + json.dumps(row), flush=True)
                 return passed
