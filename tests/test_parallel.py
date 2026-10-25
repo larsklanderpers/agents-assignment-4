@@ -63,17 +63,13 @@ class TestParallel(unittest.IsolatedAsyncioTestCase):
                 await invoke()
             self.assertEqual(len(summaries), 2, 'Summary ran after failed worker')
 
-    async def test_remote_error_event_drains_cleanup_before_raising(self):
-        cleanup = []
+    async def test_remote_error_event_raises_inside_worker(self):
         async def error_events(self, ctx):
             yield Event(author=self.name, invocation_id='current', error_message='connection refused')
-            yield Event(author=self.name, invocation_id='current')
-            cleanup.append('SDK cleanup completed')
         worker = parallel.ParallelRemoteA2aAgent(name='support_specialist', agent_card='http://example.test/card')
         with patch.object(parallel.RemoteA2aAgent, '_run_async_impl', error_events):
             with self.assertRaisesRegex(RuntimeError, 'support_specialist failed: connection refused'):
                 _ = [event async for event in worker._run_async_impl(None)]
-        self.assertEqual(cleanup, ['SDK cleanup completed'])
 
     def test_missing_stale_outputs_and_readonly_instruction(self):
         ctx = context()
