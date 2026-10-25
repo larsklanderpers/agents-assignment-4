@@ -58,8 +58,11 @@ Both instructions now distinguish records that existed before the request from
 actions completed earlier in the current workflow. Support is explicitly told
 to report the upstream ticket creation while avoiding a duplicate. It must not
 promise team contact, refunds, cancellations, or specific provider timeframes
-without supported evidence. The forthcoming live output comparison checks
-whether the observed wording improves; instructions alone are not a guarantee.
+without supported evidence. The seven-request rerun produced: "Ticket #2 was created earlier in this workflow;
+I reused it without creating a duplicate." SQLite confirmed exactly one created
+ticket. The same answer explicitly said ticket creation does not automatically
+contact engineering or guarantee a timeframe. This verifies the observed
+improvement in that run; instructions alone are not a deterministic guarantee.
 
 ## 5. A test-file edit temporarily broke two subprocess checks
 
@@ -71,18 +74,18 @@ raised CalledProcessError and the 16-test run failed.
 The edit was restricted to the module import section and the snippets restored.
 Subprocess checks now include captured stderr in assertion failures so a future
 syntax/import failure is visible instead of hidden behind CalledProcessError.
-The complete regression rerun result is recorded below. This was a test-edit
+The subsequent complete 16-test rerun passed; results are recorded below. This was a test-edit
 failure, not evidence of a new application event-loop defect.
 
 ## Results and comparison
 
-- Structural checks: pending final capture.
-- Quality/client regression checks: pending final capture.
-- Seven-request live suite: pending.
-- Provided ten-scenario suite and Part 2 comparison: pending.
+- Structural checks: 35/35 passed (4 toolset, 14 agent, 17 A2A).
+- Quality/client regression checks: 16/16 passed after correcting the test edit, including actual HTTP listener startup/shutdown and an occupied-port failure.
+- Seven-request live suite: 7/7 passed, exit code 0, including explicit failed-task reporting after Support was stopped.
+- Provided ten-scenario suite: 10/10 passed, exit code 0. `part3_comparison.md` compares the saved Part 2 and Part 3 transcripts and metrics.
 
 The original Part 2 transcripts remain under `scenario_runs/part2.*`. Part 3
-outputs will be saved separately as `scenario_runs/part3.*` with the same model,
+outputs are saved separately as `scenario_runs/part3.*` with the same model,
 queries, seed dataset, and basic Host mode. Timing from single runs is not a
 benchmark; different wording or call choices alone do not establish a fix.
 
@@ -94,3 +97,41 @@ change dependency versions or implement later routing modes. Notebook behavior
 is covered only by the import-guard test, not a full notebook session. The
 provided ten-scenario harness remains a broad smoke test, supplemented by
 explicit lifecycle, database-effect, context, and failure-injection checks.
+
+## 6. Report generation failed on Windows text encoding
+
+The comparison report included Unicode arrows. An ad hoc Windows Python report
+update used Path.write_text without an encoding, selecting the locale's cp1252.
+It raised UnicodeEncodeError and had already truncated the working results file.
+This was documentation tooling failure, not a model/server failure.
+
+The tracked report was restored from the checkpoint commit, all verification
+updates reapplied, and report text written explicitly as UTF-8. Test logs, saved
+scenario transcripts, and metrics remained intact and did not need rerunning.
+The final report files were decoded as UTF-8 and checked before commit.
+
+## Public API audit
+
+A source audit reviewed 23 public functions in the implemented agent, toolset,
+factory, and launcher modules. Every reviewed function has a docstring and
+return annotation. AgentServerConfig is a TypedDict tying each ADK BaseAgent
+to its AgentCard and listening port. A2A compatibility import ordering and ADK
+Web root-agent entry points are preserved.
+
+## Baseline comparison outcome
+
+Both ten-scenario runs used the same configured model, queries, seed data, and
+basic Host. Each scenario called both specialists once in both runs. Aggregate
+MCP calls were 30 → 29, traced specialist model requests 41 → 40, and summed
+scenario durations 297.68 → 287.87 seconds. Single runs do not establish a
+performance improvement.
+
+The urgency answer replaced the unsupported specific hold-release estimate with
+issuer-dependent timing and distinguished a tracking ticket from an external
+refund/contact action. Statistics remained correct (12/6/7, 25 total).
+
+A residual inefficiency remains: the statistics scenario repeated
+get_ticket_stats in Part 3 (two calls vs. one in Part 2), with four rather than
+three model requests. The final answer was correct, but upstream context reuse
+is still nondeterministic. This limitation is recorded rather than masked by
+the aggregate call-count decrease or the 10/10 smoke-test result.
