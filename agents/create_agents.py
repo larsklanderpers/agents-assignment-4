@@ -1,5 +1,8 @@
 """A2A discovery cards and factories for the three-agent support system."""
 
+from typing import TypedDict
+
+from google.adk.agents import BaseAgent
 from a2a.types import (
     AgentCapabilities,
     AgentCard,
@@ -14,6 +17,14 @@ from shared.agents_config import (
     SUPPORT_AGENT_PORT,
     HOST_AGENT_PORT,
 )
+
+class AgentServerConfig(TypedDict):
+    """An ADK agent, its A2A discovery card, and the local listening port."""
+
+    agent: BaseAgent
+    card: AgentCard
+    port: int
+
 
 # Import agent creation functions
 from customer_data_agent.agent import create_agent as create_customer_data_agent
@@ -100,7 +111,7 @@ def create_host_agent_card() -> AgentCard:
 # Factory Function (5 pts)
 # =============================================================================
 
-def create_all_agents() -> dict:
+def create_all_agents() -> dict[str, AgentServerConfig]:
     """Build all three agents with their cards and configured server ports."""
     return {
         'customer_data': {

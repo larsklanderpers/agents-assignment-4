@@ -25,7 +25,6 @@ Key concepts:
 
 import sys
 import os
-import logging
 
 # Add parent directory to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -44,13 +43,6 @@ from shared.agents_config import (
     SUPPORT_AGENT_URL,
 )
 
-# Configure logging for this agent
-logging.basicConfig(
-    level=logging.INFO,
-    format='[%(asctime)s] [HOST_AGENT] %(levelname)s - %(message)s',
-    datefmt='%H:%M:%S'
-)
-logger = logging.getLogger(__name__)
 
 
 def create_agent() -> SequentialAgent:
