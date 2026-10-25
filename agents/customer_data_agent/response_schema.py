@@ -15,7 +15,7 @@ class CustomerRecord(StrictRecord):
     """Customer fields exposed by the supplied database."""
     id: int = Field(gt=0)
     name: str
-    email: str
+    email: str | None
     phone: str | None
     status: Literal['active', 'disabled']
     created_at: str | None

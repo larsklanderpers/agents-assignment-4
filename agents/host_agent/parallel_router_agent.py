@@ -13,10 +13,17 @@ class ParallelRemoteA2aAgent(RemoteA2aAgent):
     """Raise remote error events inside the worker before outer conversion."""
 
     async def _run_async_impl(self, ctx):
+        error = None
         async for event in super()._run_async_impl(ctx):
             if event.error_message:
-                raise RuntimeError(f'{self.name} failed: {event.error_message}')
-            yield event
+                error = error or event.error_message
+            if error is None:
+                yield event
+            # Finish consuming SDK task-control cleanup after an error. Raising
+            # at its first error event abandons a generator whose finally block
+            # can still yield events, leaving parallel cancellation suspended.
+        if error is not None:
+            raise RuntimeError(f'{self.name} failed: {error}')
 
 
 def prepare_parallel(callback_context: CallbackContext) -> None:

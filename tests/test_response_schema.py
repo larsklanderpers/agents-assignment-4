@@ -33,6 +33,8 @@ class TestResponseSchema(unittest.TestCase):
 
     def test_valid_success_and_error_envelopes(self):
         self.assertEqual(parse_customer_data_response(json.dumps(envelope())).schema_version, '1.0')
+        customer=envelope();customer['customer_context']=dict(id=5,name='No email',email=None,phone=None,status='active',created_at=None,updated_at=None)
+        self.assertIsNone(parse_customer_data_response(json.dumps(customer)).customer_context.email)
         for status, code in [('not_found','not_found'),('needs_clarification','missing_identity'),('error','tool_error')]:
             obj=envelope();obj.update(status=status, errors=[dict(code=code,message='Explanation')])
             self.assertEqual(parse_customer_data_response(json.dumps(obj)).status,status)

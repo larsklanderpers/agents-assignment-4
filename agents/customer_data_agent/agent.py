@@ -68,7 +68,7 @@ def create_agent() -> Agent:
         results. relevant_tickets contains ticket records. Map ticket statistics into
         total_tickets/open/in_progress/resolved/high/medium/low, using zero for absent groups;
         map customer statistics into total_customers/active/disabled. Counts must sum.
-        Include nullable phone/timestamps; never invent missing fields. Completed actions
+        Include nullable email/phone/timestamps; never invent missing fields. Completed actions
         use exact tool names, description, and record_id (null for reads without an ID).
         Every completed write requires its returned positive record ID. Unavailable tools
         or tool errors use an error envelope; do not fabricate successful actions.
