@@ -21,9 +21,18 @@ from manual_part2 import ROOT, wait_ready
 import test_scenarios
 
 
+class BoundedScenarioClient(test_scenarios.A2AClient):
+    """Add an overall scenario deadline without modifying supplied queries."""
+
+    async def send_message(self, agent_url, message):
+        """Fail the test after four minutes regardless of stream activity."""
+        return await asyncio.wait_for(super().send_message(agent_url, message), timeout=240)
+
+
 async def run_scenarios(processes):
     """Run the unchanged provided harness after actual card readiness checks."""
     await wait_ready(processes)
+    test_scenarios.A2AClient = BoundedScenarioClient
     return await test_scenarios.main()
 
 

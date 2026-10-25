@@ -70,6 +70,11 @@ async def wait_ready(processes):
     print('PASS: all three HTTP agent cards available', flush=True)
 
 
+async def send_with_deadline(client, url, prompt):
+    """Bound whole test requests even when transport stream activity continues."""
+    return await asyncio.wait_for(client.send_message(url, prompt), timeout=180)
+
+
 async def check_cases(processes, db, trace, outage_only=False, host_mode="basic"):
     """Exercise real A2A HTTP calls and verify context plus database effects."""
     await wait_ready(processes)
@@ -93,7 +98,7 @@ async def check_cases(processes, db, trace, outage_only=False, host_mode="basic"
         offset = len(trace.read_text(encoding='utf-8')) if trace.exists() else 0
         logs = [trace.parent / 'server-1.log', trace.parent / 'server-2.log']
         log_offsets = [len(path.read_text(encoding='utf-8')) for path in logs]
-        answer = await client.send_message(f'http://localhost:{port}', prompt)
+        answer = await send_with_deadline(client, f'http://localhost:{port}', prompt)
         assert answer and len(answer) > 40, label
         print(json.dumps({'case': label, 'answer': answer}), flush=True)
         if host_mode == 'advanced' and port == 10022:
@@ -146,13 +151,13 @@ async def check_cases(processes, db, trace, outage_only=False, host_mode="basic"
     processes[2].wait(timeout=10)
     if host_mode == 'advanced':
         offset = len(trace.read_text(encoding='utf-8'))
-        answer = await client.send_message('http://localhost:10022', 'Get customer 5 information. Do not provide support. Do not change records.')
+        answer = await send_with_deadline(client, 'http://localhost:10022', 'Get customer 5 information. Do not provide support. Do not change records.')
         assert 'A2A Fixture Five' in answer
         records = [json.loads(line) for line in trace.read_text(encoding='utf-8')[offset:].splitlines()]
         assert not any(r['agent'] == 'support_agent' for r in records)
         print(json.dumps({'case': 'skipped_support_unavailable', 'answer': answer}), flush=True)
     try:
-        answer = await client.send_message('http://localhost:10022', 'Check customer 5 and help with login. Do not change records.')
+        answer = await send_with_deadline(client, 'http://localhost:10022', 'Check customer 5 and help with login. Do not change records.')
     except RuntimeError as exc:
         assert 'failed' in str(exc).lower(), str(exc)
         print(json.dumps({'case': 'support_unavailable', 'error_type': type(exc).__name__, 'detail': str(exc)}), flush=True)
