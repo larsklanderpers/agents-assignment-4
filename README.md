@@ -359,7 +359,7 @@ This assignment uses **GitHub Classroom**. Your work is submitted by pushing to 
    python -m tests.test_agents
    python -m tests.test_a2a
    ```
-4. Complete `docs/reflection_template.md`
+4. Complete `docs/reflect_final.md`
 5. Commit and push your changes:
    ```bash
    git add -A
