@@ -1,0 +1,182 @@
+/home/lars/miniconda3/lib/python3.14/site-packages/google/adk/features/_feature_decorator.py:71: UserWarning: [EXPERIMENTAL] feature FeatureName.PLUGGABLE_AUTH is enabled.
+  check_feature_enabled()
+/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/agents/host_agent/agent.py:53: UserWarning: [EXPERIMENTAL] RemoteA2aAgent: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  RemoteA2aAgent(
+/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/run_agents.py:87: UserWarning: [EXPERIMENTAL] A2aAgentExecutorConfig: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  _DEFAULT_EVENT_CONVERTER = A2aAgentExecutorConfig().event_converter
+[19:02:20] [fixture_database] INFO - Database initialized successfully
+[19:02:22] [httpx] INFO - HTTP Request: GET http://127.0.0.1:10020/.well-known/agent-card.json "HTTP/1.1 200 OK"
+[19:02:22] [httpx] INFO - HTTP Request: GET http://127.0.0.1:10021/.well-known/agent-card.json "HTTP/1.1 200 OK"
+[19:02:22] [httpx] INFO - HTTP Request: GET http://127.0.0.1:10022/.well-known/agent-card.json "HTTP/1.1 200 OK"
+[HOST_AGENT] Using BASIC sequential router
+PASS: all three HTTP agent cards available
+[19:02:22] [httpx] INFO - HTTP Request: GET http://localhost:10020/.well-known/agent-card.json "HTTP/1.1 200 OK"
+[19:02:22] [httpx] INFO - HTTP Request: POST http://localhost:10020 "HTTP/1.1 200 OK"
+{"case": "data_lookup", "answer": "```json\n{\n  \"customer_context\": {\n    \"id\": 5,\n    \"name\": \"A2A Fixture Five\",\n    \"email\": \"five@example.test\",\n    \"phone\": null,\n    \"status\": \"active\",\n    \"created_at\": \"2026-10-25 08:02:20\",\n    \"updated_at\": \"2026-10-25 08:02:20\"\n  },\n  \"pre_existing_tickets\": [\n    {\n      \"id\": 1,\n      \"customer_id\": 5,\n      \"issue\": \"Fixture existing login issue\",\n      \"status\": \"open\",\n      \"priority\": \"high\",\n      \"created_at\": \"2026-10-25 08:02:20\"\n    }\n  ],\n  \"tickets_created_this_request\": [],\n  \"completed_actions\": [\n    \"Retrieved customer details for ID 5\",\n    \"Retrieved existing tickets for customer ID 5\"\n  ],\n  \"missing_information_or_errors\": null\n}\n```"}
+[19:02:44] [httpx] INFO - HTTP Request: GET http://localhost:10021/.well-known/agent-card.json "HTTP/1.1 200 OK"
+[19:02:44] [httpx] INFO - HTTP Request: POST http://localhost:10021 "HTTP/1.1 200 OK"
+{"case": "support_password", "answer": "Here is general guidance on how to reset your password:\n\n### 1. Request a Password Reset\n* Navigate to the login screen of the application or service.\n* Select the **\"Forgot Password?\"** or **\"Reset Password\"** link.\n* Enter the email address associated with your account and submit the request.\n\n### 2. Check Your Email\n* Look for a password reset email in your inbox.\n* If you do not see it within a few minutes, check your **Spam**, **Junk**, or promotional folders.\n* Ensure you entered the exact email address registered to your account.\n\n### 3. Open the Reset Link\n* Click the link provided in the email to set a new password.\n* Reset links are typically time-sensitive. If the link has expired, return to the login screen and request a fresh one.\n* Follow standard security practices when choosing a new password (use a unique passphrase or combination of letters, numbers, and symbols).\n\n---\n\n### Important Security Reminders & Next Steps\n* **Security Notice:** Never share your password, multi-factor verification codes, or reset tokens with anyone\u2014support agents will never ask for them.\n* **If you do not receive the email:** Verify that your account is still active and that there are no typo errors in the email address submitted.\n* **Account-Specific Assistance:** If you continue having trouble or suspect your account is locked or disabled, please share your account identifier (such as your account email or ID) so we can look up your account status."}
+[19:03:04] [httpx] INFO - HTTP Request: GET http://localhost:10022/.well-known/agent-card.json "HTTP/1.1 200 OK"
+[19:03:04] [httpx] INFO - HTTP Request: POST http://localhost:10022 "HTTP/1.1 200 OK"
+{"case": "host_context", "answer": "Here is the information regarding your account and open tickets:\n\n### Open Tickets\n* **Ticket ID #1**\n  * **Issue:** Fixture existing login issue\n  * **Status:** open\n  * **Priority:** high\n  * **Created:** 2026-10-25 08:02:20\n\nAs requested, your details were retrieved without modifying any records or creating new tickets. \n\n---\n\n### Login Troubleshooting\nYour account status is listed as active (please note that specific lockout status is not exposed in the system records). To troubleshoot your login issue, please try the following:\n\n1. **Private/Incognito Window:** Open a private or incognito browsing window to test logging in without interference from cached sessions or browser extensions.\n2. **Verify Email:** Confirm you are entering your registered email address (`five@example.test`).\n3. **Password Reset:** Use the standard password reset link on the login page to request a fresh reset email (be sure to check your spam/junk folder).\n4. **Browser/Network Checks:** Clear your browser\u2019s cache and cookies, or try accessing the site from an alternate browser or network connection.\n\nIf you are still unable to log in, please share the exact error message or behavior you are experiencing so we can provide further guidance."}
+--- server-0.log: last 35 lines ---
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:18081 (Press CTRL+C to quit)
+INFO:     127.0.0.1:58104 - "GET /sse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58112 - "POST /messages/?session_id=bd3d75565b6f4f0d9e54e623430eb705 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:58112 - "POST /messages/?session_id=bd3d75565b6f4f0d9e54e623430eb705 HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:58112 - "POST /messages/?session_id=bd3d75565b6f4f0d9e54e623430eb705 HTTP/1.1" 202 Accepted
+2026-10-25 19:02:34,882 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+INFO:     127.0.0.1:58112 - "POST /messages/?session_id=bd3d75565b6f4f0d9e54e623430eb705 HTTP/1.1" 202 Accepted
+2026-10-25 19:02:37,499 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2026-10-25 19:02:37,499 - __main__ - INFO - [TOOL] get_customer(customer_id=5)
+INFO:     127.0.0.1:58112 - "POST /messages/?session_id=bd3d75565b6f4f0d9e54e623430eb705 HTTP/1.1" 202 Accepted
+2026-10-25 19:02:40,694 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2026-10-25 19:02:40,695 - __main__ - INFO - [TOOL] list_tickets(status=None, priority=None, customer_id=5)
+INFO:     127.0.0.1:33058 - "GET /sse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33060 - "POST /messages/?session_id=08951c5bdb994380ab2872696c313d3d HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:33060 - "POST /messages/?session_id=08951c5bdb994380ab2872696c313d3d HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:33060 - "POST /messages/?session_id=08951c5bdb994380ab2872696c313d3d HTTP/1.1" 202 Accepted
+2026-10-25 19:02:56,588 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+INFO:     127.0.0.1:46852 - "POST /messages/?session_id=08951c5bdb994380ab2872696c313d3d HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:46868 - "POST /messages/?session_id=bd3d75565b6f4f0d9e54e623430eb705 HTTP/1.1" 202 Accepted
+2026-10-25 19:03:04,391 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2026-10-25 19:03:04,391 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+INFO:     127.0.0.1:46852 - "POST /messages/?session_id=08951c5bdb994380ab2872696c313d3d HTTP/1.1" 202 Accepted
+2026-10-25 19:03:08,005 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2026-10-25 19:03:08,005 - __main__ - INFO - [TOOL] get_customer(customer_id=5)
+INFO:     127.0.0.1:46852 - "POST /messages/?session_id=08951c5bdb994380ab2872696c313d3d HTTP/1.1" 202 Accepted
+2026-10-25 19:03:08,007 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2026-10-25 19:03:08,007 - __main__ - INFO - [TOOL] list_tickets(status=None, priority=None, customer_id=5)
+INFO:     127.0.0.1:46868 - "POST /messages/?session_id=bd3d75565b6f4f0d9e54e623430eb705 HTTP/1.1" 202 Accepted
+2026-10-25 19:03:08,632 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2026-10-25 19:03:08,632 - __main__ - INFO - [TOOL] get_customer(customer_id=5)
+INFO:     127.0.0.1:46868 - "POST /messages/?session_id=bd3d75565b6f4f0d9e54e623430eb705 HTTP/1.1" 202 Accepted
+2026-10-25 19:03:08,634 - mcp.server.lowlevel.server - INFO - Processing request of type CallToolRequest
+2026-10-25 19:03:08,634 - __main__ - INFO - [TOOL] list_tickets(status=None, priority=None, customer_id=5)
+--- server-3.log: last 35 lines ---
+  executor = A2aAgentExecutor(runner=runner, config=config)
+[19:03:04] [run_agents] INFO - [Customer Support Host Agent] Received request
+[19:03:04] [run_agents] INFO - [Customer Support Host Agent] Message: I am customer 5. Show my open tickets and help with my login issue. Do not change any records....
+/home/lars/miniconda3/lib/python3.14/site-packages/google/adk/a2a/executor/a2a_agent_executor.py:188: UserWarning: [EXPERIMENTAL] convert_a2a_request_to_agent_run_request: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  run_request = self._config.request_converter(
+/home/lars/miniconda3/lib/python3.14/site-packages/google/adk/a2a/converters/request_converter.py:127: UserWarning: [EXPERIMENTAL] convert_a2a_part_to_genai_part: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  genai_parts = part_converter(a2a_part)
+/home/lars/miniconda3/lib/python3.14/site-packages/google/adk/a2a/converters/request_converter.py:132: UserWarning: [EXPERIMENTAL] AgentRunRequest: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  return AgentRunRequest(
+/home/lars/miniconda3/lib/python3.14/site-packages/google/adk/a2a/executor/a2a_agent_executor.py:225: UserWarning: [EXPERIMENTAL] TaskResultAggregator: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  task_result_aggregator = TaskResultAggregator()
+/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/run_agents.py:94: UserWarning: [EXPERIMENTAL] convert_event_to_a2a_events: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  return _DEFAULT_EVENT_CONVERTER(event, *args)
+/home/lars/miniconda3/lib/python3.14/site-packages/google/adk/a2a/converters/event_converter.py:592: UserWarning: [EXPERIMENTAL] convert_event_to_a2a_message: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  message = convert_event_to_a2a_message(
+[19:03:04] [a2a.server.tasks.task_manager] INFO - Task not found or task_id not set. Creating new task for event (task_id: e96d53f0-57d8-4370-955e-46f7b58b5cc6, context_id: 57d9f1c9-9564-47af-9858-ce78da3c8858).
+[19:03:04] [httpx] INFO - HTTP Request: GET http://localhost:10021/.well-known/agent-card.json "HTTP/1.1 200 OK"
+[19:03:04] [a2a.client.card_resolver] INFO - Successfully fetched agent card data from http://localhost:10021/.well-known/agent-card.json: {'capabilities': {'streaming': True}, 'defaultInputModes': ['text/plain'], 'defaultOutputModes': ['text/plain'], 'description': 'Troubleshoot customer issues and manage support tickets.', 'name': 'Support Agent', 'preferredTransport': 'JSONRPC', 'protocolVersion': '0.3.0', 'skills': [{'description': 'Troubleshoot customer issues and manage support tickets.', 'examples': ['Help me reset my password', 'My payment failed; what should I do?'], 'id': 'provide_support', 'name': 'Support Agent', 'tags': ['support', 'troubleshooting']}], 'url': 'http://localhost:10021', 'version': '1.0'}
+[19:03:04] [google_adk.google.adk.a2a.agent._remote_a2a_agent] INFO - Successfully resolved remote A2A agent: support_specialist
+[19:03:04] [google_adk.google.adk.a2a.agent._remote_a2a_agent] WARNING - RemoteA2aAgent 'support_specialist' cannot forward the preceding state-only event across A2A. Session state is local to each agent; include the required values in event content instead.
+/home/lars/miniconda3/lib/python3.14/site-packages/google/adk/a2a/agent/_remote_a2a_agent.py:1489: UserWarning: [EXPERIMENTAL] convert_genai_part_to_a2a_part: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  raw_parts = self._genai_part_converter(part)
+[19:03:04] [httpx] INFO - HTTP Request: GET http://localhost:10020/.well-known/agent-card.json "HTTP/1.1 200 OK"
+[19:03:04] [a2a.client.card_resolver] INFO - Successfully fetched agent card data from http://localhost:10020/.well-known/agent-card.json: {'capabilities': {'streaming': True}, 'defaultInputModes': ['text/plain'], 'defaultOutputModes': ['application/json'], 'description': 'Access and manage customer records, support tickets, and statistics.', 'name': 'Customer Data Agent', 'preferredTransport': 'JSONRPC', 'protocolVersion': '0.3.0', 'skills': [{'description': 'Access and manage customer records, support tickets, and statistics.', 'examples': ['Get customer 5 information', 'Show open high-priority tickets'], 'id': 'manage_customer_data', 'name': 'Customer Data Agent', 'tags': ['customers', 'tickets', 'data']}], 'url': 'http://localhost:10020', 'version': '1.0'}
+[19:03:04] [google_adk.google.adk.a2a.agent._remote_a2a_agent] INFO - Successfully resolved remote A2A agent: customer_data
+[19:03:04] [google_adk.google.adk.a2a.agent._remote_a2a_agent] WARNING - RemoteA2aAgent 'customer_data' cannot forward the preceding state-only event across A2A. Session state is local to each agent; include the required values in event content instead.
+[19:03:14] [httpx] INFO - HTTP Request: POST http://localhost:10020 "HTTP/1.1 200 OK"
+/home/lars/miniconda3/lib/python3.14/site-packages/google/adk/a2a/converters/event_converter.py:260: UserWarning: [EXPERIMENTAL] convert_a2a_message_to_event: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  event: Event = convert_a2a_message_to_event(
+[19:03:16] [httpx] INFO - HTTP Request: POST http://localhost:10021 "HTTP/1.1 200 OK"
+[19:03:16] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[19:03:16] [google_genai.models] INFO - AFC is enabled with max remote calls: 10.
+[19:03:23] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[19:03:23] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[19:03:23] [run_agents] INFO - [Customer Support Host Agent] Sending response
+--- server-2.log: last 35 lines ---
+[19:02:44] [a2a.server.tasks.task_manager] INFO - Task not found or task_id not set. Creating new task for event (task_id: f7491bc4-25e7-415c-a41b-ce31bbdde9cc, context_id: 063fe24a-c211-44e0-be4e-89891d9636de).
+[19:02:56] [google_adk.google.adk.tools.mcp_tool.mcp_session_manager] WARNING - Failed to configure mTLS using AsyncAuthorizedSession: Your default credentials were not found. To set up Application Default Credentials, see https://cloud.google.com/docs/authentication/external/set-up-adc for more information.
+/home/lars/miniconda3/lib/python3.14/site-packages/google/adk/tools/mcp_tool/mcp_toolset.py:407: UserWarning: [EXPERIMENTAL] feature FeatureName._MCP_GRACEFUL_ERROR_HANDLING is enabled.
+  session = await self._mcp_session_manager.create_session(
+[19:02:56] [httpx] INFO - HTTP Request: GET http://127.0.0.1:18081/sse "HTTP/1.1 200 OK"
+[19:02:56] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=08951c5bdb994380ab2872696c313d3d "HTTP/1.1 202 Accepted"
+[19:02:56] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=08951c5bdb994380ab2872696c313d3d "HTTP/1.1 202 Accepted"
+[19:02:56] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=08951c5bdb994380ab2872696c313d3d "HTTP/1.1 202 Accepted"
+/home/lars/miniconda3/lib/python3.14/site-packages/google/adk/features/_feature_decorator.py:71: UserWarning: [EXPERIMENTAL] feature FeatureName.BASE_AUTHENTICATED_TOOL is enabled.
+  check_feature_enabled()
+/home/lars/miniconda3/lib/python3.14/site-packages/google/adk/tools/mcp_tool/mcp_tool.py:371: UserWarning: [EXPERIMENTAL] feature FeatureName.JSON_SCHEMA_FOR_FUNC_DECL is enabled.
+  return self._build_declaration(fenced=False)
+[19:02:56] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[19:03:04] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[19:03:04] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/run_agents.py:94: UserWarning: [EXPERIMENTAL] convert_event_to_a2a_events: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  return _DEFAULT_EVENT_CONVERTER(event, *args)
+/home/lars/miniconda3/lib/python3.14/site-packages/google/adk/a2a/converters/event_converter.py:592: UserWarning: [EXPERIMENTAL] convert_event_to_a2a_message: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  message = convert_event_to_a2a_message(
+/home/lars/miniconda3/lib/python3.14/site-packages/google/adk/a2a/converters/event_converter.py:430: UserWarning: [EXPERIMENTAL] convert_genai_part_to_a2a_part: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  a2a_parts = part_converter(part)
+[19:03:04] [run_agents] INFO - [Support Agent] Sending response
+[19:03:04] [run_agents] INFO - [Support Agent] Received request
+[19:03:04] [run_agents] INFO - [Support Agent] Message: I am customer 5. Show my open tickets and help with my login issue. Do not change any records....
+[19:03:04] [a2a.server.tasks.task_manager] INFO - Task not found or task_id not set. Creating new task for event (task_id: 84b2173f-027a-47bc-adcc-90a5f17fa08e, context_id: c085b1ec-8ad2-44c5-b038-3f02f2bf9d99).
+[19:03:04] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=08951c5bdb994380ab2872696c313d3d "HTTP/1.1 202 Accepted"
+[19:03:04] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[19:03:07] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[19:03:08] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[19:03:08] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=08951c5bdb994380ab2872696c313d3d "HTTP/1.1 202 Accepted"
+[19:03:08] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=08951c5bdb994380ab2872696c313d3d "HTTP/1.1 202 Accepted"
+[19:03:08] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[19:03:16] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[19:03:16] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[19:03:16] [run_agents] INFO - [Support Agent] Sending response
+--- server-1.log: last 35 lines ---
+/home/lars/miniconda3/lib/python3.14/site-packages/google/adk/features/_feature_decorator.py:71: UserWarning: [EXPERIMENTAL] feature FeatureName.BASE_AUTHENTICATED_TOOL is enabled.
+  check_feature_enabled()
+/home/lars/miniconda3/lib/python3.14/site-packages/google/adk/tools/mcp_tool/mcp_tool.py:371: UserWarning: [EXPERIMENTAL] feature FeatureName.JSON_SCHEMA_FOR_FUNC_DECL is enabled.
+  return self._build_declaration(fenced=False)
+[19:02:34] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[19:02:37] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[19:02:37] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/run_agents.py:94: UserWarning: [EXPERIMENTAL] convert_event_to_a2a_events: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  return _DEFAULT_EVENT_CONVERTER(event, *args)
+/home/lars/miniconda3/lib/python3.14/site-packages/google/adk/a2a/converters/event_converter.py:592: UserWarning: [EXPERIMENTAL] convert_event_to_a2a_message: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  message = convert_event_to_a2a_message(
+/home/lars/miniconda3/lib/python3.14/site-packages/google/adk/a2a/converters/event_converter.py:430: UserWarning: [EXPERIMENTAL] convert_genai_part_to_a2a_part: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  a2a_parts = part_converter(part)
+[19:02:37] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=bd3d75565b6f4f0d9e54e623430eb705 "HTTP/1.1 202 Accepted"
+[19:02:37] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[19:02:40] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[19:02:40] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[19:02:40] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=bd3d75565b6f4f0d9e54e623430eb705 "HTTP/1.1 202 Accepted"
+[19:02:40] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[19:02:44] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[19:02:44] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[19:02:44] [run_agents] INFO - [Customer Data Agent] Sending response
+[19:03:04] [run_agents] INFO - [Customer Data Agent] Received request
+[19:03:04] [run_agents] INFO - [Customer Data Agent] Message: I am customer 5. Show my open tickets and help with my login issue. Do not change any records....
+[19:03:04] [a2a.server.tasks.task_manager] INFO - Task not found or task_id not set. Creating new task for event (task_id: 59f41cb0-f759-41b9-921a-5542b01e0265, context_id: 3893faf6-4dbb-46aa-b10c-e08b33a26430).
+[19:03:04] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=bd3d75565b6f4f0d9e54e623430eb705 "HTTP/1.1 202 Accepted"
+[19:03:04] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[19:03:08] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[19:03:08] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[19:03:08] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=bd3d75565b6f4f0d9e54e623430eb705 "HTTP/1.1 202 Accepted"
+[19:03:08] [httpx] INFO - HTTP Request: POST http://127.0.0.1:18081/messages/?session_id=bd3d75565b6f4f0d9e54e623430eb705 "HTTP/1.1 202 Accepted"
+[19:03:08] [google_adk.google.adk.models.google_llm] INFO - Sending out request, model: gemini-3.8-flash, backend: GoogleLLMVariant.GEMINI_API, stream: False
+[19:03:14] [httpx] INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 200 OK"
+[19:03:14] [google_adk.google.adk.models.google_llm] INFO - Response received from the model.
+[19:03:14] [run_agents] INFO - [Customer Data Agent] Sending response
+Traceback (most recent call last):
+  File "/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/tests/manual_part2.py", line 203, in <module>
+    asyncio.run(check_cases(processes, db, trace, args.outage_only, args.host_mode))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/lib/python3.14/asyncio/runners.py", line 205, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/home/lars/miniconda3/lib/python3.14/asyncio/runners.py", line 128, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/lars/miniconda3/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/tests/manual_part2.py", line 135, in check_cases
+    assert 'A2A Fixture Five' in answer and 'Fixture existing login issue' in summaries[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

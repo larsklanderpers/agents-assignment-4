@@ -25,7 +25,6 @@ Example instruction topics to cover:
 
 import sys
 import os
-import logging
 
 # Add parent directory to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -34,13 +33,6 @@ from google.adk.agents import Agent
 from shared.agents_config import GEMINI_MODEL
 from shared.mcp_toolset import create_customer_data_toolset
 
-# Configure logging for this agent
-logging.basicConfig(
-    level=logging.INFO,
-    format='[%(asctime)s] [CUSTOMER_DATA_AGENT] %(levelname)s - %(message)s',
-    datefmt='%H:%M:%S'
-)
-logger = logging.getLogger(__name__)
 
 
 def create_agent() -> Agent:
@@ -63,7 +55,11 @@ def create_agent() -> Agent:
         or claim success without a successful tool result. If a tool fails,
         explain the limitation and what information or retry is needed.
         Return a JSON object describing the customer context, relevant tickets,
-        completed actions, and any missing information or errors. Include only
+        completed actions, and any missing information or errors. Clearly distinguish
+        pre-existing records from tickets created during THIS request. Include the
+        created ticket ID and successful action so Support can attribute the whole
+        workflow accurately. A ticket write does not perform a refund, cancel a
+        subscription, contact another team, or establish a resolution timeframe. Include only
         data needed for the request so the next support agent can use it.
         """,
         tools=[create_customer_data_toolset()],

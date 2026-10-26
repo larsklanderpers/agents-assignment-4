@@ -1,0 +1,452 @@
+Checkpoint commit: b741f8bfcc19cb5b480756ccf8043dd6bfe1342c
+Configured model: gemini-3.8-flash
+Host mode: parallel
+Fixture: original 15 sample customers and 25 tickets, newly seeded.
+PASS: all three HTTP agent cards available
+
+Verifying agent availability...
+--------------------------------------------------------------------------------
+  [OK] Customer Data Agent is running at http://localhost:10020
+  [OK] Support Agent is running at http://localhost:10021
+  [OK] Host Agent (Orchestrator) is running at http://localhost:10022
+--------------------------------------------------------------------------------
+[OK] All agents are available!
+
+
+================================================================================
+COMPREHENSIVE A2A MULTI-AGENT SYSTEM TESTING
+================================================================================
+
+
+================================================================================
+SCENARIO: Simple Query - Single Agent
+================================================================================
+Query: Get customer information for ID 5
+--------------------------------------------------------------------------------
+Expected Capabilities:
+  - Single agent (Customer Data) handles request
+  - Direct MCP call to get customer data
+  - Returns customer details
+--------------------------------------------------------------------------------
+
+RESPONSE:
+--------------------------------------------------------------------------------
+Here is the customer information and ticket history for ID 5:
+
+**Customer Details:**
+- **Customer ID:** 5
+- **Name:** Charlie Brown
+- **Email:** charlie.brown@email.com
+- **Phone:** +1-555-0105
+- **Status:** active
+- **Created At:** 2026-10-25 08:07:41
+- **Updated At:** 2026-10-25 08:07:41
+
+**Associated Tickets:**
+- **Ticket ID 8:** "Email notifications not being received" — Status: open, Priority: medium (Created: 2026-10-25 08:07:41)
+- **Ticket ID 17:** "Typo in welcome email" — Status: resolved, Priority: low (Created: 2026-10-25 08:07:41)
+--------------------------------------------------------------------------------
+
+VERIFICATION:
+  [PASS] Response has substantial content
+  [PASS] Response contains relevant keywords
+
+================================================================================
+Parallel execution contract: True
+OBSERVED EXECUTION: {"scenario": "Simple Query - Single Agent", "passed": true, "seconds": 26.33, "mcp_tool_calls": ["get_customer", "get_customer", "list_tickets"], "customer_data_requests": 1, "support_requests": 1, "model_requests": 4, "router_model_requests": 0, "summary_model_requests": 1, "total_model_requests": 5, "routing_decisions": [], "smoke_passed": true, "parallel_contract_passed": true}
+
+================================================================================
+SCENARIO: Task Allocation - Customer Tier Recognition
+================================================================================
+Query: I need help with my account, customer ID 1. I'm John Doe.
+--------------------------------------------------------------------------------
+Expected Capabilities:
+  - Router fetches customer data to understand context
+  - Identifies customer status (active/disabled)
+  - Routes to appropriate support level
+  - Checks for existing tickets
+  - Provides personalized assistance
+--------------------------------------------------------------------------------
+
+RESPONSE:
+--------------------------------------------------------------------------------
+Hello John,
+
+We have accessed your account records for Customer ID 1 (Status: active; please note that lockout state is not exposed by this status). 
+
+Here are your existing tickets on file:
+- **Ticket #1**: "Cannot login to account" (Status: **open**)
+- **Ticket #6**: "Password reset not working" (Status: **in_progress**)
+
+No new tickets were created during this request. 
+
+If you are currently experiencing login or password reset issues, here are a few general troubleshooting steps:
+- Try logging in or requesting a reset link using a private or incognito browser window.
+- Check your spam or junk folders for reset emails sent to `john.doe@example.com`.
+- Request a fresh password reset link if previous attempts did not go through.
+- Verify that credentials do not include accidental leading or trailing spaces.
+
+Could you please clarify the specific issue you are facing today, or let us know if you are following up on Ticket #1 or Ticket #6?
+--------------------------------------------------------------------------------
+
+VERIFICATION:
+  [PASS] Response has substantial content
+  [PASS] Response contains relevant keywords
+
+================================================================================
+Parallel execution contract: True
+OBSERVED EXECUTION: {"scenario": "Task Allocation - Customer Tier Recognition", "passed": true, "seconds": 22.4, "mcp_tool_calls": ["get_customer", "list_tickets", "get_customer", "list_tickets"], "customer_data_requests": 1, "support_requests": 1, "model_requests": 4, "router_model_requests": 0, "summary_model_requests": 1, "total_model_requests": 5, "routing_decisions": [], "smoke_passed": true, "parallel_contract_passed": true}
+
+================================================================================
+SCENARIO: Coordinated Query - Multi-Agent Collaboration
+================================================================================
+Query: I'm customer 2 (Jane Smith) and I need help checking my ticket status and getting support
+--------------------------------------------------------------------------------
+Expected Capabilities:
+  - Customer Data Agent fetches customer info
+  - Customer Data Agent retrieves ticket history
+  - Support Agent provides guidance based on data
+  - Coordinated response with both data and support
+--------------------------------------------------------------------------------
+
+RESPONSE:
+--------------------------------------------------------------------------------
+Hello Jane,
+
+Here is the current status of your tickets:
+
+* **Ticket #15:** Feature request: dark mode  
+  * **Status:** open  
+  * **Priority:** low  
+* **Ticket #7:** Profile image upload fails  
+  * **Status:** resolved  
+  * **Priority:** medium  
+* **Ticket #14:** Billing question about invoice  
+  * **Status:** resolved  
+  * **Priority:** low  
+
+Your account profile and existing tickets have been retrieved; no new tickets were created.
+
+### Additional Notes & Guidance
+* **Feature Requests (Ticket #15):** This ticket tracks customer interest, but implementation and resolution timeframes cannot be guaranteed.
+* **Profile Image Uploads (Ticket #7):** If you are still experiencing upload errors, ensure your file is in a standard format (such as JPEG or PNG), check file size limits, or try uploading from a private/incognito browsing window to rule out cache issues.
+* **Billing Inquiries (Ticket #14):** If you have further billing questions, please check your records or contact your billing provider directly, as payments, cancellations, and refunds cannot be processed or issued through this channel.
+
+Please let us know what specific issue you need assistance with today, along with any relevant details or error messages, so we can provide targeted troubleshooting.
+--------------------------------------------------------------------------------
+
+VERIFICATION:
+  [PASS] Response has substantial content
+  [PASS] Response contains relevant keywords
+
+================================================================================
+Parallel execution contract: True
+OBSERVED EXECUTION: {"scenario": "Coordinated Query - Multi-Agent Collaboration", "passed": true, "seconds": 20.48, "mcp_tool_calls": ["get_customer", "list_tickets", "get_customer", "list_tickets"], "customer_data_requests": 1, "support_requests": 1, "model_requests": 4, "router_model_requests": 0, "summary_model_requests": 1, "total_model_requests": 5, "routing_decisions": [], "smoke_passed": true, "parallel_contract_passed": true}
+
+================================================================================
+SCENARIO: Multi-Step Coordination - Complex Data Query
+================================================================================
+Query: Show me all customers who have open high-priority tickets
+--------------------------------------------------------------------------------
+Expected Capabilities:
+  - Router decomposes task
+  - Filters tickets by status=open and priority=high
+  - Fetches customer details for each ticket
+  - Aggregates and formats results
+  - Returns comprehensive report
+--------------------------------------------------------------------------------
+
+RESPONSE:
+--------------------------------------------------------------------------------
+Here are the customers who currently have open, high-priority tickets:
+
+1. **John Doe**
+   - **Customer ID:** 1
+   - **Email:** john.doe@example.com
+   - **Phone:** +1-555-0101
+   - **Ticket ID:** 1
+   - **Issue:** Cannot login to account
+   - **Ticket Status:** open
+   - **Priority:** high
+   - **Created At:** 2026-10-25 08:07:41
+
+2. **Edward Norton**
+   - **Customer ID:** 7
+   - **Email:** e.norton@business.net
+   - **Phone:** +1-555-0107
+   - **Ticket ID:** 3
+   - **Issue:** Payment processing failing for all transactions
+   - **Ticket Status:** open
+   - **Priority:** high
+   - **Created At:** 2026-10-25 08:07:41
+--------------------------------------------------------------------------------
+
+VERIFICATION:
+  [PASS] Response has substantial content
+  [PASS] Response contains relevant keywords
+
+================================================================================
+Parallel execution contract: True
+OBSERVED EXECUTION: {"scenario": "Multi-Step Coordination - Complex Data Query", "passed": true, "seconds": 13.49, "mcp_tool_calls": ["list_tickets", "list_tickets"], "customer_data_requests": 1, "support_requests": 1, "model_requests": 4, "router_model_requests": 0, "summary_model_requests": 1, "total_model_requests": 5, "routing_decisions": [], "smoke_passed": true, "parallel_contract_passed": true}
+
+================================================================================
+SCENARIO: Negotiation/Escalation - Multiple Intents
+================================================================================
+Query: I want to cancel my subscription but I'm also having billing issues. Customer ID 7.
+--------------------------------------------------------------------------------
+Expected Capabilities:
+  - Detects multiple intents (cancellation + billing)
+  - Router coordinates between agents
+  - Fetches customer billing context
+  - Support agent addresses both concerns
+  - Escalation awareness for urgent issues
+--------------------------------------------------------------------------------
+
+RESPONSE:
+--------------------------------------------------------------------------------
+Your account context was successfully retrieved. You currently have an existing ticket on file:
+
+* **Ticket #3**: Status is **open** (Priority: High) for *"Payment processing failing for all transactions"*. No new tickets were created during this request.
+
+### Subscription Cancellation & Billing Assistance
+* **System Limitation:** This system cannot directly cancel subscriptions, modify recurring billing profiles, process payments, or issue refunds. To cancel your subscription, please check your account settings or contact your subscription and billing provider directly.
+* **General Troubleshooting for Payment Failures:**
+  * Verify that your payment method details (card number, expiration date, security code/CVV, and billing address) match your bank's records.
+  * Contact your card issuer or financial institution to ensure there are no holds, restrictions, or fraud blocks on online or recurring transactions.
+  * Avoid multiple rapid payment retries, which may trigger automated gateway security holds.
+
+### Additional Details
+To help address your inquiry:
+* Are you seeking to cancel your subscription specifically due to the ongoing payment failures referenced in Ticket #3, or as an unrelated cancellation?
+* If you are seeing a specific error code or message when attempting to update billing or manage your subscription, please share the exact text.
+--------------------------------------------------------------------------------
+
+VERIFICATION:
+  [PASS] Response has substantial content
+  [PASS] Response contains relevant keywords
+
+================================================================================
+Parallel execution contract: True
+OBSERVED EXECUTION: {"scenario": "Negotiation/Escalation - Multiple Intents", "passed": true, "seconds": 25.13, "mcp_tool_calls": ["get_customer", "list_tickets", "get_customer", "list_tickets"], "customer_data_requests": 1, "support_requests": 1, "model_requests": 4, "router_model_requests": 0, "summary_model_requests": 1, "total_model_requests": 5, "routing_decisions": [], "smoke_passed": true, "parallel_contract_passed": true}
+
+================================================================================
+SCENARIO: Urgency Detection - Immediate Escalation
+================================================================================
+Query: URGENT! I've been charged twice for the same transaction! Customer ID 3. Please refund immediately!
+--------------------------------------------------------------------------------
+Expected Capabilities:
+  - Detects urgency keywords (URGENT, immediately)
+  - Identifies billing issue type
+  - Fetches customer record and existing tickets (no transaction data exists)
+  - Creates high-priority ticket
+  - Provides immediate escalation path
+  - Shows ticket ID for tracking
+--------------------------------------------------------------------------------
+
+RESPONSE:
+--------------------------------------------------------------------------------
+Dear Bob,
+
+We have reviewed your account details (Customer ID: 3). Please note that your account is currently marked with the status **disabled**. Additionally, our system has not created a new ticket for this billing issue (your existing ticket 16 regarding API documentation remains **open**).
+
+This system cannot process refunds, reverse transactions, or forward requests to billing. To address the duplicate charge, please consider the following guidance:
+
+* **Check Pending vs. Settled Charges:** Check with your bank or card issuer to see whether both charges have posted/settled or if one is an authorization hold (pending charge), as temporary holds often release automatically depending on your financial institution.
+* **Avoid Further Transactions:** Avoid retrying transactions while the charges are under review to prevent additional holds.
+* **Contact Your Provider / Billing:** Please contact your payment provider, bank, or merchant billing support directly to dispute or request a refund for the charge. When contacting them, have your transaction dates, exact charge amounts, reference numbers, and payment method details (such as the last 4 digits of your card) ready.
+--------------------------------------------------------------------------------
+
+VERIFICATION:
+  [PASS] Response has substantial content
+  [PASS] Response contains relevant keywords
+
+================================================================================
+Parallel execution contract: True
+OBSERVED EXECUTION: {"scenario": "Urgency Detection - Immediate Escalation", "passed": true, "seconds": 23.57, "mcp_tool_calls": ["get_customer", "list_tickets", "get_customer", "list_tickets"], "customer_data_requests": 1, "support_requests": 1, "model_requests": 4, "router_model_requests": 0, "summary_model_requests": 1, "total_model_requests": 5, "routing_decisions": [], "smoke_passed": true, "parallel_contract_passed": true}
+
+================================================================================
+SCENARIO: Multi-Intent - Parallel Task Execution
+================================================================================
+Query: I'm customer 5 (Charlie Brown). Please show me my ticket history and also tell me how to reset my password
+--------------------------------------------------------------------------------
+Expected Capabilities:
+  - Identifies two distinct requests
+  - Fetches ticket history from data agent
+  - Provides password reset instructions from support
+  - Combines both responses coherently
+--------------------------------------------------------------------------------
+
+RESPONSE:
+--------------------------------------------------------------------------------
+Hello Charlie,
+
+Here is your ticket history and guidance on resetting your password:
+
+### Your Ticket History
+* **Ticket #8**
+  * **Issue:** Email notifications not being received
+  * **Status:** open
+  * **Priority:** medium
+  * **Created:** 2026-10-25 08:07:41
+* **Ticket #17**
+  * **Issue:** Typo in welcome email
+  * **Status:** resolved
+  * **Priority:** low
+  * **Created:** 2026-10-25 08:07:41
+
+---
+
+### How to Reset Your Password
+1. Navigate to the service login screen and select the **"Forgot Password"** or **"Reset Password"** option.
+2. Enter your registered email address (`charlie.brown@email.com`) and submit the request.
+3. Check your email inbox (including spam, junk, or promotions folders) for the password reset message.
+4. Open the link provided in the email to establish a new password.
+
+*Note:* Because Ticket #8 regarding email notification delivery is currently open, delivery of the reset email may be affected. If the email does not arrive after checking your spam/junk folders, please reply to let us know.
+--------------------------------------------------------------------------------
+
+VERIFICATION:
+  [PASS] Response has substantial content
+  [PASS] Response contains relevant keywords
+
+================================================================================
+Parallel execution contract: True
+OBSERVED EXECUTION: {"scenario": "Multi-Intent - Parallel Task Execution", "passed": true, "seconds": 19.25, "mcp_tool_calls": ["get_customer", "list_tickets", "get_customer", "list_tickets"], "customer_data_requests": 1, "support_requests": 1, "model_requests": 4, "router_model_requests": 0, "summary_model_requests": 1, "total_model_requests": 5, "routing_decisions": [], "smoke_passed": true, "parallel_contract_passed": true}
+
+================================================================================
+SCENARIO: Cross-Agent Dependency - Context Passing
+================================================================================
+Query: I can't login. Can you check if I have any open tickets about this? I'm customer 1.
+--------------------------------------------------------------------------------
+Expected Capabilities:
+  - Fetches customer information
+  - Searches for login-related tickets
+  - Support agent uses ticket context for troubleshooting
+  - Provides solutions based on ticket history
+  - Creates new ticket if needed
+--------------------------------------------------------------------------------
+
+RESPONSE:
+--------------------------------------------------------------------------------
+We have retrieved your account details and ticket history for Customer ID 1 (John Doe). 
+
+Here is the status of your tickets regarding login issues:
+* **Ticket #1:** "Cannot login to account" — Status: `open` (Priority: high)
+* **Ticket #6:** "Password reset not working" — Status: `in_progress` (Priority: medium)
+
+*(Please note that while Ticket #1 has an `open` status, Ticket #6 has an `in_progress` status. Additionally, while your account status is listed as active, whether the account is currently locked out is not exposed in the records.)*
+
+### Troubleshooting Steps
+While your tickets are being addressed, you can try the following general steps:
+1. **Use Private/Incognito Browsing:** Open a private window to rule out conflicting browser cache or session cookies.
+2. **Verify Credentials:** Check that your email address is entered correctly without leading or trailing spaces.
+3. **Password Reset:** If you request a password reset, check your spam or junk folder for the email.
+4. **Identify Error Messages:** Note any specific error message that appears (such as invalid credentials, lockout notices, or timeouts).
+
+If you are still unable to log in, what exact error message or behavior are you encountering?
+--------------------------------------------------------------------------------
+
+VERIFICATION:
+  [PASS] Response has substantial content
+  [PASS] Response contains relevant keywords
+
+================================================================================
+Parallel execution contract: True
+OBSERVED EXECUTION: {"scenario": "Cross-Agent Dependency - Context Passing", "passed": true, "seconds": 22.93, "mcp_tool_calls": ["get_customer", "list_tickets", "get_customer", "list_tickets"], "customer_data_requests": 1, "support_requests": 1, "model_requests": 4, "router_model_requests": 0, "summary_model_requests": 1, "total_model_requests": 5, "routing_decisions": [], "smoke_passed": true, "parallel_contract_passed": true}
+
+================================================================================
+SCENARIO: Data Aggregation - Statistical Analysis
+================================================================================
+Query: Give me statistics on customer tickets - how many are open, in progress, and resolved?
+--------------------------------------------------------------------------------
+Expected Capabilities:
+  - Calls ticket statistics MCP tool
+  - Aggregates data across all tickets
+  - Provides breakdown by status
+  - May include priority distribution
+  - Formatted statistical report
+--------------------------------------------------------------------------------
+
+RESPONSE:
+--------------------------------------------------------------------------------
+Here is the breakdown of customer tickets by status:
+
+* **Open:** 12
+* **In Progress:** 6
+* **Resolved:** 7
+
+**Total Tickets:** 25
+
+*(Additional breakdown by priority: 5 High, 8 Medium, 12 Low)*
+--------------------------------------------------------------------------------
+
+VERIFICATION:
+  [PASS] Response has substantial content
+  [PASS] Response contains relevant keywords
+
+================================================================================
+Parallel execution contract: True
+OBSERVED EXECUTION: {"scenario": "Data Aggregation - Statistical Analysis", "passed": true, "seconds": 11.69, "mcp_tool_calls": ["get_ticket_stats", "get_ticket_stats"], "customer_data_requests": 1, "support_requests": 1, "model_requests": 4, "router_model_requests": 0, "summary_model_requests": 1, "total_model_requests": 5, "routing_decisions": [], "smoke_passed": true, "parallel_contract_passed": true}
+
+================================================================================
+SCENARIO: Customer Search - Ticket Resolution Flow
+================================================================================
+Query: Find all tickets about password reset issues and help me understand the common solutions
+--------------------------------------------------------------------------------
+Expected Capabilities:
+  - Searches tickets by keyword (password reset)
+  - Analyzes common patterns
+  - Support agent provides standard solutions
+  - May identify customers needing follow-up
+--------------------------------------------------------------------------------
+
+RESPONSE:
+--------------------------------------------------------------------------------
+### Relevant Tickets Found
+
+A search of the ticketing records identified the following relevant tickets for your account:
+
+* **Ticket #6**
+  * **Issue:** Password reset not working
+  * **Status:** `in_progress`
+  * **Priority:** medium
+* **Ticket #1** *(related authentication issue)*
+  * **Issue:** Cannot login to account
+  * **Status:** `open`
+  * **Priority:** high
+
+*(Note: While the account status is listed as active, lockout status is not exposed in these records. Furthermore, the ticket database does not record resolution notes or knowledge base articles, so Ticket #6 has no attached resolution details.)*
+
+---
+
+### Common Troubleshooting Solutions
+
+Because specific historical resolutions are not recorded in the database, the following general troubleshooting steps are recommended for password reset issues:
+
+1. **Verify Email Address:** Confirm that the reset request is submitted using the exact email address registered to your account.
+2. **Check Spam and Email Filters:** Automated reset emails may be diverted to spam, junk, promotions, or quarantine folders, or intercepted by corporate mail filters.
+3. **Use the Most Recent Link:** Reset links are typically single-use or time-sensitive. If multiple requests were made, ensure you are accessing the link from the most recent email.
+4. **Resolve Browser Conflicts:** Clear your browser's cache and cookies, or open the reset link in a private/incognito window to avoid conflicts from cached sessions or autofill extensions.
+5. **Contact an Administrator:** If self-service reset emails do not arrive or continue to fail, contact your system or domain administrator directly to verify account status or request a manual reset.
+--------------------------------------------------------------------------------
+
+VERIFICATION:
+  [PASS] Response has substantial content
+  [PASS] Response contains relevant keywords
+
+================================================================================
+Parallel execution contract: True
+OBSERVED EXECUTION: {"scenario": "Customer Search - Ticket Resolution Flow", "passed": true, "seconds": 37.53, "mcp_tool_calls": ["search_tickets", "search_tickets", "search_tickets", "search_tickets", "list_tickets", "list_tickets", "get_ticket", "get_ticket"], "customer_data_requests": 1, "support_requests": 1, "model_requests": 10, "router_model_requests": 0, "summary_model_requests": 1, "total_model_requests": 11, "routing_decisions": [], "smoke_passed": true, "parallel_contract_passed": true}
+
+
+================================================================================
+TEST RESULTS SUMMARY
+================================================================================
+
+Tests Passed: 10/10
+Success Rate: 100.0%
+
+[PASS] ALL TESTS PASSED! Multi-agent system is working end-to-end!
+
+================================================================================
+

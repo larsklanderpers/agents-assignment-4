@@ -1,0 +1,131 @@
+[
+  {
+    "scenario": "Simple Query - Single Agent",
+    "passed": true,
+    "seconds": 46.3,
+    "mcp_tool_calls": [
+      "get_customer",
+      "list_tickets"
+    ],
+    "customer_data_requests": 1,
+    "support_requests": 1,
+    "model_requests": 3
+  },
+  {
+    "scenario": "Task Allocation - Customer Tier Recognition",
+    "passed": true,
+    "seconds": 23.01,
+    "mcp_tool_calls": [
+      "get_customer",
+      "list_tickets"
+    ],
+    "customer_data_requests": 1,
+    "support_requests": 1,
+    "model_requests": 3
+  },
+  {
+    "scenario": "Coordinated Query - Multi-Agent Collaboration",
+    "passed": true,
+    "seconds": 18.9,
+    "mcp_tool_calls": [
+      "get_customer",
+      "list_tickets"
+    ],
+    "customer_data_requests": 1,
+    "support_requests": 1,
+    "model_requests": 3
+  },
+  {
+    "scenario": "Multi-Step Coordination - Complex Data Query",
+    "passed": true,
+    "seconds": 22.42,
+    "mcp_tool_calls": [
+      "list_tickets",
+      "list_tickets"
+    ],
+    "customer_data_requests": 1,
+    "support_requests": 1,
+    "model_requests": 4
+  },
+  {
+    "scenario": "Negotiation/Escalation - Multiple Intents",
+    "passed": true,
+    "seconds": 28.36,
+    "mcp_tool_calls": [
+      "get_customer",
+      "list_tickets",
+      "get_ticket"
+    ],
+    "customer_data_requests": 1,
+    "support_requests": 1,
+    "model_requests": 4
+  },
+  {
+    "scenario": "Urgency Detection - Immediate Escalation",
+    "passed": true,
+    "seconds": 41.01,
+    "mcp_tool_calls": [
+      "get_customer",
+      "list_tickets",
+      "search_tickets",
+      "search_tickets",
+      "list_tickets"
+    ],
+    "customer_data_requests": 1,
+    "support_requests": 1,
+    "model_requests": 5
+  },
+  {
+    "scenario": "Multi-Intent - Parallel Task Execution",
+    "passed": true,
+    "seconds": 27.56,
+    "mcp_tool_calls": [
+      "get_customer",
+      "list_tickets"
+    ],
+    "customer_data_requests": 1,
+    "support_requests": 1,
+    "model_requests": 3
+  },
+  {
+    "scenario": "Cross-Agent Dependency - Context Passing",
+    "passed": true,
+    "seconds": 22.1,
+    "mcp_tool_calls": [
+      "get_customer",
+      "list_tickets"
+    ],
+    "customer_data_requests": 1,
+    "support_requests": 1,
+    "model_requests": 3
+  },
+  {
+    "scenario": "Data Aggregation - Statistical Analysis",
+    "passed": true,
+    "seconds": 15.13,
+    "mcp_tool_calls": [
+      "get_ticket_stats",
+      "get_ticket_stats"
+    ],
+    "customer_data_requests": 1,
+    "support_requests": 1,
+    "model_requests": 4
+  },
+  {
+    "scenario": "Customer Search - Ticket Resolution Flow",
+    "passed": true,
+    "seconds": 43.08,
+    "mcp_tool_calls": [
+      "search_tickets",
+      "search_tickets",
+      "list_tickets",
+      "get_ticket",
+      "get_ticket",
+      "search_tickets",
+      "search_tickets"
+    ],
+    "customer_data_requests": 1,
+    "support_requests": 1,
+    "model_requests": 8
+  }
+]
