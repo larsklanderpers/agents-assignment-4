@@ -1,0 +1,357 @@
+[
+  {
+    "case": "customer_lookup",
+    "calls": [
+      {
+        "name": "get_customer",
+        "args": {
+          "customer_id": 5
+        }
+      },
+      {
+        "name": "list_tickets",
+        "args": {
+          "customer_id": 5
+        }
+      }
+    ],
+    "tool_results": [
+      {
+        "name": "get_customer",
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\n  \"id\": 5,\n  \"name\": \"Synthetic Customer Five\",\n  \"email\": \"five@example.test\",\n  \"phone\": null,\n  \"status\": \"active\",\n  \"created_at\": \"2026-10-25 09:39:53\",\n  \"updated_at\": \"2026-10-25 09:39:53\"\n}"
+            }
+          ],
+          "structuredContent": {
+            "result": "{\n  \"id\": 5,\n  \"name\": \"Synthetic Customer Five\",\n  \"email\": \"five@example.test\",\n  \"phone\": null,\n  \"status\": \"active\",\n  \"created_at\": \"2026-10-25 09:39:53\",\n  \"updated_at\": \"2026-10-25 09:39:53\"\n}"
+          },
+          "isError": false
+        }
+      },
+      {
+        "name": "list_tickets",
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "[\n  {\n    \"id\": 1,\n    \"customer_id\": 5,\n    \"issue\": \"Synthetic login issue\",\n    \"status\": \"open\",\n    \"priority\": \"high\",\n    \"created_at\": \"2026-10-25 09:39:53\",\n    \"customer_name\": \"Synthetic Customer Five\",\n    \"customer_email\": \"five@example.test\",\n    \"customer_phone\": null,\n    \"customer_status\": \"active\"\n  },\n  {\n    \"id\": 2,\n    \"customer_id\": 5,\n    \"issue\": \"Synthetic resolved issue\",\n    \"status\": \"resolved\",\n    \"priority\": \"high\",\n    \"created_at\": \"2026-10-25 09:39:53\",\n    \"customer_name\": \"Synthetic Customer Five\",\n    \"customer_email\": \"five@example.test\",\n    \"customer_phone\": null,\n    \"customer_status\": \"active\"\n  },\n  {\n    \"id\": 3,\n    \"customer_id\": 5,\n    \"issue\": \"Synthetic minor issue\",\n    \"status\": \"open\",\n    \"priority\": \"low\",\n    \"created_at\": \"2026-10-25 09:39:53\",\n    \"customer_name\": \"Synthetic Customer Five\",\n    \"customer_email\": \"five@example.test\",\n    \"customer_phone\": null,\n    \"customer_status\": \"active\"\n  }\n]"
+            }
+          ],
+          "structuredContent": {
+            "result": "[\n  {\n    \"id\": 1,\n    \"customer_id\": 5,\n    \"issue\": \"Synthetic login issue\",\n    \"status\": \"open\",\n    \"priority\": \"high\",\n    \"created_at\": \"2026-10-25 09:39:53\",\n    \"customer_name\": \"Synthetic Customer Five\",\n    \"customer_email\": \"five@example.test\",\n    \"customer_phone\": null,\n    \"customer_status\": \"active\"\n  },\n  {\n    \"id\": 2,\n    \"customer_id\": 5,\n    \"issue\": \"Synthetic resolved issue\",\n    \"status\": \"resolved\",\n    \"priority\": \"high\",\n    \"created_at\": \"2026-10-25 09:39:53\",\n    \"customer_name\": \"Synthetic Customer Five\",\n    \"customer_email\": \"five@example.test\",\n    \"customer_phone\": null,\n    \"customer_status\": \"active\"\n  },\n  {\n    \"id\": 3,\n    \"customer_id\": 5,\n    \"issue\": \"Synthetic minor issue\",\n    \"status\": \"open\",\n    \"priority\": \"low\",\n    \"created_at\": \"2026-10-25 09:39:53\",\n    \"customer_name\": \"Synthetic Customer Five\",\n    \"customer_email\": \"five@example.test\",\n    \"customer_phone\": null,\n    \"customer_status\": \"active\"\n  }\n]"
+          },
+          "isError": false
+        }
+      }
+    ],
+    "final": "{\"schema_version\":\"1.0\",\"status\":\"success\",\"summary\":\"Successfully retrieved account information and associated tickets for customer 5 (Synthetic Customer Five). No records were modified.\",\"customer_context\":{\"id\":5,\"name\":\"Synthetic Customer Five\",\"email\":\"five@example.test\",\"phone\":null,\"status\":\"active\",\"created_at\":\"2026-10-25 09:39:53\",\"updated_at\":\"2026-10-25 09:39:53\"},\"customers\":[],\"relevant_tickets\":[{\"id\":1,\"customer_id\":5,\"issue\":\"Synthetic login issue\",\"status\":\"open\",\"priority\":\"high\",\"created_at\":\"2026-10-25 09:39:53\"},{\"id\":2,\"customer_id\":5,\"issue\":\"Synthetic resolved issue\",\"status\":\"resolved\",\"priority\":\"high\",\"created_at\":\"2026-10-25 09:39:53\"},{\"id\":3,\"customer_id\":5,\"issue\":\"Synthetic minor issue\",\"status\":\"open\",\"priority\":\"low\",\"created_at\":\"2026-10-25 09:39:53\"}],\"ticket_statistics\":null,\"customer_statistics\":null,\"completed_actions\":[{\"tool\":\"get_customer\",\"description\":\"Retrieved details for customer ID 5\",\"record_id\":5},{\"tool\":\"list_tickets\",\"description\":\"Retrieved tickets associated with customer ID 5\",\"record_id\":null}],\"errors\":[]}"
+  },
+  {
+    "schema_case": "customer_lookup",
+    "status": "success",
+    "passed": true
+  },
+  {
+    "case": "ticket_lookup",
+    "calls": [
+      {
+        "name": "list_tickets",
+        "args": {
+          "priority": "high",
+          "status": "open"
+        }
+      }
+    ],
+    "tool_results": [
+      {
+        "name": "list_tickets",
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "[\n  {\n    \"id\": 1,\n    \"customer_id\": 5,\n    \"issue\": \"Synthetic login issue\",\n    \"status\": \"open\",\n    \"priority\": \"high\",\n    \"created_at\": \"2026-10-25 09:39:53\",\n    \"customer_name\": \"Synthetic Customer Five\",\n    \"customer_email\": \"five@example.test\",\n    \"customer_phone\": null,\n    \"customer_status\": \"active\"\n  }\n]"
+            }
+          ],
+          "structuredContent": {
+            "result": "[\n  {\n    \"id\": 1,\n    \"customer_id\": 5,\n    \"issue\": \"Synthetic login issue\",\n    \"status\": \"open\",\n    \"priority\": \"high\",\n    \"created_at\": \"2026-10-25 09:39:53\",\n    \"customer_name\": \"Synthetic Customer Five\",\n    \"customer_email\": \"five@example.test\",\n    \"customer_phone\": null,\n    \"customer_status\": \"active\"\n  }\n]"
+          },
+          "isError": false
+        }
+      }
+    ],
+    "final": "{\"schema_version\":\"1.0\",\"status\":\"success\",\"summary\":\"Found 1 open high-priority ticket.\",\"customer_context\":null,\"customers\":[],\"relevant_tickets\":[{\"id\":1,\"customer_id\":5,\"issue\":\"Synthetic login issue\",\"status\":\"open\",\"priority\":\"high\",\"created_at\":\"2026-10-25 09:39:53\"}],\"ticket_statistics\":null,\"customer_statistics\":null,\"completed_actions\":[{\"tool\":\"list_tickets\",\"description\":\"Listed open high-priority tickets\",\"record_id\":null}],\"errors\":[]}"
+  },
+  {
+    "schema_case": "ticket_lookup",
+    "status": "success",
+    "passed": true
+  },
+  {
+    "case": "missing_customer",
+    "calls": [
+      {
+        "name": "get_customer",
+        "args": {
+          "customer_id": 999999
+        }
+      }
+    ],
+    "tool_results": [
+      {
+        "name": "get_customer",
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "null"
+            }
+          ],
+          "structuredContent": {
+            "result": "null"
+          },
+          "isError": false
+        }
+      }
+    ],
+    "final": "{\"schema_version\":\"1.0\",\"status\":\"not_found\",\"summary\":\"Customer with ID 999999 was not found in the database. No records were modified.\",\"customer_context\":null,\"customers\":[],\"relevant_tickets\":[],\"ticket_statistics\":null,\"customer_statistics\":null,\"completed_actions\":[{\"tool\":\"get_customer\",\"description\":\"Looked up customer with ID 999999\",\"record_id\":999999}],\"errors\":[{\"code\":\"not_found\",\"message\":\"Customer with ID 999999 was not found.\"}]}"
+  },
+  {
+    "schema_case": "missing_customer",
+    "status": "not_found",
+    "passed": true
+  },
+  {
+    "case": "ambiguous_customer",
+    "calls": [],
+    "tool_results": [],
+    "final": "{\"schema_version\":\"1.0\",\"status\":\"needs_clarification\",\"summary\":\"Please provide your customer ID, name, or registered email address so that I can look up your account details.\",\"customer_context\":null,\"customers\":[],\"relevant_tickets\":[],\"ticket_statistics\":null,\"customer_statistics\":null,\"completed_actions\":[],\"errors\":[{\"code\":\"missing_identity\",\"message\":\"No customer ID, name, or email was provided to identify your account.\"}]}"
+  },
+  {
+    "schema_case": "ambiguous_customer",
+    "status": "needs_clarification",
+    "passed": true
+  },
+  {
+    "case": "ticket_statistics",
+    "calls": [
+      {
+        "name": "get_ticket_stats",
+        "args": {}
+      }
+    ],
+    "tool_results": [
+      {
+        "name": "get_ticket_stats",
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\n  \"total_tickets\": 3,\n  \"by_status\": {\n    \"open\": 2,\n    \"resolved\": 1\n  },\n  \"by_priority\": {\n    \"high\": 2,\n    \"low\": 1\n  }\n}"
+            }
+          ],
+          "structuredContent": {
+            "result": "{\n  \"total_tickets\": 3,\n  \"by_status\": {\n    \"open\": 2,\n    \"resolved\": 1\n  },\n  \"by_priority\": {\n    \"high\": 2,\n    \"low\": 1\n  }\n}"
+          },
+          "isError": false
+        }
+      }
+    ],
+    "final": "{\"schema_version\":\"1.0\",\"status\":\"success\",\"summary\":\"Retrieved ticket statistics: 3 total tickets (2 open, 0 in progress, 1 resolved; 2 high priority, 0 medium priority, 1 low priority).\",\"customer_context\":null,\"customers\":[],\"relevant_tickets\":[],\"ticket_statistics\":{\"total_tickets\":3,\"open\":2,\"in_progress\":0,\"resolved\":1,\"high\":2,\"medium\":0,\"low\":1},\"customer_statistics\":null,\"completed_actions\":[{\"tool\":\"get_ticket_stats\",\"description\":\"Retrieved ticket statistics by status and priority\",\"record_id\":null}],\"errors\":[]}"
+  },
+  {
+    "schema_case": "ticket_statistics",
+    "status": "success",
+    "passed": true
+  },
+  {
+    "case": "ticket_creation",
+    "calls": [
+      {
+        "name": "get_customer",
+        "args": {
+          "customer_id": 5
+        }
+      },
+      {
+        "name": "list_tickets",
+        "args": {
+          "customer_id": 5
+        }
+      },
+      {
+        "name": "search_tickets",
+        "args": {
+          "keyword": "XYZ99"
+        }
+      },
+      {
+        "name": "create_ticket",
+        "args": {
+          "priority": "high",
+          "issue": "Schema fixture export failure XYZ99",
+          "status": "open",
+          "customer_id": 5
+        }
+      }
+    ],
+    "tool_results": [
+      {
+        "name": "get_customer",
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\n  \"id\": 5,\n  \"name\": \"Synthetic Customer Five\",\n  \"email\": \"five@example.test\",\n  \"phone\": null,\n  \"status\": \"active\",\n  \"created_at\": \"2026-10-25 09:39:53\",\n  \"updated_at\": \"2026-10-25 09:39:53\"\n}"
+            }
+          ],
+          "structuredContent": {
+            "result": "{\n  \"id\": 5,\n  \"name\": \"Synthetic Customer Five\",\n  \"email\": \"five@example.test\",\n  \"phone\": null,\n  \"status\": \"active\",\n  \"created_at\": \"2026-10-25 09:39:53\",\n  \"updated_at\": \"2026-10-25 09:39:53\"\n}"
+          },
+          "isError": false
+        }
+      },
+      {
+        "name": "list_tickets",
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "[\n  {\n    \"id\": 1,\n    \"customer_id\": 5,\n    \"issue\": \"Synthetic login issue\",\n    \"status\": \"open\",\n    \"priority\": \"high\",\n    \"created_at\": \"2026-10-25 09:39:53\",\n    \"customer_name\": \"Synthetic Customer Five\",\n    \"customer_email\": \"five@example.test\",\n    \"customer_phone\": null,\n    \"customer_status\": \"active\"\n  },\n  {\n    \"id\": 2,\n    \"customer_id\": 5,\n    \"issue\": \"Synthetic resolved issue\",\n    \"status\": \"resolved\",\n    \"priority\": \"high\",\n    \"created_at\": \"2026-10-25 09:39:53\",\n    \"customer_name\": \"Synthetic Customer Five\",\n    \"customer_email\": \"five@example.test\",\n    \"customer_phone\": null,\n    \"customer_status\": \"active\"\n  },\n  {\n    \"id\": 3,\n    \"customer_id\": 5,\n    \"issue\": \"Synthetic minor issue\",\n    \"status\": \"open\",\n    \"priority\": \"low\",\n    \"created_at\": \"2026-10-25 09:39:53\",\n    \"customer_name\": \"Synthetic Customer Five\",\n    \"customer_email\": \"five@example.test\",\n    \"customer_phone\": null,\n    \"customer_status\": \"active\"\n  }\n]"
+            }
+          ],
+          "structuredContent": {
+            "result": "[\n  {\n    \"id\": 1,\n    \"customer_id\": 5,\n    \"issue\": \"Synthetic login issue\",\n    \"status\": \"open\",\n    \"priority\": \"high\",\n    \"created_at\": \"2026-10-25 09:39:53\",\n    \"customer_name\": \"Synthetic Customer Five\",\n    \"customer_email\": \"five@example.test\",\n    \"customer_phone\": null,\n    \"customer_status\": \"active\"\n  },\n  {\n    \"id\": 2,\n    \"customer_id\": 5,\n    \"issue\": \"Synthetic resolved issue\",\n    \"status\": \"resolved\",\n    \"priority\": \"high\",\n    \"created_at\": \"2026-10-25 09:39:53\",\n    \"customer_name\": \"Synthetic Customer Five\",\n    \"customer_email\": \"five@example.test\",\n    \"customer_phone\": null,\n    \"customer_status\": \"active\"\n  },\n  {\n    \"id\": 3,\n    \"customer_id\": 5,\n    \"issue\": \"Synthetic minor issue\",\n    \"status\": \"open\",\n    \"priority\": \"low\",\n    \"created_at\": \"2026-10-25 09:39:53\",\n    \"customer_name\": \"Synthetic Customer Five\",\n    \"customer_email\": \"five@example.test\",\n    \"customer_phone\": null,\n    \"customer_status\": \"active\"\n  }\n]"
+          },
+          "isError": false
+        }
+      },
+      {
+        "name": "search_tickets",
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "[]"
+            }
+          ],
+          "structuredContent": {
+            "result": "[]"
+          },
+          "isError": false
+        }
+      },
+      {
+        "name": "create_ticket",
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\n  \"id\": 4,\n  \"customer_id\": 5,\n  \"issue\": \"Schema fixture export failure XYZ99\",\n  \"status\": \"open\",\n  \"priority\": \"high\",\n  \"created_at\": \"2026-10-25 09:42:41\",\n  \"customer_name\": \"Synthetic Customer Five\",\n  \"customer_email\": \"five@example.test\",\n  \"customer_phone\": null,\n  \"customer_status\": \"active\"\n}"
+            }
+          ],
+          "structuredContent": {
+            "result": "{\n  \"id\": 4,\n  \"customer_id\": 5,\n  \"issue\": \"Schema fixture export failure XYZ99\",\n  \"status\": \"open\",\n  \"priority\": \"high\",\n  \"created_at\": \"2026-10-25 09:42:41\",\n  \"customer_name\": \"Synthetic Customer Five\",\n  \"customer_email\": \"five@example.test\",\n  \"customer_phone\": null,\n  \"customer_status\": \"active\"\n}"
+          },
+          "isError": false
+        }
+      }
+    ],
+    "final": "{\"schema_version\":\"1.0\",\"status\":\"success\",\"summary\":\"Verified customer 5 (Synthetic Customer Five) and confirmed no duplicate ticket existed for issue 'Schema fixture export failure XYZ99'. Created new high-priority ticket ID 4 during this request. Tickets 1, 2, and 3 are pre-existing records for customer 5.\",\"customer_context\":{\"id\":5,\"name\":\"Synthetic Customer Five\",\"email\":\"five@example.test\",\"phone\":null,\"status\":\"active\",\"created_at\":\"2026-10-25 09:39:53\",\"updated_at\":\"2026-10-25 09:39:53\"},\"customers\":[],\"relevant_tickets\":[{\"id\":4,\"customer_id\":5,\"issue\":\"Schema fixture export failure XYZ99\",\"status\":\"open\",\"priority\":\"high\",\"created_at\":\"2026-10-25 09:42:41\"},{\"id\":1,\"customer_id\":5,\"issue\":\"Synthetic login issue\",\"status\":\"open\",\"priority\":\"high\",\"created_at\":\"2026-10-25 09:39:53\"},{\"id\":2,\"customer_id\":5,\"issue\":\"Synthetic resolved issue\",\"status\":\"resolved\",\"priority\":\"high\",\"created_at\":\"2026-10-25 09:39:53\"},{\"id\":3,\"customer_id\":5,\"issue\":\"Synthetic minor issue\",\"status\":\"open\",\"priority\":\"low\",\"created_at\":\"2026-10-25 09:39:53\"}],\"ticket_statistics\":null,\"customer_statistics\":null,\"completed_actions\":[{\"tool\":\"get_customer\",\"description\":\"Retrieved customer details for customer ID 5\",\"record_id\":5},{\"tool\":\"list_tickets\",\"description\":\"Listed existing tickets for customer ID 5 to verify no duplicates existed\",\"record_id\":null},{\"tool\":\"search_tickets\",\"description\":\"Searched tickets for keyword XYZ99 to check for duplicate issues\",\"record_id\":null},{\"tool\":\"create_ticket\",\"description\":\"Created high-priority ticket for customer 5 regarding Schema fixture export failure XYZ99\",\"record_id\":4}],\"errors\":[]}"
+  },
+  {
+    "schema_case": "ticket_creation",
+    "status": "success",
+    "passed": true
+  },
+  {
+    "case": "database_error",
+    "calls": [
+      {
+        "name": "get_customer",
+        "args": {
+          "customer_id": 5
+        }
+      },
+      {
+        "name": "list_customers",
+        "args": {}
+      },
+      {
+        "name": "list_tickets",
+        "args": {}
+      }
+    ],
+    "tool_results": [
+      {
+        "name": "get_customer",
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Error executing tool get_customer: no such table: customers"
+            }
+          ],
+          "isError": true
+        }
+      },
+      {
+        "name": "list_customers",
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Error executing tool list_customers: no such table: customers"
+            }
+          ],
+          "isError": true
+        }
+      },
+      {
+        "name": "list_tickets",
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Error executing tool list_tickets: no such table: customers"
+            }
+          ],
+          "isError": true
+        }
+      }
+    ],
+    "final": "{\"schema_version\":\"1.0\",\"status\":\"error\",\"summary\":\"Failed to retrieve customer 5 information because the database returned an error: no such table: customers. The database schema appears to be uninitialized or missing.\",\"customer_context\":null,\"customers\":[],\"relevant_tickets\":[],\"ticket_statistics\":null,\"customer_statistics\":null,\"completed_actions\":[],\"errors\":[{\"code\":\"tool_error\",\"message\":\"Error executing tool get_customer: no such table: customers\"}]}"
+  },
+  {
+    "schema_case": "database_error",
+    "status": "error",
+    "passed": true
+  },
+  {
+    "case": "mcp_unavailable",
+    "calls": [
+      {
+        "name": "get_customer",
+        "args": {
+          "customer_id": 5
+        }
+      }
+    ],
+    "tool_results": [
+      {
+        "name": "get_customer",
+        "response": {
+          "error": "Invoking `get_customer()` failed as no tool with that name is available. The tools you can call are: set_model_response. You could retry, but it is IMPORTANT that you only call a tool from that list."
+        }
+      }
+    ],
+    "final": "{\"schema_version\":\"1.0\",\"status\":\"error\",\"summary\":\"Unable to retrieve information for customer ID 5 because the required customer lookup tool is unavailable.\",\"customer_context\":null,\"customers\":[],\"relevant_tickets\":[],\"ticket_statistics\":null,\"customer_statistics\":null,\"completed_actions\":[],\"errors\":[{\"code\":\"unavailable\",\"message\":\"The customer lookup tool 'get_customer' is unavailable in the current environment.\"}]}"
+  },
+  {
+    "schema_case": "mcp_unavailable",
+    "status": "error",
+    "passed": true
+  }
+]

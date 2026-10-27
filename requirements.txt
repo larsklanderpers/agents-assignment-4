@@ -25,3 +25,6 @@ mcp>=1.24,<2
 
 # Test runner (tests/*.py also support `python -m pytest`)
 pytest>=8
+
+# Typed Customer Data final-response validation
+pydantic>=2,<3

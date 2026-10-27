@@ -7,3 +7,6 @@ uvicorn>=0.30.0
 python-dotenv>=1.0.0
 nest-asyncio>=1.6.0
 requests>=2.31.0
+
+# Typed Customer Data final-response validation
+pydantic>=2,<3
