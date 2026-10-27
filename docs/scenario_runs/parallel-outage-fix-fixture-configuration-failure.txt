@@ -1,0 +1,79 @@
+/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/agents/host_agent/agent.py:53: UserWarning: [EXPERIMENTAL] RemoteA2aAgent: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  RemoteA2aAgent(
+/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/features/_feature_decorator.py:71: UserWarning: [EXPERIMENTAL] feature FeatureName.PLUGGABLE_AUTH is enabled.
+  check_feature_enabled()
+/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/run_agents.py:87: UserWarning: [EXPERIMENTAL] A2aAgentExecutorConfig: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  _DEFAULT_EVENT_CONVERTER = A2aAgentExecutorConfig().event_converter
+test_cached_and_uncached_outages_return_failed_tasks (tests.test_parallel_http.TestParallelHttp.test_cached_and_uncached_outages_return_failed_tasks) ... /mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/run_agents.py:117: UserWarning: [EXPERIMENTAL] A2aAgentExecutor: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  executor = A2aAgentExecutor(runner=runner, config=config)
+[HOST_AGENT] Using BASIC sequential router
+/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/agents/host_agent/parallel_router_agent.py:115: DeprecationWarning: ParallelAgent is deprecated in favor of Workflow and will be removed in a future version. Workflow cannot yet be used as an LlmAgent sub-agent.
+  sub_agents=[ParallelAgent(name='parallel_workers', sub_agents=workers,
+/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/agents/host_agent/parallel_router_agent.py:114: DeprecationWarning: SequentialAgent is deprecated in favor of Workflow and will be removed in a future version. Workflow cannot yet be used as an LlmAgent sub-agent.
+  return SequentialAgent(name='parallel_customer_support_host', before_agent_callback=prepare_parallel,
+
+  test_cached_and_uncached_outages_return_failed_tasks (tests.test_parallel_http.TestParallelHttp.test_cached_and_uncached_outages_return_failed_tasks) (failed_index=0, warm=False) ... ERROR
+  test_cached_and_uncached_outages_return_failed_tasks (tests.test_parallel_http.TestParallelHttp.test_cached_and_uncached_outages_return_failed_tasks) (failed_index=0, warm=True) ... ERROR
+  test_cached_and_uncached_outages_return_failed_tasks (tests.test_parallel_http.TestParallelHttp.test_cached_and_uncached_outages_return_failed_tasks) (failed_index=1, warm=False) ... ERROR
+  test_cached_and_uncached_outages_return_failed_tasks (tests.test_parallel_http.TestParallelHttp.test_cached_and_uncached_outages_return_failed_tasks) (failed_index=1, warm=True) ... ERROR
+
+======================================================================
+ERROR: test_cached_and_uncached_outages_return_failed_tasks (tests.test_parallel_http.TestParallelHttp.test_cached_and_uncached_outages_return_failed_tasks) (failed_index=0, warm=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/tests/test_parallel_http.py", line 58, in test_cached_and_uncached_outages_return_failed_tasks
+    worker.agent_card = url + '/.well-known/agent-card.json'
+    ^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/pydantic/main.py", line 1111, in __setattr__
+    elif (setattr_handler := self._setattr_handler(name, value)) is not None:
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/pydantic/main.py", line 1158, in _setattr_handler
+    raise ValueError(f'"{cls.__name__}" object has no field "{name}"')
+ValueError: "ParallelRemoteA2aAgent" object has no field "agent_card"
+
+======================================================================
+ERROR: test_cached_and_uncached_outages_return_failed_tasks (tests.test_parallel_http.TestParallelHttp.test_cached_and_uncached_outages_return_failed_tasks) (failed_index=0, warm=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/tests/test_parallel_http.py", line 58, in test_cached_and_uncached_outages_return_failed_tasks
+    worker.agent_card = url + '/.well-known/agent-card.json'
+    ^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/pydantic/main.py", line 1111, in __setattr__
+    elif (setattr_handler := self._setattr_handler(name, value)) is not None:
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/pydantic/main.py", line 1158, in _setattr_handler
+    raise ValueError(f'"{cls.__name__}" object has no field "{name}"')
+ValueError: "ParallelRemoteA2aAgent" object has no field "agent_card"
+
+======================================================================
+ERROR: test_cached_and_uncached_outages_return_failed_tasks (tests.test_parallel_http.TestParallelHttp.test_cached_and_uncached_outages_return_failed_tasks) (failed_index=1, warm=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/tests/test_parallel_http.py", line 58, in test_cached_and_uncached_outages_return_failed_tasks
+    worker.agent_card = url + '/.well-known/agent-card.json'
+    ^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/pydantic/main.py", line 1111, in __setattr__
+    elif (setattr_handler := self._setattr_handler(name, value)) is not None:
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/pydantic/main.py", line 1158, in _setattr_handler
+    raise ValueError(f'"{cls.__name__}" object has no field "{name}"')
+ValueError: "ParallelRemoteA2aAgent" object has no field "agent_card"
+
+======================================================================
+ERROR: test_cached_and_uncached_outages_return_failed_tasks (tests.test_parallel_http.TestParallelHttp.test_cached_and_uncached_outages_return_failed_tasks) (failed_index=1, warm=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/tests/test_parallel_http.py", line 58, in test_cached_and_uncached_outages_return_failed_tasks
+    worker.agent_card = url + '/.well-known/agent-card.json'
+    ^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/pydantic/main.py", line 1111, in __setattr__
+    elif (setattr_handler := self._setattr_handler(name, value)) is not None:
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/pydantic/main.py", line 1158, in _setattr_handler
+    raise ValueError(f'"{cls.__name__}" object has no field "{name}"')
+ValueError: "ParallelRemoteA2aAgent" object has no field "agent_card"
+
+----------------------------------------------------------------------
+Ran 1 test in 1.109s
+
+FAILED (errors=4)

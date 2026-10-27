@@ -1,0 +1,370 @@
+/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/features/_feature_decorator.py:71: UserWarning: [EXPERIMENTAL] feature FeatureName.PLUGGABLE_AUTH is enabled.
+  check_feature_enabled()
+/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/agents/host_agent/agent.py:53: UserWarning: [EXPERIMENTAL] RemoteA2aAgent: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  RemoteA2aAgent(
+/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/run_agents.py:87: UserWarning: [EXPERIMENTAL] A2aAgentExecutorConfig: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  _DEFAULT_EVENT_CONVERTER = A2aAgentExecutorConfig().event_converter
+test_invalid_final_after_write_fails_without_retry_or_handoff (tests.test_response_schema.TestADKValidation.test_invalid_final_after_write_fails_without_retry_or_handoff) ... /mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/tests/test_response_schema.py:133: DeprecationWarning: SequentialAgent is deprecated in favor of Workflow and will be removed in a future version. Workflow cannot yet be used as an LlmAgent sub-agent.
+  root=SequentialAgent(name='schema_test',sub_agents=[data,NextAgent(name='next_agent',calls=downstream)])
+/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/tools/set_model_response_tool.py:272: UserWarning: [EXPERIMENTAL] feature FeatureName.JSON_SCHEMA_FOR_FUNC_DECL is enabled.
+  build_function_declaration(
+Skipping missing token usage metadata for agent customer_data_agent and model gemini-3.8-flash
+Skipping missing token usage metadata for agent customer_data_agent and model gemini-3.8-flash
+ok
+test_sdk_fallback_after_write_valid_and_invalid (tests.test_response_schema.TestADKValidation.test_sdk_fallback_after_write_valid_and_invalid) ... Skipping missing token usage metadata for agent customer_data_agent and model gemini-3.8-flash
+Skipping missing token usage metadata for agent customer_data_agent and model gemini-3.8-flash
+Skipping missing token usage metadata for agent customer_data_agent and model gemini-3.8-flash
+Skipping missing token usage metadata for agent customer_data_agent and model gemini-3.8-flash
+ok
+test_valid_final_after_write_preserves_id_and_allows_handoff (tests.test_response_schema.TestADKValidation.test_valid_final_after_write_preserves_id_and_allows_handoff) ... Skipping missing token usage metadata for agent customer_data_agent and model gemini-3.8-flash
+Skipping missing token usage metadata for agent customer_data_agent and model gemini-3.8-flash
+ok
+test_completion_gate_rejects_old_turn_and_malformed_final (tests.test_response_schema.TestResponseSchema.test_completion_gate_rejects_old_turn_and_malformed_final) ... ok
+test_missing_extra_wrong_types_fences_and_invalid_nested_fields (tests.test_response_schema.TestResponseSchema.test_missing_extra_wrong_types_fences_and_invalid_nested_fields) ... ok
+test_nested_extras_rejected_and_created_id_preserved (tests.test_response_schema.TestResponseSchema.test_nested_extras_rejected_and_created_id_preserved) ... ok
+test_sdk_fallback_preserves_required_nulls_and_rejects_bad_or_mixed_args (tests.test_response_schema.TestResponseSchema.test_sdk_fallback_preserves_required_nulls_and_rejects_bad_or_mixed_args) ... ok
+test_tool_calls_and_stream_fragments_not_mistaken_for_final_json (tests.test_response_schema.TestResponseSchema.test_tool_calls_and_stream_fragments_not_mistaken_for_final_json) ... ok
+test_valid_success_and_error_envelopes (tests.test_response_schema.TestResponseSchema.test_valid_success_and_error_envelopes) ... ok
+test_cancellation_is_not_converted_to_an_error_event (tests.test_parallel.TestParallel.test_cancellation_is_not_converted_to_an_error_event) ... ok
+test_capture_rejects_previous_turn (tests.test_parallel.TestParallel.test_capture_rejects_previous_turn) ... ok
+test_concurrency_repeated_turns_and_worker_failure (tests.test_parallel.TestParallel.test_concurrency_repeated_turns_and_worker_failure) ... /mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/agents/host_agent/parallel_router_agent.py:115: DeprecationWarning: ParallelAgent is deprecated in favor of Workflow and will be removed in a future version. Workflow cannot yet be used as an LlmAgent sub-agent.
+  sub_agents=[ParallelAgent(name='parallel_workers', sub_agents=workers,
+/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/agents/host_agent/parallel_router_agent.py:114: DeprecationWarning: SequentialAgent is deprecated in favor of Workflow and will be removed in a future version. Workflow cannot yet be used as an LlmAgent sub-agent.
+  return SequentialAgent(name='parallel_customer_support_host', before_agent_callback=prepare_parallel,
+ok
+test_missing_stale_outputs_and_readonly_instruction (tests.test_parallel.TestParallel.test_missing_stale_outputs_and_readonly_instruction) ... ok
+test_parallel_support_cannot_write (tests.test_parallel.TestParallel.test_parallel_support_cannot_write) ... ok
+test_remote_failure_drains_both_workers_before_terminal_failure (tests.test_parallel.TestParallel.test_remote_failure_drains_both_workers_before_terminal_failure) ... ok
+test_unexpected_remote_exception_is_deferred (tests.test_parallel.TestParallel.test_unexpected_remote_exception_is_deferred) ... ok
+test_cached_and_uncached_outages_return_failed_tasks (tests.test_parallel_http.TestParallelHttp.test_cached_and_uncached_outages_return_failed_tasks) ... /mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/run_agents.py:117: UserWarning: [EXPERIMENTAL] A2aAgentExecutor: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  executor = A2aAgentExecutor(runner=runner, config=config)
+[HOST_AGENT] Using BASIC sequential router
+/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/a2a/executor/a2a_agent_executor.py:188: UserWarning: [EXPERIMENTAL] convert_a2a_request_to_agent_run_request: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  run_request = self._config.request_converter(
+/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/a2a/converters/request_converter.py:127: UserWarning: [EXPERIMENTAL] convert_a2a_part_to_genai_part: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  genai_parts = part_converter(a2a_part)
+/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/a2a/converters/request_converter.py:132: UserWarning: [EXPERIMENTAL] AgentRunRequest: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  return AgentRunRequest(
+/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/a2a/executor/a2a_agent_executor.py:225: UserWarning: [EXPERIMENTAL] TaskResultAggregator: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  task_result_aggregator = TaskResultAggregator()
+/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/run_agents.py:94: UserWarning: [EXPERIMENTAL] convert_event_to_a2a_events: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  return _DEFAULT_EVENT_CONVERTER(event, *args)
+/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/a2a/converters/event_converter.py:592: UserWarning: [EXPERIMENTAL] convert_event_to_a2a_message: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  message = convert_event_to_a2a_message(
+/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/a2a/agent/_remote_a2a_agent.py:959: UserWarning: [EXPERIMENTAL] AgentCardResolutionError: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  raise AgentCardResolutionError(
+Failed to resolve remote A2A agent customer_data: Failed to resolve AgentCard from URL http://127.0.0.1:53541/.well-known/agent-card.json: HTTP Error 503: Network communication error fetching agent card from http://127.0.0.1:53541/.well-known/agent-card.json: All connection attempts failed
+RemoteA2aAgent 'support_specialist' cannot forward the preceding state-only event across A2A. Session state is local to each agent; include the required values in event content instead.
+/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/a2a/agent/_remote_a2a_agent.py:1489: UserWarning: [EXPERIMENTAL] convert_genai_part_to_a2a_part: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  raw_parts = self._genai_part_converter(part)
+/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/a2a/converters/event_converter.py:260: UserWarning: [EXPERIMENTAL] convert_a2a_message_to_event: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  event: Event = convert_a2a_message_to_event(
+Error handling A2A request: customer_data failed: Failed to initialize remote A2A agent: Failed to initialize remote A2A agent customer_data: Failed to resolve AgentCard from URL http://127.0.0.1:53541/.well-known/agent-card.json: HTTP Error 503: Network communication error fetching agent card from http://127.0.0.1:53541/.well-known/agent-card.json: All connection attempts failed
+Traceback (most recent call last):
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/a2a/executor/a2a_agent_executor.py", line 153, in execute
+    await self._handle_request(context, event_queue)
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/a2a/executor/a2a_agent_executor.py", line 228, in _handle_request
+    async for adk_event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/runners.py", line 1391, in run_async
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 164, in stream_in_scope
+    item = await _drive(owned.__anext__())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 152, in _drive
+    return await step
+           ^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/runners.py", line 1359, in _run_with_trace
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/runners.py", line 1593, in _exec_with_plugin
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/runners.py", line 1346, in execute
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 359, in run_async
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 460, in _run_with_lifecycle
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 164, in stream_in_scope
+    item = await _drive(owned.__anext__())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 152, in _drive
+    return await step
+           ^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 423, in _run
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/sequential_agent.py", line 135, in _run_async_impl
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 359, in run_async
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 460, in _run_with_lifecycle
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 164, in stream_in_scope
+    item = await _drive(owned.__anext__())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 152, in _drive
+    return await step
+           ^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 430, in _run
+    if event := await self._handle_after_agent_callback(ctx):
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 644, in _handle_after_agent_callback
+    return await self._handle_agent_callbacks(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 584, in _handle_agent_callbacks
+    callback_content = await _run_callbacks(
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/utils/_callback_pipeline.py", line 95, in _run_callbacks
+    callback_result = _invoke_callback(callback, *args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/utils/_callback_pipeline.py", line 78, in _invoke_callback
+    return _callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/agents/host_agent/parallel_router_agent.py", line 44, in finish_parallel
+    raise RuntimeError('; '.join(error for error in errors if error))
+RuntimeError: customer_data failed: Failed to initialize remote A2A agent: Failed to initialize remote A2A agent customer_data: Failed to resolve AgentCard from URL http://127.0.0.1:53541/.well-known/agent-card.json: HTTP Error 503: Network communication error fetching agent card from http://127.0.0.1:53541/.well-known/agent-card.json: All connection attempts failed
+RemoteA2aAgent 'customer_data' cannot forward the preceding state-only event across A2A. Session state is local to each agent; include the required values in event content instead.
+RemoteA2aAgent 'support_specialist' cannot forward the preceding state-only event across A2A. Session state is local to each agent; include the required values in event content instead.
+RemoteA2aAgent 'customer_data' cannot forward the preceding state-only event across A2A. Session state is local to each agent; include the required values in event content instead.
+RemoteA2aAgent 'support_specialist' cannot forward the preceding state-only event across A2A. Session state is local to each agent; include the required values in event content instead.
+A2A request failed: HTTP Error 503: Network communication error: All connection attempts failed
+Error handling A2A request: customer_data failed: A2A request failed: HTTP Error 503: Network communication error: All connection attempts failed
+Traceback (most recent call last):
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/a2a/executor/a2a_agent_executor.py", line 153, in execute
+    await self._handle_request(context, event_queue)
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/a2a/executor/a2a_agent_executor.py", line 228, in _handle_request
+    async for adk_event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/runners.py", line 1391, in run_async
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 164, in stream_in_scope
+    item = await _drive(owned.__anext__())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 152, in _drive
+    return await step
+           ^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/runners.py", line 1359, in _run_with_trace
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/runners.py", line 1593, in _exec_with_plugin
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/runners.py", line 1346, in execute
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 359, in run_async
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 460, in _run_with_lifecycle
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 164, in stream_in_scope
+    item = await _drive(owned.__anext__())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 152, in _drive
+    return await step
+           ^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 423, in _run
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/sequential_agent.py", line 135, in _run_async_impl
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 359, in run_async
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 460, in _run_with_lifecycle
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 164, in stream_in_scope
+    item = await _drive(owned.__anext__())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 152, in _drive
+    return await step
+           ^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 430, in _run
+    if event := await self._handle_after_agent_callback(ctx):
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 644, in _handle_after_agent_callback
+    return await self._handle_agent_callbacks(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 584, in _handle_agent_callbacks
+    callback_content = await _run_callbacks(
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/utils/_callback_pipeline.py", line 95, in _run_callbacks
+    callback_result = _invoke_callback(callback, *args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/utils/_callback_pipeline.py", line 78, in _invoke_callback
+    return _callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/agents/host_agent/parallel_router_agent.py", line 44, in finish_parallel
+    raise RuntimeError('; '.join(error for error in errors if error))
+RuntimeError: customer_data failed: A2A request failed: HTTP Error 503: Network communication error: All connection attempts failed
+Failed to resolve remote A2A agent support_specialist: Failed to resolve AgentCard from URL http://127.0.0.1:59009/.well-known/agent-card.json: HTTP Error 503: Network communication error fetching agent card from http://127.0.0.1:59009/.well-known/agent-card.json: All connection attempts failed
+RemoteA2aAgent 'customer_data' cannot forward the preceding state-only event across A2A. Session state is local to each agent; include the required values in event content instead.
+Error handling A2A request: support_specialist failed: Failed to initialize remote A2A agent: Failed to initialize remote A2A agent support_specialist: Failed to resolve AgentCard from URL http://127.0.0.1:59009/.well-known/agent-card.json: HTTP Error 503: Network communication error fetching agent card from http://127.0.0.1:59009/.well-known/agent-card.json: All connection attempts failed
+Traceback (most recent call last):
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/a2a/executor/a2a_agent_executor.py", line 153, in execute
+    await self._handle_request(context, event_queue)
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/a2a/executor/a2a_agent_executor.py", line 228, in _handle_request
+    async for adk_event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/runners.py", line 1391, in run_async
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 164, in stream_in_scope
+    item = await _drive(owned.__anext__())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 152, in _drive
+    return await step
+           ^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/runners.py", line 1359, in _run_with_trace
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/runners.py", line 1593, in _exec_with_plugin
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/runners.py", line 1346, in execute
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 359, in run_async
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 460, in _run_with_lifecycle
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 164, in stream_in_scope
+    item = await _drive(owned.__anext__())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 152, in _drive
+    return await step
+           ^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 423, in _run
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/sequential_agent.py", line 135, in _run_async_impl
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 359, in run_async
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 460, in _run_with_lifecycle
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 164, in stream_in_scope
+    item = await _drive(owned.__anext__())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 152, in _drive
+    return await step
+           ^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 430, in _run
+    if event := await self._handle_after_agent_callback(ctx):
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 644, in _handle_after_agent_callback
+    return await self._handle_agent_callbacks(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 584, in _handle_agent_callbacks
+    callback_content = await _run_callbacks(
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/utils/_callback_pipeline.py", line 95, in _run_callbacks
+    callback_result = _invoke_callback(callback, *args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/utils/_callback_pipeline.py", line 78, in _invoke_callback
+    return _callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/agents/host_agent/parallel_router_agent.py", line 44, in finish_parallel
+    raise RuntimeError('; '.join(error for error in errors if error))
+RuntimeError: support_specialist failed: Failed to initialize remote A2A agent: Failed to initialize remote A2A agent support_specialist: Failed to resolve AgentCard from URL http://127.0.0.1:59009/.well-known/agent-card.json: HTTP Error 503: Network communication error fetching agent card from http://127.0.0.1:59009/.well-known/agent-card.json: All connection attempts failed
+RemoteA2aAgent 'customer_data' cannot forward the preceding state-only event across A2A. Session state is local to each agent; include the required values in event content instead.
+RemoteA2aAgent 'support_specialist' cannot forward the preceding state-only event across A2A. Session state is local to each agent; include the required values in event content instead.
+RemoteA2aAgent 'customer_data' cannot forward the preceding state-only event across A2A. Session state is local to each agent; include the required values in event content instead.
+RemoteA2aAgent 'support_specialist' cannot forward the preceding state-only event across A2A. Session state is local to each agent; include the required values in event content instead.
+A2A request failed: HTTP Error 503: Network communication error: All connection attempts failed
+Error handling A2A request: support_specialist failed: A2A request failed: HTTP Error 503: Network communication error: All connection attempts failed
+Traceback (most recent call last):
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/a2a/executor/a2a_agent_executor.py", line 153, in execute
+    await self._handle_request(context, event_queue)
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/a2a/executor/a2a_agent_executor.py", line 228, in _handle_request
+    async for adk_event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/runners.py", line 1391, in run_async
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 164, in stream_in_scope
+    item = await _drive(owned.__anext__())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 152, in _drive
+    return await step
+           ^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/runners.py", line 1359, in _run_with_trace
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/runners.py", line 1593, in _exec_with_plugin
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/runners.py", line 1346, in execute
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 359, in run_async
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 460, in _run_with_lifecycle
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 164, in stream_in_scope
+    item = await _drive(owned.__anext__())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 152, in _drive
+    return await step
+           ^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 423, in _run
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/sequential_agent.py", line 135, in _run_async_impl
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 359, in run_async
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 460, in _run_with_lifecycle
+    async for event in agen:
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 164, in stream_in_scope
+    item = await _drive(owned.__anext__())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/telemetry/_instrumentation.py", line 152, in _drive
+    return await step
+           ^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 430, in _run
+    if event := await self._handle_after_agent_callback(ctx):
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 644, in _handle_after_agent_callback
+    return await self._handle_agent_callbacks(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/agents/base_agent.py", line 584, in _handle_agent_callbacks
+    callback_content = await _run_callbacks(
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/utils/_callback_pipeline.py", line 95, in _run_callbacks
+    callback_result = _invoke_callback(callback, *args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lars/miniconda3/envs/a2a-agents/lib/python3.11/site-packages/google/adk/utils/_callback_pipeline.py", line 78, in _invoke_callback
+    return _callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/agents/host_agent/parallel_router_agent.py", line 44, in finish_parallel
+    raise RuntimeError('; '.join(error for error in errors if error))
+RuntimeError: support_specialist failed: A2A request failed: HTTP Error 503: Network communication error: All connection attempts failed
+ok
+test_routes_and_preserves_final_answer_across_turns (tests.test_routing.TestADKRouting.test_routes_and_preserves_final_answer_across_turns) ... /mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/agents/host_agent/advanced_router_agent.py:162: DeprecationWarning: SequentialAgent is deprecated in favor of Workflow and will be removed in a future version. Workflow cannot yet be used as an LlmAgent sub-agent.
+  SequentialAgent(name='conditional_execution', sub_agents=[customer_data, support])])
+/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/agents/host_agent/advanced_router_agent.py:161: DeprecationWarning: SequentialAgent is deprecated in favor of Workflow and will be removed in a future version. Workflow cannot yet be used as an LlmAgent sub-agent.
+  return SequentialAgent(name='advanced_customer_support_host', sub_agents=[router,
+ok
+test_instruction_reads_readonly_state_without_writing (tests.test_routing.TestRoutingRules.test_instruction_reads_readonly_state_without_writing) ... ok
+test_intent_matrix (tests.test_routing.TestRoutingRules.test_intent_matrix) ... ok
+test_preparation_refreshes_decision_and_clears_previous_answer (tests.test_routing.TestRoutingRules.test_preparation_refreshes_decision_and_clears_previous_answer) ... ok
+test_skip_support_requires_current_data_answer (tests.test_routing.TestRoutingRules.test_skip_support_requires_current_data_answer) ... ok
+test_stale_missing_and_malformed_decisions_run_both (tests.test_routing.TestRoutingRules.test_stale_missing_and_malformed_decisions_run_both) ... ok
+test_urgency_is_not_an_action (tests.test_routing.TestRoutingRules.test_urgency_is_not_an_action) ... ok
+test_direct_message_and_all_artifacts_return_text (tests.test_quality.TestCLIAndResponses.test_direct_message_and_all_artifacts_return_text) ... ok
+test_empty_stream_and_empty_completed_task_raise (tests.test_quality.TestCLIAndResponses.test_empty_stream_and_empty_completed_task_raise) ... ok
+test_factory_failure_returns_nonzero_without_readiness (tests.test_quality.TestCLIAndResponses.test_factory_failure_returns_nonzero_without_readiness) ... ok
+test_import_preserves_root_logging_and_cli_loop (tests.test_quality.TestCLIAndResponses.test_import_preserves_root_logging_and_cli_loop) ... ok
+test_running_loop_import_uses_nested_loop_guard (tests.test_quality.TestCLIAndResponses.test_running_loop_import_uses_nested_loop_guard) ... ok
+test_test_mode_failure_returns_nonzero (tests.test_quality.TestCLIAndResponses.test_test_mode_failure_returns_nonzero) ... ok
+test_bind_exit_propagates_and_stops_sibling (tests.test_quality.TestSupervisor.test_bind_exit_propagates_and_stops_sibling) ... ok
+test_mixed_smoke_test_failure_returns_false (tests.test_quality.TestSupervisor.test_mixed_smoke_test_failure_returns_false) ... ok
+test_readiness_waits_for_all_servers (tests.test_quality.TestSupervisor.test_readiness_waits_for_all_servers) ... [07:04:21] [run_agents] INFO - All 2 agent servers are ready. Press Ctrl+C to stop.
+ok
+test_real_occupied_port_fails_without_readiness (tests.test_quality.TestSupervisor.test_real_occupied_port_fails_without_readiness)
+Use Uvicorn's actual bind path, not a simulated SystemExit. ... ok
+test_real_servers_ready_and_stop_cleanly (tests.test_quality.TestSupervisor.test_real_servers_ready_and_stop_cleanly)
+Exercise supervised A2A listeners without making model requests. ... /mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/agents/host_agent/agent.py:50: DeprecationWarning: SequentialAgent is deprecated in favor of Workflow and will be removed in a future version. Workflow cannot yet be used as an LlmAgent sub-agent.
+  return SequentialAgent(
+[07:04:22] [asyncio] INFO - <Server sockets=(<asyncio.TransportSocket fd=6, family=2, type=1, proto=6, laddr=('127.0.0.1', 55377)>,)> is serving
+[07:04:22] [asyncio] INFO - <Server sockets=(<asyncio.TransportSocket fd=8, family=2, type=1, proto=6, laddr=('127.0.0.1', 34189)>,)> is serving
+[07:04:22] [asyncio] INFO - <Server sockets=(<asyncio.TransportSocket fd=9, family=2, type=1, proto=6, laddr=('127.0.0.1', 60017)>,)> is serving
+[07:04:22] [run_agents] INFO - All 3 agent servers are ready. Press Ctrl+C to stop.
+[07:04:22] [httpx] INFO - HTTP Request: GET http://127.0.0.1:55377/.well-known/agent-card.json "HTTP/1.1 200 OK"
+[07:04:22] [httpx] INFO - HTTP Request: GET http://127.0.0.1:34189/.well-known/agent-card.json "HTTP/1.1 200 OK"
+[07:04:22] [httpx] INFO - HTTP Request: GET http://127.0.0.1:60017/.well-known/agent-card.json "HTTP/1.1 200 OK"
+ok
+test_startup_timeout_does_not_report_ready (tests.test_quality.TestSupervisor.test_startup_timeout_does_not_report_ready) ... ok
+test_completed_task_with_artifact_returns_text (tests.test_client_results.TestA2AClientResults.test_completed_task_with_artifact_returns_text)
+Completed tasks still return their normal answer. ... [07:04:22] [httpx] INFO - HTTP Request: GET http://example.test/.well-known/agent-card.json "HTTP/1.1 200 OK"
+ok
+test_failed_task_with_partial_artifact_raises (tests.test_client_results.TestA2AClientResults.test_failed_task_with_partial_artifact_raises)
+Preserve failure status even after an earlier agent produced data. ... [07:04:22] [httpx] INFO - HTTP Request: GET http://example.test/.well-known/agent-card.json "HTTP/1.1 200 OK"
+ok
+test_normal_events_use_standard_converter (tests.test_client_results.TestAgentErrorConversion.test_normal_events_use_standard_converter) ... ok
+test_remote_error_is_raised (tests.test_client_results.TestAgentErrorConversion.test_remote_error_is_raised) ... ok
+
+----------------------------------------------------------------------
+Ran 40 tests in 8.974s
+
+OK

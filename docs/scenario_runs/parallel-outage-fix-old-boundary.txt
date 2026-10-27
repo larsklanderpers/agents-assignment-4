@@ -1,0 +1,32 @@
+/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/agents/host_agent/agent.py:53: UserWarning: [EXPERIMENTAL] RemoteA2aAgent: ADK Implementation for A2A support (A2aAgentExecutor, RemoteA2aAgent and corresponding supporting components etc.) is in experimental mode and is subject to breaking changes. A2A protocol and SDK are themselves not experimental. Once it's stable enough the experimental mode will be removed. Your feedback is welcome.
+  RemoteA2aAgent(
+test_remote_failure_drains_both_workers_before_terminal_failure (tests.test_parallel.TestParallel.test_remote_failure_drains_both_workers_before_terminal_failure) ... Executing <Task pending name='Task-3' coro=<TestParallel.test_remote_failure_drains_both_workers_before_terminal_failure.<locals>.invoke() running at /mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/tests/test_parallel.py:103> wait_for=<Future pending cb=[Task.task_wakeup()] created at /home/lars/miniconda3/envs/a2a-agents/lib/python3.11/asyncio/base_events.py:428> cb=[_release_waiter(<Future pendi...events.py:428>)() at /home/lars/miniconda3/envs/a2a-agents/lib/python3.11/asyncio/tasks.py:431] created at /home/lars/miniconda3/envs/a2a-agents/lib/python3.11/asyncio/tasks.py:680> took 0.433 seconds
+
+  test_remote_failure_drains_both_workers_before_terminal_failure (tests.test_parallel.TestParallel.test_remote_failure_drains_both_workers_before_terminal_failure) (failed_name='customer_data') ... FAIL
+  test_remote_failure_drains_both_workers_before_terminal_failure (tests.test_parallel.TestParallel.test_remote_failure_drains_both_workers_before_terminal_failure) (failed_name='support_specialist') ... FAIL
+
+======================================================================
+FAIL: test_remote_failure_drains_both_workers_before_terminal_failure (tests.test_parallel.TestParallel.test_remote_failure_drains_both_workers_before_terminal_failure) (failed_name='customer_data')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/tests/test_parallel.py", line 110, in test_remote_failure_drains_both_workers_before_terminal_failure
+    self.assertEqual(completed, finished, 'A remote stream was aborted during failure handling')
+AssertionError: Items in the second set but not the first:
+'customer_data'
+'support_specialist' : A remote stream was aborted during failure handling
+
+======================================================================
+FAIL: test_remote_failure_drains_both_workers_before_terminal_failure (tests.test_parallel.TestParallel.test_remote_failure_drains_both_workers_before_terminal_failure) (failed_name='support_specialist')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/vc-newpe-projects/continuing-education/ucla-agentic-ai/agents-assignment-4/tests/test_parallel.py", line 110, in test_remote_failure_drains_both_workers_before_terminal_failure
+    self.assertEqual(completed, finished, 'A remote stream was aborted during failure handling')
+AssertionError: Items in the second set but not the first:
+'customer_data'
+'support_specialist' : A remote stream was aborted during failure handling
+
+----------------------------------------------------------------------
+Ran 1 test in 0.543s
+
+FAILED (failures=2)
+[HOST_AGENT] Using BASIC sequential router
